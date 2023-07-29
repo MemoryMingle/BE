@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "obligedwalnut",
+    "password": "303030aa",
+    "database": "MemoryMingle",
+    "host": "express-database.c2uflxyobxhu.ap-northeast-2.rds.amazonaws.com",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "test",
+    "password": "test",
+    "database": "test",
+    "host": "localhost",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "production",
+    "password": "production",
+    "database": "production",
+    "host": "localhost",
+    "dialect": "mysql"
+  }
+}
