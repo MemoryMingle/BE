@@ -1,7 +1,7 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class Users extends Model {
+  class Groups extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -10,43 +10,57 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
 
-      this.hasMany(models.Groups, {
-        sourceKey: "userId",
+      this.belongsTo(models.Users, {
         foreignKey: "userId",
+        targetKey: "userId",
       });
 
       this.hasMany(models.Memories, {
-        sourceKey: "nickname",
-        foreignKey: "nickname",
-      });
-
-      this.hasMany(models.Comments, {
-        sourceKey: "nickname",
-        foreignKey: "nickname",
+        sourceKey: "groupId",
+        foreignKey: "groupId",
       });
     }
   }
-
-  Users.init(
+  Groups.init(
     {
-      userId: {
+      memeoryId: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      email: {
+      groupId: {
+        allowNull: false,
+        primaryKey: true,
+        type: DataTypes.INTEGER,
+      },
+      userId: {
         allowNull: false,
         type: DataTypes.STRING,
       },
-      nickname: {
+      groupName: {
         allowNull: false,
         type: DataTypes.STRING,
-        unique: true
       },
-      password: {
+      thumbnailUrl: {
+        allowNull: true,
+        type: DataTypes.STRING,
+      },
+      place: {
+        allowNull: true,
+        type: DataTypes.STRING,
+      },
+      participant: {
         allowNull: false,
         type: DataTypes.STRING,
+      },
+      startDate: {
+        allowNull: false,
+        type: DataTypes.DATE,
+      },
+      endDate: {
+        allowNull: false,
+        type: DataTypes.DATE,
       },
       createdAt: {
         allowNull: false,
@@ -61,8 +75,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "Users",
+      modelName: "Groups",
     }
   );
-  return Users;
+  return Groups;
 };

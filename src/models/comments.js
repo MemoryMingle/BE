@@ -10,12 +10,11 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
 
-      // memoryId 연결
       this.belongsTo(models.Memories, {
         foreignKey: "memoryId",
         targetKey: "memoryId",
       });
-      // nickname 연결
+
       this.belongsTo(models.Users, {
         foreignKey: "nickname",
         targetKey: "nickname",
@@ -35,10 +34,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
       },
       comment: {
-        allowNull: false,
-        type: DataTypes.STRING,
-      },
-      commentUrl: {
         allowNull: false,
         type: DataTypes.STRING,
       },

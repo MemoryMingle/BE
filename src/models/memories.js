@@ -10,17 +10,16 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
 
-      // userId 연결
       this.belongsTo(models.Users, {
-        foreignKey: "userId",
-        targetKey: "userId",
+        targetKey: "nickname",
+        foreignKey: "nickname",
       });
 
-      // memoryId -Participants , Comments
-      this.hasMany(models.Participants, {
-        sourceKey: "memoryId",
-        foreignKey: "memoryId",
+      this.belongsTo(models.Groups, {
+        targetKey: "groupId",
+        foreignKey: "groupId",
       });
+
       this.hasMany(models.Comments, {
         sourceKey: "memoryId",
         foreignKey: "memoryId",
@@ -29,43 +28,27 @@ module.exports = (sequelize, DataTypes) => {
   }
   Memories.init(
     {
-      memeoryId: {
+      memoryId: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      userId: {
+      nickname: {
         allowNull: false,
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
       },
       title: {
         allowNull: false,
         type: DataTypes.STRING,
       },
-      content: {
+      groupId: {
         allowNull: false,
-        type: DataTypes.STRING,
-      },
-      thumbnailUrl: {
-        allowNull: false,
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
       },
       imgUrl: {
         allowNull: false,
         type: DataTypes.STRING,
-      },
-      place: {
-        allowNull: false,
-        type: DataTypes.STRING,
-      },
-      startDate: {
-        allowNull: false,
-        type: DataTypes.DATE,
-      },
-      endDate: {
-        allowNull: false,
-        type: DataTypes.DATE,
       },
       createdAt: {
         allowNull: false,

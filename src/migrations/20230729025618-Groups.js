@@ -9,28 +9,43 @@ module.exports = {
      * Example:
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
-    await queryInterface.createTable("Comments", {
-      commentId: {
+    await queryInterface.createTable("Groups", {
+      groupId: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      memoryId: {
+      userId: {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {
-          model: 'Memories',
-          key: 'memoryId',
-        },
+          model: 'Users',
+          key: 'userId',
+        }
       },
-      comment: {
+      groupName: {
         allowNull: false,
         type: Sequelize.STRING,
       },
-      nickname: {
+      thumbnailUrl: {
+        allowNull: true,
+        type: Sequelize.STRING,
+      },
+      place: {
+        allowNull: true,
+        type: Sequelize.STRING,
+      },
+      participant: {
         allowNull: false,
         type: Sequelize.STRING,
+      },
+      startDate: {
+        allowNull: false,
+        type: Sequelize.DATE,
+      },
+      endDate: {
+        allowNull: false,
+        type: Sequelize.DATE,
       },
       createdAt: {
         allowNull: false,
@@ -52,6 +67,7 @@ module.exports = {
      * Example:
      * await queryInterface.dropTable('users');
      */
-    await queryInterface.dropTable("Comments");
+
+    await queryInterface.dropTable("Groups");
   },
 };

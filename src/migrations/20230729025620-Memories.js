@@ -11,43 +11,35 @@ module.exports = {
      */
 
     await queryInterface.createTable("Memories", {
-      memeoryId: {
+      memoryId: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      userId: {
+      nickname: {
         allowNull: false,
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
+        references: {
+          model: 'Users',
+          key: 'nickname',
+        },
       },
       title: {
         allowNull: false,
         type: Sequelize.STRING,
       },
-      content: {
+      groupId: {
         allowNull: false,
-        type: Sequelize.STRING,
-      },
-      thumbnailUrl: {
-        allowNull: false,
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Groups',
+          key: 'groupId',
+        },
       },
       imgUrl: {
         allowNull: false,
         type: Sequelize.STRING,
-      },
-      place: {
-        allowNull: false,
-        type: Sequelize.STRING,
-      },
-      startDate: {
-        allowNull: false,
-        type: Sequelize.DATE,
-      },
-      endDate: {
-        allowNull: false,
-        type: Sequelize.DATE,
       },
       createdAt: {
         allowNull: false,
