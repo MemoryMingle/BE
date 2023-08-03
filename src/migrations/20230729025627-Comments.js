@@ -28,9 +28,13 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
       },
-      nickname: {
+      userId: {
         allowNull: false,
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Users',
+          key: 'userId',
+        },
       },
       createdAt: {
         allowNull: false,

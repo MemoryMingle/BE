@@ -11,8 +11,8 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
 
       this.belongsTo(models.Users, {
-        targetKey: "nickname",
-        foreignKey: "nickname",
+        targetKey: "userId",
+        foreignKey: "userId",
       });
 
       this.belongsTo(models.Groups, {
@@ -34,9 +34,9 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      nickname: {
+      userId: {
         allowNull: false,
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
       },
       title: {
         allowNull: false,
@@ -46,7 +46,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.INTEGER,
       },
-      imgUrl: {
+      imageUrl: {
         allowNull: false,
         type: DataTypes.STRING,
       },

@@ -17,12 +17,12 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      nickname: {
+      userId: {
         allowNull: false,
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
         references: {
           model: 'Users',
-          key: 'nickname',
+          key: 'userId',
         },
       },
       title: {
@@ -37,7 +37,7 @@ module.exports = {
           key: 'groupId',
         },
       },
-      imgUrl: {
+      imageUrl: {
         allowNull: false,
         type: Sequelize.STRING,
       },

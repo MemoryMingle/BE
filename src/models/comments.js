@@ -16,8 +16,8 @@ module.exports = (sequelize, DataTypes) => {
       });
 
       this.belongsTo(models.Users, {
-        foreignKey: "nickname",
-        targetKey: "nickname",
+        foreignKey: "userId",
+        targetKey: "userId",
       });
     }
   }
@@ -37,9 +37,9 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.STRING,
       },
-      nickname: {
+      userId: {
         allowNull: false,
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
       },
       createdAt: {
         allowNull: false,

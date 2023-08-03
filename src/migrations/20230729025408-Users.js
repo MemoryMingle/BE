@@ -16,16 +16,20 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      email: {
-        allowNull: false,
-        type: Sequelize.STRING,
-      },
-      nickname: {
+      loginId: {
         allowNull: false,
         type: Sequelize.STRING,
         unique: true
       },
+      nickname: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
       password: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
+      profileUrl: {
         allowNull: false,
         type: Sequelize.STRING,
       },

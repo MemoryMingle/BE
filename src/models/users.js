@@ -16,13 +16,13 @@ module.exports = (sequelize, DataTypes) => {
       });
 
       this.hasMany(models.Memories, {
-        sourceKey: "nickname",
-        foreignKey: "nickname",
+        sourceKey: "userId",
+        foreignKey: "userId",
       });
 
       this.hasMany(models.Comments, {
-        sourceKey: "nickname",
-        foreignKey: "nickname",
+        sourceKey: "userId",
+        foreignKey: "userId",
       });
     }
   }
@@ -35,16 +35,19 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      email: {
+      loginId: {
         allowNull: false,
         type: DataTypes.STRING,
       },
       nickname: {
         allowNull: false,
         type: DataTypes.STRING,
-        unique: true
       },
       password: {
+        allowNull: false,
+        type: DataTypes.STRING,
+      },
+      profileUrl: {
         allowNull: false,
         type: DataTypes.STRING,
       },
