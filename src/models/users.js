@@ -36,7 +36,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
       },
       loginId: {
-        allowNull: false,
         type: DataTypes.STRING,
       },
       nickname: {
@@ -44,11 +43,17 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
       },
       password: {
-        allowNull: false,
         type: DataTypes.STRING,
       },
       profileUrl: {
         allowNull: false,
+        type: DataTypes.STRING,
+        defaultValue: "https://t1.daumcdn.net/cfile/tistory/243FE450575F82662D",
+      },
+      providerType: {
+        type: DataTypes.STRING,
+      },
+      kakaoId: {
         type: DataTypes.STRING,
       },
       createdAt: {

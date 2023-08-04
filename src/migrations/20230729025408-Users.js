@@ -17,7 +17,6 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       loginId: {
-        allowNull: false,
         type: Sequelize.STRING,
         unique: true
       },
@@ -31,6 +30,12 @@ module.exports = {
       },
       profileUrl: {
         allowNull: false,
+        type: Sequelize.STRING,
+      },
+      providerType: {
+        type: Sequelize.STRING,
+      },
+      kakaoId: {
         type: Sequelize.STRING,
       },
       createdAt: {
