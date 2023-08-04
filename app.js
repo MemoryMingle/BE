@@ -14,7 +14,7 @@ app.use(cookieParser());
 
 
 app.get("/", (_, res) => {
-    return res.send("이게 왜 됨?");
+    return res.send("CICD?");
 });
 
 app.use("/api", indexRouter);
