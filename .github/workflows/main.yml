@@ -1,0 +1,47 @@
+name: Node.js CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+          cache: "npm"
+      - run: npm ci
+      #     - run: npm run build --if-present
+      #     - run: npm test
+
+      - name: zip file
+        run: zip -r CI.zip ./app.js ./config ./migrations ./models ./routes ./scripts ./appspec.yml ./package.json ./package-lock.json ./middlewares
+
+      - name: AWS configure credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-2
+
+      - name: upload to S3
+        run: aws s3 cp --region ap-northeast-2 ./CI.zip s3://mjmbucket1/CICD/
+
+      - name: deploy with AWS codeDeploy
+        run: aws deploy create-deployment
+          --application-name CICDTEST1
+          --deployment-config-name CodeDeployDefault.OneAtATime
+          --deployment-group-name CICDTEST1-group
+          --s3-location bucket=mjmbucket1,bundleType=zip,key=CICD/CI.zip
