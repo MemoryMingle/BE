@@ -27,7 +27,7 @@ jobs:
       #     - run: npm test
 
       - name: zip file
-        run: zip -r CI.zip ./app.js ./config ./migrations ./models ./routes ./scripts ./appspec.yml ./package.json ./package-lock.json ./middlewares
+        run: zip -r CI.zip ./app.js ./scripts ./appspec.yml ./package.json ./package-lock.json ./src
 
       - name: AWS configure credentials
         uses: aws-actions/configure-aws-credentials@v1
