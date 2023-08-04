@@ -14,7 +14,7 @@ app.use(cookieParser());
 
 
 app.get("/", (_, res) => {
-    return res.send("이게 왜 될까?");
+    return res.send("이게 왜 됨?");
 });
 
 app.use("/api", indexRouter);
