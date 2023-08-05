@@ -25,10 +25,6 @@ module.exports = {
           key: 'userId',
         },
       },
-      title: {
-        allowNull: false,
-        type: Sequelize.STRING,
-      },
       groupId: {
         allowNull: false,
         type: Sequelize.INTEGER,
@@ -36,6 +32,10 @@ module.exports = {
           model: 'Groups',
           key: 'groupId',
         },
+      },
+      title: {
+        allowNull: false,
+        type: Sequelize.STRING,
       },
       imageUrl: {
         allowNull: false,
