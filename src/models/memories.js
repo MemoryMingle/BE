@@ -38,13 +38,13 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.INTEGER,
       },
-      title: {
-        allowNull: false,
-        type: DataTypes.STRING,
-      },
       groupId: {
         allowNull: false,
         type: DataTypes.INTEGER,
+      },
+      title: {
+        allowNull: false,
+        type: DataTypes.STRING,
       },
       imageUrl: {
         allowNull: false,

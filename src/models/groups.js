@@ -23,14 +23,9 @@ module.exports = (sequelize, DataTypes) => {
   }
   Groups.init(
     {
-      memeoryId: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: DataTypes.INTEGER,
-      },
       groupId: {
         allowNull: false,
+        autoIncrement: true,
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
