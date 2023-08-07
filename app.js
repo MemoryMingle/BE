@@ -11,7 +11,13 @@ const indexRouter = require("./src/routes/index.route");
 app.use(express.json());
 app.use(cookieParser());
 
-
+app.use(
+    cors({
+        origin: '*',
+        methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+        credentials: true,
+    })
+);
 
 app.get("/", (_, res) => {
     return res.send("이게 왜 됨?");

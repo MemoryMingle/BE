@@ -13,15 +13,16 @@ module.exports = {
       groupId: {
         allowNull: false,
         primaryKey: true,
+        autoIncrement: true,
         type: Sequelize.INTEGER,
       },
       userId: {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {
-          model: 'Users',
-          key: 'userId',
-        }
+          model: "Users",
+          key: "userId",
+        },
       },
       groupName: {
         allowNull: false,
