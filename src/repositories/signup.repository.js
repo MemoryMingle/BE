@@ -8,7 +8,6 @@ class SignupRepositroy {
             nickname,
             password,
         });
-
         return user;
     };
 }
