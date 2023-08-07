@@ -40,7 +40,7 @@ class LoginController {
 
             // res.cookie("MM", `Bearer ${accessToken}`);
             res.status(200).json({
-                accessToken,
+                message: "로그인 완료",
                 Authorization: `Bearer ${accessToken}`
             });
         } catch (err) {
