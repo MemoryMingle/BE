@@ -38,8 +38,11 @@ class LoginController {
                 }
             );
 
-            res.cookie("MM", `Bearer ${accessToken}`);
-            res.status(200).json({ accessToken });
+            // res.cookie("MM", `Bearer ${accessToken}`);
+            res.status(200).json({
+                accessToken,
+                Authorization: `Bearer ${accessToken}`
+            });
         } catch (err) {
             next(err);
         }
