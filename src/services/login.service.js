@@ -4,8 +4,8 @@ class LoginService {
 
     loginRepository = new LoginRepository()
 
-    findUser = async (loginId) => {
-        const user = await this.loginRepository.findUser(loginId)
+    login = async (loginId) => {
+        const user = await this.loginRepository.login(loginId)
         return user
     }
 }
