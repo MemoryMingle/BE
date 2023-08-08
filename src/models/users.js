@@ -46,6 +46,7 @@ module.exports = (sequelize, DataTypes) => {
       nickname: {
         allowNull: false,
         type: DataTypes.STRING,
+        defaultValue: "닉네임"
       },
       password: {
         type: DataTypes.STRING,
