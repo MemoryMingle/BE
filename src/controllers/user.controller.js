@@ -6,7 +6,7 @@ class UserController {
   // 닉네임 기반 검색
   findByNickname = async (req, res, next) => {
     try {
-      const { nickname } = req.body;
+      const { nickname } = req.params;
 
       const findByNicknameData = await this.userService.findByNickname(
         nickname
