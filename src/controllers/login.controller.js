@@ -17,7 +17,7 @@ class LoginController {
             if (error) throw new CustomError(error.details[0].message, 400);
 
             // DB에서 정보 찾아오기
-            const user = await this.loginService.findUser(loginId);
+            const user = await this.loginService.login(loginId);
 
             // DB에서 ID를 찾지 못한 경우 처리
             if (!user)
@@ -39,7 +39,10 @@ class LoginController {
             );
 
             res.cookie("MM", `Bearer ${accessToken}`);
-            res.status(200).json({ accessToken });
+            res.status(200).json({
+                message: "로그인 완료",
+                // Authorization: `Bearer ${accessToken}`
+            });
         } catch (err) {
             next(err);
         }

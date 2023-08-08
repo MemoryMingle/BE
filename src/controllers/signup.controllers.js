@@ -7,7 +7,7 @@ class SignupController {
 
     signup = async (req, res, next) => {
         try {
-            const { loginId, nickname, password, confirm } = req.body;
+            const { loginId, password, confirm, nickname } = req.body;
 
             const { error } = signupSchema.validate(req.body);
 
@@ -16,7 +16,7 @@ class SignupController {
             if (password !== confirm)
                 throw new CustomError('비밀번호가 일치하지 않습니다.', 400);
 
-            await this.signupService.signup(loginId, nickname, password);
+            await this.signupService.signup(loginId, password, nickname);
 
             return res.status(201).json({ msg: '회원가입이 완료되었습니다.' });
         } catch (err) {

@@ -23,6 +23,7 @@ module.exports = {
       nickname: {
         allowNull: false,
         type: Sequelize.STRING,
+        defaultValue: "닉네임",
       },
       password: {
         allowNull: false,

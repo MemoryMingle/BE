@@ -24,6 +24,11 @@ module.exports = (sequelize, DataTypes) => {
         sourceKey: "userId",
         foreignKey: "userId",
       });
+
+      this.hasMany(models.Participant, {
+        sourceKey: "userId",
+        foreignKey: "userId",
+      });
     }
   }
 
@@ -41,6 +46,7 @@ module.exports = (sequelize, DataTypes) => {
       nickname: {
         allowNull: false,
         type: DataTypes.STRING,
+        defaultValue: "닉네임"
       },
       password: {
         type: DataTypes.STRING,

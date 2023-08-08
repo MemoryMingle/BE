@@ -19,19 +19,20 @@ module.exports = (sequelize, DataTypes) => {
         sourceKey: "groupId",
         foreignKey: "groupId",
       });
+
+      this.hasMany(models.Participant, {
+        sourceKey: "groupId",
+        foreignKey: "groupId",
+      });
     }
   }
   Groups.init(
     {
-      memeoryId: {
+      groupId: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: DataTypes.INTEGER,
-      },
-      groupId: {
-        allowNull: false,
-        primaryKey: true,
+        autoIncrement: true,
         type: DataTypes.INTEGER,
       },
       userId: {
@@ -49,10 +50,6 @@ module.exports = (sequelize, DataTypes) => {
       },
       place: {
         allowNull: true,
-        type: DataTypes.STRING,
-      },
-      participant: {
-        allowNull: false,
         type: DataTypes.STRING,
       },
       startDate: {

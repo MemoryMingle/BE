@@ -13,15 +13,16 @@ module.exports = {
       groupId: {
         allowNull: false,
         primaryKey: true,
+        autoIncrement: true,
         type: Sequelize.INTEGER,
       },
       userId: {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {
-          model: 'Users',
-          key: 'userId',
-        }
+          model: "Users",
+          key: "userId",
+        },
       },
       groupName: {
         allowNull: false,
@@ -33,10 +34,6 @@ module.exports = {
       },
       place: {
         allowNull: true,
-        type: Sequelize.STRING,
-      },
-      participant: {
-        allowNull: false,
         type: Sequelize.STRING,
       },
       startDate: {
