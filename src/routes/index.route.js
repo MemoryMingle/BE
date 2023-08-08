@@ -6,6 +6,7 @@ const groupRouter = require("./group.route");
 const memoryRouter = require("./memory.route")
 const userRouter = require("./user.route")
 
+
 router.get("/", (req, res) => {
   res.send("이게 왜 안됨?");
 });
@@ -17,5 +18,6 @@ groupRouter.use("/:groupId/memory", memoryRouter);
 
 // 닉네임 기반 검색
 router.use("/", userRouter);
+
 
 module.exports = router;
