@@ -23,6 +23,7 @@ module.exports = {
           model: 'Memories',
           key: 'memoryId',
         },
+        // onDelete: 'CASCADE',
       },
       comment: {
         allowNull: false,
