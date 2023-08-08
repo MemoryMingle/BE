@@ -24,8 +24,8 @@ class MemoryService {
         return findUpdateMemoryData
     }
     updateMemory = async (userId, memoryId, title, imageUrl) => {
-        const checkData = await this.memoryRepository.check(memoryId)
-        if (checkData.userId !== userId) {
+        const memoryCheckData = await this.memoryRepository.memoryCheck(memoryId)
+        if (memoryCheckData.userId !== userId) {
             const error = new Error("글쓴이가 아닙니다.");
             error.status = 404
             throw error;
@@ -34,8 +34,8 @@ class MemoryService {
         return updateMemoryData
     }
     deleteMemory = async (userId, memoryId) => {
-        const checkData = await this.memoryRepository.check(memoryId)
-        if (checkData.userId !== userId) {
+        const memoryCheckData = await this.memoryRepository.memoryCheck(memoryId)
+        if (memoryCheckData.userId !== userId) {
             const error = new Error("글쓴이가 아닙니다.");
             error.status = 404
             throw error;

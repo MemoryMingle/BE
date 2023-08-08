@@ -26,7 +26,7 @@ class MemoryController {
             const { userId } = res.locals.user;
             const { groupId, memoryId } = req.params;
 
-            const [findOneMemoryData, MemoryComments] = await this.memoryService.findOneMemory(userId, groupId, memoryId)
+            const [findOneMemoryData, memoryComments] = await this.memoryService.findOneMemory(userId, groupId, memoryId)
 
             res
                 .status(200)
