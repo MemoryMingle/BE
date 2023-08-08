@@ -20,7 +20,7 @@ class MemoryRepository {
         return participantCheckData
     }
 
-    findOneMemory = async (userId, groupId, memoryId) => {
+    findOneMemory = async (memoryId) => {
         const findOneMemoryData = await Memories.findAll({
             where: { memoryId },
             attributes: ["memoryId", "title", "imageUrl"],
