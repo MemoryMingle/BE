@@ -21,6 +21,7 @@ class MemoryRepository {
     }
 
     findOneMemory = async (memoryId) => {
+
         const findOneMemoryData = await Memories.findOne({
             where: { memoryId },
             attributes: ["memoryId", "title", "imageUrl"],
