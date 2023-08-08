@@ -38,7 +38,12 @@ class LoginController {
                 }
             );
 
-            res.cookie("MM", `Bearer ${accessToken}`);
+            res.cookie("MM", `Bearer ${accessToken}`, {
+                secure: true,
+                httpOnly: false,
+                sameSite: 'none',
+            });
+
             res.status(200).json({
                 message: "로그인 완료",
                 // Authorization: `Bearer ${accessToken}`
