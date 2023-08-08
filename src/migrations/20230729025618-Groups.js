@@ -36,10 +36,6 @@ module.exports = {
         allowNull: true,
         type: Sequelize.STRING,
       },
-      participant: {
-        allowNull: false,
-        type: Sequelize.STRING,
-      },
       startDate: {
         allowNull: false,
         type: Sequelize.DATE,
