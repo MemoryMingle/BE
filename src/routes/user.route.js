@@ -10,5 +10,4 @@ router.get(
   authMiddleware,
   userController.findByNickname
 );
-
 module.exports = router;
