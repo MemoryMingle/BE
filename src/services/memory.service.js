@@ -7,7 +7,6 @@ class MemoryService {
         const createMemoryData = await this.memoryRepository.createMemory(userId, groupId, title, imageUrl)
         return createMemoryData
     }
-
     findOneMemory = async (userId, groupId, memoryId) => {
         const participantCheckData = await this.memoryRepository.participantCheck(userId, groupId)
         if (!participantCheckData) {
@@ -18,7 +17,6 @@ class MemoryService {
         const findOneMemoryData = await this.memoryRepository.findOneMemory(userId, groupId, memoryId)
         return findOneMemoryData
     }
-
     findUpdateMemory = async (memoryId) => {
         const findUpdateMemoryData = await this.memoryRepository.findUpdateMemory(memoryId)
         return findUpdateMemoryData
