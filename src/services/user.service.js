@@ -9,7 +9,7 @@ class UserService {
       nickname
     );
 
-    return { success: true };
+    return findByNicknameData
   };
 }
 
