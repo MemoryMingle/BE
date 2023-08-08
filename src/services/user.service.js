@@ -10,6 +10,7 @@ class UserService {
     );
 
     return findByNicknameData
+
   };
 }
 

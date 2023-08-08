@@ -7,4 +7,5 @@ const userController = new UserController();
 // 닉네임 기반 검색
 router.get("/nickname", authMiddleware, userController.findByNickname);
 
+
 module.exports = router;
