@@ -9,8 +9,8 @@ class MemoryService {
     }
 
     findOneMemory = async (userId, groupId, memoryId) => {
-        const participantCheck = await this.memoryRepository.participantCheck(userId, groupId)
-        if (!participantCheck) {
+        const participantCheckData = await this.memoryRepository.participantCheck(userId, groupId)
+        if (!participantCheckData) {
             const error = new Error("참여자가 아닙니다.");
             error.status = 404
             throw error;
