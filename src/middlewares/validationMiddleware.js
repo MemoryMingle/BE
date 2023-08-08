@@ -9,10 +9,9 @@ const signupSchema = Joi.object().keys({
         'any.required': 'loginId를 입력해주세요.',
     }),
 
-    nickname: Joi.string().max(10).required().messages({
+    nickname: Joi.string().max(10).messages({
         'string.base': '닉네임은 문자열이어야 합니다.',
         'any.max': '닉네임은 10자이하입니다.',
-        'any.required': '닉네임을 입력해주세요.',
     }),
 
     password: Joi.string().required().messages({

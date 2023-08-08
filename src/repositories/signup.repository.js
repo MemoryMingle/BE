@@ -2,11 +2,11 @@ const { Users } = require('../models');
 
 
 class SignupRepositroy {
-    signup = async (loginId, nickname, password) => {
+    signup = async (loginId, password, nickname) => {
         const user = await Users.create({
             loginId,
-            nickname,
             password,
+            nickname,
         });
         return user;
     };
