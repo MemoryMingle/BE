@@ -1,7 +1,7 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class Groups extends Model {
+  class Participant extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -10,54 +10,32 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
 
+      this.belongsTo(models.Groups, {
+        targetKey: "groupId",
+        foreignKey: "groupId",
+      });
+
       this.belongsTo(models.Users, {
         foreignKey: "userId",
         targetKey: "userId",
       });
-
-      this.hasMany(models.Memories, {
-        sourceKey: "groupId",
-        foreignKey: "groupId",
-      });
-
-      this.hasMany(models.Participant, {
-        sourceKey: "groupId",
-        foreignKey: "groupId",
-      });
     }
   }
-  Groups.init(
+  Participant.init(
     {
-      groupId: {
+      participantId: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        autoIncrement: true,
+        type: DataTypes.INTEGER,
+      },
+      groupId: {
+        allowNull: false,
         type: DataTypes.INTEGER,
       },
       userId: {
         allowNull: false,
-        type: DataTypes.STRING,
-      },
-      groupName: {
-        allowNull: false,
-        type: DataTypes.STRING,
-      },
-      thumbnailUrl: {
-        allowNull: true,
-        type: DataTypes.STRING,
-      },
-      place: {
-        allowNull: true,
-        type: DataTypes.STRING,
-      },
-      startDate: {
-        allowNull: false,
-        type: DataTypes.DATE,
-      },
-      endDate: {
-        allowNull: false,
-        type: DataTypes.DATE,
+        type: DataTypes.INTEGER,
       },
       createdAt: {
         allowNull: false,
@@ -72,8 +50,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "Groups",
+      modelName: "Participant",
     }
   );
-  return Groups;
+  return Participant;
 };
