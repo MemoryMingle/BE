@@ -44,8 +44,9 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
       },
       thumbnailUrl: {
-        allowNull: true,
+        allowNull: false,
         type: DataTypes.STRING,
+        defaultValue: "https://t1.daumcdn.net/cfile/tistory/243FE450575F82662D",
       },
       place: {
         allowNull: true,
