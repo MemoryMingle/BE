@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "groupId",
       });
 
-      this.hasMany(models.Participant, {
+      this.hasMany(models.Participants, {
         sourceKey: "groupId",
         foreignKey: "groupId",
       });

@@ -1,10 +1,10 @@
 const { Users } = require("../models")
 
-class LoginReposiory {
+class LoginRepository {
     login = async (loginId) => {
         const user = await Users.findOne({ where: { loginId } })
         return user
     }
 }
 
-module.exports = LoginReposiory;
+module.exports = LoginRepository;
