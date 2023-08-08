@@ -1,34 +1,102 @@
+const { sequelize, Groups } = require("../models");
 const GroupRepository = require("../repositories/group.repository");
 
 class GroupService {
   groupRepository = new GroupRepository();
+
   // 그룹 추가
   createGroup = async (
     userId,
     groupName,
     thumbnailUrl,
     place,
-    participant,
+    participants,
     startDate,
     endDate
   ) => {
-    const createGroupData = await this.groupRepository.createGroup(
+    const transaction = await sequelize.transaction(); // sequelize.transaction() 사용
+
+    try {
+      // 그룹 생성
+      const group = await this.groupRepository.createGroup(
+        userId,
+        groupName,
+        thumbnailUrl,
+        place,
+        startDate,
+        endDate,
+        { transaction }
+      );
+
+      // 참여자 레코드 생성
+      const participantRecords = participants.map((participantId) => ({
+        userId: participantId,
+        groupId: group.groupId,
+      }));
+      await this.groupRepository.bulkCreateParticipants(participantRecords, {
+        transaction,
+      });
+
+      await transaction.commit();
+
+      return group;
+    } catch (error) {
+      await transaction.rollback();
+      throw error;
+    }
+  };
+
+  // userId가 포함된 participant를 가지는 Groups 조회
+  findMyGroup = async (userId) => {
+    const groups = await this.groupRepository.findMyGroup(userId);
+
+    return groups;
+  };
+
+  updateMyGroup = async (
+    userId,
+    groupId,
+    groupName,
+    thumbnailUrl,
+    place,
+    startDate,
+    endDate
+  ) => {
+    const updateMyGroupData = await this.groupRepository.updateMyGroup(
       userId,
+      groupId,
       groupName,
       thumbnailUrl,
       place,
-      participant,
       startDate,
       endDate
     );
+
     return { success: true };
   };
 
-  // 내가 참여한 그룹 전체 조회
-  findMyGroup = async (userId) => {
-    const findMyGroupData = await this.groupRepository.findMyGroup(userId);
+  // 그룹 상세보기
+  detailedGroup = async (groupId) => {
+    // 그룹정보
+    const groupData = await this.groupRepository.detailedGroup(groupId);
+    // 참여자 정보
+    const participantData = await this.groupRepository.findUsers(groupId);
+    // 메모리 정보
+    const memoryData = await this.groupRepository.findMemoriesByGroupId(
+      groupId
+    );
 
-    return { success: true };
+    const detailedGroupData = {
+      groupId: groupData.groupId,
+      groupName: groupData.groupName,
+      place: groupData.place,
+      startDate: groupData.startDate,
+      endDate: groupData.endDate,
+      participants: participantData,
+      memories: memoryData,
+    };
+
+    return detailedGroupData;
   };
 }
 
