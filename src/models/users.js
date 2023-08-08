@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "userId",
       });
 
-      this.hasMany(models.Participant, {
+      this.hasMany(models.Participants, {
         sourceKey: "userId",
         foreignKey: "userId",
       });

@@ -5,13 +5,12 @@ require("dotenv").config();
 module.exports = async (req, res, next) => {
     try {
         const { MM } = req.cookies;
-
         const [type, token] = (MM ?? "").split(" ");
 
         if (!type || !token || type !== "Bearer") {
             return res
                 .status(403)
-                .json({ errorMessage: "로그인이 필요한 기능입니다." });
+                .json({ errorMessage: "로그인이 필요한 기능입니다1." });
         }
 
         const decodeToken = jwt.verify(token, process.env.JWT_SECRET);
@@ -22,7 +21,7 @@ module.exports = async (req, res, next) => {
         if (!findUser) {
             return res
                 .status(403)
-                .json({ errorMessage: "로그인이 필요한 기능입니다." });
+                .json({ errorMessage: "로그인이 필요한 기능입니다2." });
         }
 
         res.locals.user = findUser;
