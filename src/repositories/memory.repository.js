@@ -11,7 +11,6 @@ class MemoryRepository {
         });
         return createMemoryData
     }
-
     participantCheck = async (userId, groupId) => {
         console.log(Participants)
         const participantCheckData = await Participants.findOne({
@@ -20,8 +19,10 @@ class MemoryRepository {
         return participantCheckData
     }
 
-    findOneMemory = async (userId, groupId, memoryId) => {
-        const findOneMemoryData = await Memories.findAll({
+
+    findOneMemory = async (memoryId) => {
+        const findOneMemoryData = await Memories.findOne({
+
             where: { memoryId },
             attributes: ["memoryId", "title", "imageUrl"],
             raw: true,
@@ -32,7 +33,7 @@ class MemoryRepository {
                 }
             ]
         })
-        const MemoryComments = await Comments.findAll({
+        const memoryComments = await Comments.findAll({
             where: { memoryId },
             attributes: ["commentId", "comment"],
             group: ["commentId"],
@@ -44,7 +45,8 @@ class MemoryRepository {
                 }
             ]
         })
-        return [findOneMemoryData, MemoryComments]
+
+        return [findOneMemoryData, memoryComments]
     }
     findUpdateMemory = async (memoryId) => {
         const findUpdateMemoryData = await Memories.findOne({
@@ -53,7 +55,7 @@ class MemoryRepository {
         })
         return findUpdateMemoryData
     }
-    check = async (memoryId) => {
+    memoryCheck = async (memoryId) => {
         const checkData = await Memories.findByPk(memoryId)
         return checkData
     }
