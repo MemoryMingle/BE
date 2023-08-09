@@ -15,14 +15,14 @@ class GroupService {
     endDate
   ) => {
     const transaction = await sequelize.transaction(); // sequelize.transaction() 사용
-
+    const placeString = JSON.stringify(place)
     try {
       // 그룹 생성
       const group = await this.groupRepository.createGroup(
         userId,
         groupName,
         thumbnailUrl,
-        place,
+        placeString,
         startDate,
         endDate,
         { transaction }
