@@ -46,7 +46,6 @@ class LoginController {
 
       res.status(200).json({
         message: "로그인 완료",
-        // Authorization: `Bearer ${accessToken}`
       });
     } catch (err) {
       next(err);

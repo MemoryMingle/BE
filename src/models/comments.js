@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(models.Memories, {
         foreignKey: "memoryId",
         targetKey: "memoryId",
+        // onDelete: 'CASCADE',
       });
 
       this.belongsTo(models.Users, {
