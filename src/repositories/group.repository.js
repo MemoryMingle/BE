@@ -1,4 +1,4 @@
-const { Groups, Participant, Users, Memories } = require("../models");
+const { Groups, Participants, Users, Memories } = require("../models");
 const { Op } = require("sequelize");
 
 class GroupRepository {
@@ -25,11 +25,11 @@ class GroupRepository {
   }
 
   async bulkCreateParticipants(participantRecords, options) {
-    return Participant.bulkCreate(participantRecords, options);
+    return Participants.bulkCreate(participantRecords, options);
   }
 
   async findGroupIds(userId) {
-    const participantData = await Participant.findAll({
+    const participantData = await Participants.findAll({
       where: {
         userId: userId,
       },
@@ -93,7 +93,7 @@ class GroupRepository {
   }
   // Participant - 해당 groupId의 userIds
   async findUserIds(groupId){
-    const participantData = await Participant.findAll({
+    const participantData = await Participants.findAll({
       where:{
         groupId:groupId
       },

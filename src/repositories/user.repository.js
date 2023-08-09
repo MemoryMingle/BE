@@ -8,6 +8,7 @@ class UserRepository {
       where: {
         nickname: nickname,
       },
+      attributes :["userId","loginId","nickname","profileUrl"]
     });    
     return findByNicknameData;
   };
