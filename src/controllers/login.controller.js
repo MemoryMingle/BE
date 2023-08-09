@@ -16,17 +16,14 @@ class LoginController {
             const { error } = await loginSchema.validateAsync(req.body);
             if (error) throw new CustomError(error.details[0].message, 400);
 
-            // DB에서 정보 찾아오기
             const user = await this.loginService.login(loginId);
 
-            // DB에서 ID를 찾지 못한 경우 처리
             if (!user)
                 throw new CustomError('이메일 또는 비밀번호가 일치하지 않습니다.', 403);
 
             if (!password === user.password)
                 throw new CustomError('이메일 또는 비밀번호가 일치하지 않습니다.', 403);
 
-            // accessToken 생성
             const accessToken = jwt.sign(
                 {
                     userId: user.userId,

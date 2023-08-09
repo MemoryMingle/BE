@@ -10,6 +10,17 @@ class SignupRepositroy {
         });
         return user;
     };
+    checkDuplicate = async (loginId) => {
+        const checkDuplicateData = await Users.findOne({ where: { loginId } })
+        return checkDuplicateData
+    }
+    updateProfile = async (loginId, nickname, imageUrl) => {
+        const updateProfileData = await Users.update(
+            { nickname, imageUrl },
+            { where: { loginId } }
+        );
+        return updateProfileData
+    }
 }
 
 module.exports = SignupRepositroy;

@@ -6,11 +6,17 @@ class SignupService {
     signupRepository = new SignupRepository();
 
     signup = async (loginId, password, nickname) => {
-
         // const salt = await bcrypt.genSalt(10);
         // const hashedPassword = await bcrypt.hash(password, salt);
         await this.signupRepository.signup(loginId, password, nickname);
     };
+    checkDuplicate = async (loginId) => {
+        const checkDuplicateData = await this.signupRepository.checkDuplicate(loginId);
+        return checkDuplicateData
+    }
+    updateProfile = async (loginId, nickname, imageUrl) => {
+        const updateProfileData = await this.signupRepository.updateProfile(loginId, nickname, imageUrl);
+        return updateProfileData
+    }
 }
-
 module.exports = SignupService;
