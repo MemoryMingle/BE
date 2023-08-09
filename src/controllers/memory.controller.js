@@ -25,14 +25,13 @@ class MemoryController {
         try {
             const { userId } = res.locals.user;
             const { groupId, memoryId } = req.params;
-
             const [findOneMemoryData, memoryComments] = await this.memoryService.findOneMemory(userId, groupId, memoryId)
 
             res
                 .status(200)
                 .json({
                     memory: findOneMemoryData,
-                    comments: MemoryComments
+                    comments: memoryComments
                 })
         } catch (error) {
             next(error);
