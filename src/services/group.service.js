@@ -90,6 +90,7 @@ class GroupService {
       groupId: groupData.groupId,
       groupName: groupData.groupName,
       place: groupData.place,
+      thumbnailUrl: groupData.thumbnailUrl,
       startDate: groupData.startDate,
       endDate: groupData.endDate,
       participants: participantData,
