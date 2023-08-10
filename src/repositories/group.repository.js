@@ -87,7 +87,7 @@ class GroupRepository {
       where: {
         groupId : groupId
       },
-      attributes:["groupId","groupName","place","startDate","endDate"]
+      attributes:["groupId","thumbnailUrl","groupName","place","startDate","endDate"]
     })
     return detailedGroupData
   }
