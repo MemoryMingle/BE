@@ -15,13 +15,14 @@ class GroupController {
         startDate,
         endDate,
       } = req.body;
-
+      
+      const participantPlusUserId = participant.concat(JSON.stringify(userId))         
       const createGroupData = await this.groupService.createGroup(
         userId,
         groupName,
         thumbnailUrl,
         place,
-        participant,
+        participantPlusUserId,
         startDate,
         endDate
       );

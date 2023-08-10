@@ -16,6 +16,7 @@ class GroupService {
   ) => {
     const transaction = await sequelize.transaction(); // sequelize.transaction() 사용
     const placeString = JSON.stringify(place)
+    console.log(participants)
     try {
       // 그룹 생성
       const group = await this.groupRepository.createGroup(
