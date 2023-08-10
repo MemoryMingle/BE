@@ -1,6 +1,7 @@
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
+const morgan = require("morgan");
 
 require("dotenv").config();
 
@@ -19,6 +20,8 @@ app.use(
         credentials: true,
     })
 );
+
+app.use(morgan('dev'));
 
 app.get("/", (_, res) => {
     return res.send("이게 왜 됨?");
