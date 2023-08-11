@@ -1,7 +1,7 @@
 const passport = require('passport');
 const KakaoStrategy = require('passport-kakao').Strategy;
 
-const User = require('../models');
+const Users = require('../models');
 
 module.exports = () => {
     passport.use(
@@ -19,7 +19,7 @@ module.exports = () => {
             async (accessToken, refreshToken, profile, done) => {
                 console.log('kakao profile', profile);
                 try {
-                    const exUser = await User.findOne({
+                    const exUser = await Users.findOne({
                         // 카카오 플랫폼에서 로그인 했고 & snsId필드에 카카오 아이디가 일치할경우
                         where: { kakaoId: profile.id, provider: 'kakao' },
                     });
