@@ -18,6 +18,11 @@ app.use(
         secret: process.env.SESSION_SECRET, // 세션 ID 를 서명하는데 사용되는 키
         resave: false, // 세션을 강제로 다시 저장할지 여부를 결정
         saveUninitialized: false, // 초기회 되지 않은 세션을 저장소에 저장할지 여부를 설정
+        cookie: {
+            httpOnly: true,
+            secure: true,
+            sameSite: "none"
+        }
     })
 );
 
