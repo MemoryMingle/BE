@@ -2,6 +2,9 @@ const express = require("express");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const morgan = require("morgan");
+const passport = require('passport');
+require('./src/passport/localStrategy')
+require('./src/passport/kakaoStrategy')();
 
 require("dotenv").config();
 
@@ -12,6 +15,7 @@ const indexRouter = require("./src/routes/index.route");
 
 app.use(express.json());
 app.use(cookieParser());
+app.use(passport.initialize());
 
 app.use(
     cors({
