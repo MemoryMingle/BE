@@ -1,9 +1,7 @@
 const passport = require('passport');
 const KakaoStrategy = require('passport-kakao').Strategy;
 
-
 const { Users } = require('../models');
-
 
 module.exports = () => {
     passport.use(
@@ -19,7 +17,6 @@ module.exports = () => {
              * profile: 카카오가 보내준 유저 정보. profile의 정보를 바탕으로 회원가입
              */
             async (accessToken, refreshToken, profile, done) => {
-                console.log('kakao profile', profile);
                 try {
                     const exUser = await Users.findOne({
                         // 카카오 플랫폼에서 로그인 했고 & snsId필드에 카카오 아이디가 일치할경우
@@ -38,7 +35,7 @@ module.exports = () => {
                                 profile._json &&
                                 profile._json.kakao_account.profile.profile_image_url,
                             providerType: 'kakao',
-                        });
+                        })
                         done(null, newUser); // 회원가입하고 로그인 인증 완료
                     }
                     // !일단 해보고 여기서 토큰 발급 가능한지 추후 확인
