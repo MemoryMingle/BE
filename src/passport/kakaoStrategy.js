@@ -30,7 +30,7 @@ module.exports = () => {
                         done(null, exUser); // 로그인 인증 완료
                     } else {
                         // 가입되지 않는 유저면 회원가입 시키고 로그인을 시킨다
-                        const newUser = await User.create({
+                        const newUser = await Users.create({
                             loginId: profile._json && profile._json.kakao_account_email,
                             nickname: profile.displayName,
                             kakaoId: profile.id,
