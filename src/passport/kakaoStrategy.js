@@ -37,7 +37,7 @@ module.exports = () => {
                             profileUrl:
                                 profile._json &&
                                 profile._json.kakao_account.profile.profile_image_url,
-                            provider: 'kakao',
+                            providerType: 'kakao',
                         });
                         done(null, newUser); // 회원가입하고 로그인 인증 완료
                     }
