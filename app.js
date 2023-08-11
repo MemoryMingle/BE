@@ -3,6 +3,7 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const morgan = require("morgan");
 const passport = require('passport');
+const session = require('express-session');
 require('./src/passport/localStrategy')
 require('./src/passport/kakaoStrategy')();
 
@@ -12,10 +13,18 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const indexRouter = require("./src/routes/index.route");
 
+app.use(
+    session({
+        secret: process.env.SESSION_SECRET, // 세션 ID 를 서명하는데 사용되는 키
+        resave: false, // 세션을 강제로 다시 저장할지 여부를 결정
+        saveUninitialized: false, // 초기회 되지 않은 세션을 저장소에 저장할지 여부를 설정
+    })
+);
 
 app.use(express.json());
 app.use(cookieParser());
 app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(
     cors({
