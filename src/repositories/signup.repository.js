@@ -14,9 +14,9 @@ class SignupRepositroy {
         const checkDuplicateData = await Users.findOne({ where: { loginId } })
         return checkDuplicateData
     }
-    updateProfile = async (loginId, nickname, imageUrl) => {
+    updateProfile = async (loginId, nickname, profileUrl) => {
         const updateProfileData = await Users.update(
-            { nickname, imageUrl },
+            { nickname, profileUrl },
             { where: { loginId } }
         );
         return updateProfileData
