@@ -46,11 +46,11 @@ class SignupController {
     }
     updateProfile = async (req, res, next) => {
         try {
-            const { nickname, imageUrl, loginId } = req.body;
+            const { nickname, profileUrl, loginId } = req.body;
             if (!nickname) {
                 nickname = "닉네임"
             }
-            const updateProfileData = await this.signupService.updateProfile(loginId, nickname, imageUrl)
+            const updateProfileData = await this.signupService.updateProfile(loginId, nickname, profileUrl)
 
             res.status(201).json({ message: '프로필 변경이 완료되었습니다.' });
         } catch (error) {

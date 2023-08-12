@@ -14,8 +14,8 @@ class SignupService {
         const checkDuplicateData = await this.signupRepository.checkDuplicate(loginId);
         return checkDuplicateData
     }
-    updateProfile = async (loginId, nickname, imageUrl) => {
-        const updateProfileData = await this.signupRepository.updateProfile(loginId, nickname, imageUrl);
+    updateProfile = async (loginId, nickname, profileUrl) => {
+        const updateProfileData = await this.signupRepository.updateProfile(loginId, nickname, profileUrl);
         return updateProfileData
     }
 }
