@@ -15,6 +15,7 @@ router.post('/', passport.authenticate('local', { session: false }), (req, res) 
 
 // 카카오 로그인
 router.get("/kakao", passport.authenticate("kakao", { session: false }));
+
 router.get(
     "/kakao/callback",
     passport.authenticate("kakao", { failureRedirect: "/", session: false }),
@@ -32,7 +33,8 @@ router.get(
                 httpOnly: true,
                 sameSite: "none",
             });
-            res.status(200).json({ message: "로그인 완료" });
+            res.redirect('http://localhost:3000/groupmain')
+
         } catch (error) {
             res.status(500).json({ message: "요청을 처리하는 동안 오류가 발생했습니다." });
         }
