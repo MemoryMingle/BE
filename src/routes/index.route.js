@@ -6,6 +6,7 @@ const groupRouter = require("./group.route");
 const memoryRouter = require("./memory.route")
 const userRouter = require("./user.route")
 const commentRouter = require("./comment.route")
+const logoutRouter = require("./logout.route")
 
 
 router.get("/", (req, res) => {
@@ -14,6 +15,7 @@ router.get("/", (req, res) => {
 
 router.use("/signup", signupRouter);
 router.use("/login", loginRouter);
+router.use("/logout", logoutRouter)
 router.use("/group", groupRouter);
 groupRouter.use("/:groupId/memory", memoryRouter);
 memoryRouter.use("/:memoryId/comment", commentRouter);
