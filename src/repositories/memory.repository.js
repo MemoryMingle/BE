@@ -18,11 +18,8 @@ class MemoryRepository {
         })
         return participantCheckData
     }
-
-
     findOneMemory = async (memoryId) => {
         const findOneMemoryData = await Memories.findOne({
-
             where: { memoryId },
             attributes: ["memoryId", "title", "imageUrl"],
             raw: true,
@@ -45,7 +42,6 @@ class MemoryRepository {
                 }
             ]
         })
-
         return [findOneMemoryData, memoryComments]
     }
     findUpdateMemory = async (memoryId) => {

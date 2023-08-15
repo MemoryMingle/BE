@@ -1,11 +1,11 @@
 const { Users } = require('../models');
 
 
-class SignupRepositroy {
-    signup = async (loginId, password, nickname) => {
+class SignupRepository {
+    signup = async (loginId, hashPassword, nickname) => {
         const user = await Users.create({
             loginId,
-            password,
+            password: hashPassword,
             nickname,
         });
         return user;
@@ -23,4 +23,4 @@ class SignupRepositroy {
     }
 }
 
-module.exports = SignupRepositroy;
+module.exports = SignupRepository;

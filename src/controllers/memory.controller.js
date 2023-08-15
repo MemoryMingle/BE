@@ -41,9 +41,9 @@ class MemoryController {
         try {
             // null인 경우와 그룹 유저 검사할건지에 대한 확인이 필요함
             const { userId } = res.locals.user;
-            const { groupId, memoryId } = req.params;
+            const { memoryId } = req.params;
 
-            const findUpdateMemoryData = await this.memoryService.findUpdateMemory(memoryId)
+            const findUpdateMemoryData = await this.memoryService.findUpdateMemory(userId, memoryId)
             res
                 .status(200)
                 .json({
