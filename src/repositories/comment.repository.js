@@ -1,6 +1,6 @@
 const { Comments } = require("../models")
 
-class CommentRepositoy {
+class CommentRepository {
 
     cerateComment = async (userId, memoryId, comment) => {
         const cerateCommentData = await Comments.create({
@@ -30,4 +30,4 @@ class CommentRepositoy {
     }
 };
 
-module.exports = CommentRepositoy
+module.exports = CommentRepository
