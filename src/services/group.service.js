@@ -15,7 +15,7 @@ class GroupService {
     endDate
   ) => {
     const transaction = await sequelize.transaction(); // sequelize.transaction() 사용
-    const placeString = JSON.stringify(place)
+    const placeString = JSON.stringify(place);
     try {
       // 그룹 생성
       const group = await this.groupRepository.createGroup(
@@ -98,6 +98,43 @@ class GroupService {
     };
 
     return detailedGroupData;
+  };
+
+  // 그룹 나가기(작성자인지 체크하고, 맞으면 참여자 더 있는지 확인하고 더 있으면 막기/ 나머지 다 나가기)
+  groupOut = async (userId, groupId) => {
+    const checkCreator = await this.groupRepository.checkCreator(
+      userId,
+      groupId
+    );
+
+    if (!checkCreator) {
+      await this.groupRepository.groupOut(userId, groupId);
+      return { success: true, message: "그룹에서 나갔습니다." };
+    } else {
+      const participantsCount = await this.groupRepository.participantsCount(
+        groupId
+      );
+
+      if (participantsCount === 1) {
+        await this.groupRepository.groupOut(userId, groupId);
+        return { success: true, message: "그룹에서 나갔습니다." };
+      } else {
+        return {
+          success: false,
+          message: "다른 참여자들이 나갈 때까지 나갈 수 없습니다.",
+        };
+      }
+    }
+  };
+
+  searchDate = async (userId, searchStartDate, searchEndDate) => {
+    const searchDateData = await this.groupRepository.searchDate(
+      userId,
+      searchStartDate,
+      searchEndDate
+    );
+
+    return searchDateData;
   };
 }
 
