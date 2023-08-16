@@ -4,9 +4,9 @@ const bcrypt = require('bcrypt');
 class SignupService {
     signupRepository = new SignupRepository();
 
-    signup = async (loginId, password, nickname) => {
+    signup = async (loginId, password) => {
         const hashPassword = bcrypt.hashSync(password, 10)
-        await this.signupRepository.signup(loginId, hashPassword, nickname);
+        await this.signupRepository.signup(loginId, hashPassword);
     };
     checkDuplicate = async (loginId) => {
         const checkDuplicateData = await this.signupRepository.checkDuplicate(loginId);

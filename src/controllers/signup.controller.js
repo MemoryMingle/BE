@@ -8,12 +8,12 @@ class SignupController {
     signupService = new SignupService();
 
     signup = async (req, res, next) => {
-        const { loginId, password, confirm, nickname } = req.body;
+        const { loginId, password, confirm } = req.body;
         const { error } = signupSchema.validate(req.body);
         if (error) {
             throw new CustomError(error.details[0].message, 400);
         }
-        await this.signupService.signup(loginId, password, nickname);
+        await this.signupService.signup(loginId, password);
         res.status(201).json({ message: '회원가입이 완료되었습니다.' });
     };
     checkDuplicate = async (req, res, next) => {
@@ -32,16 +32,12 @@ class SignupController {
         }
     }
     updateProfile = async (req, res, next) => {
-        try {
-            const { nickname, profileUrl, loginId } = req.body;
-            if (!nickname) {
-                nickname = "닉네임"
-            }
-            const updateProfileData = await this.signupService.updateProfile(loginId, nickname, profileUrl)
-            res.status(201).json({ message: '프로필 변경이 완료되었습니다.' });
-        } catch (error) {
-            next(error);
+        const { nickname, profileUrl, loginId } = req.body;
+        if (!nickname) {
+            nickname = "닉네임"
         }
+        const updateProfileData = await this.signupService.updateProfile(loginId, nickname, profileUrl)
+        res.status(201).json({ message: '프로필 변경이 완료되었습니다.' });
     }
 }
 

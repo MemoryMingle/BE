@@ -2,11 +2,10 @@ const { Users } = require('../models');
 
 
 class SignupRepository {
-    signup = async (loginId, hashPassword, nickname) => {
+    signup = async (loginId, hashPassword) => {
         const user = await Users.create({
             loginId,
-            password: hashPassword,
-            nickname,
+            password: hashPassword
         });
         return user;
     };
