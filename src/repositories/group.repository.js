@@ -117,7 +117,7 @@ class GroupRepository {
       where: {
         userId: { [Op.in]: userIds },
       },
-      attributes: ["nickname", "profileUrl"],
+      attributes: ["userId", "nickname", "profileUrl"],
     });
     return userData;
   }
