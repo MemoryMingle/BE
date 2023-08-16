@@ -6,7 +6,6 @@ const asyncHandler = (requestHandler) => {
             next(error);
         }
     }
-  };
 };
 
 module.exports = asyncHandler;
