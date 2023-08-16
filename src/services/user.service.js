@@ -9,8 +9,13 @@ class UserService {
       nickname
     );
 
-    return findByNicknameData
+    return findByNicknameData;
+  };
 
+  userInfoByUserId = async (userId) => {
+    const userInfoData = await this.userRepository.userInfoByUserId(userId);
+
+    return userInfoData;
   };
 }
 

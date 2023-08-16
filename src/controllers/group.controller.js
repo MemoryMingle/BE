@@ -15,8 +15,8 @@ class GroupController {
         startDate,
         endDate,
       } = req.body;
-      
-      const participantPlusUserId = participant.concat(JSON.stringify(userId))         
+
+      const participantPlusUserId = participant.concat(JSON.stringify(userId));
       const createGroupData = await this.groupService.createGroup(
         userId,
         groupName,
@@ -44,6 +44,29 @@ class GroupController {
         success: true,
         msg: "Group 조회에 성공하였습니다.",
         findMyGroupData,
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  // 날짜별 겸색
+  searchDate = async (req, res, next) => {
+    try {
+      const { userId } = res.locals.user;
+      const { searchDate } = req.params;
+      const searchDateRange = searchDate.split("~");
+      const searchStartDate = searchDateRange[0];
+      const searchEndDate = searchDateRange[1];
+      const searchDateData = await this.groupService.searchDate(
+        userId,
+        searchStartDate,
+        searchEndDate
+      );
+      res.status(201).json({
+        success: true,
+        msg: "Group 검색에 성공하였습니다.",
+        searchDateData,
       });
     } catch (error) {
       next(error);
@@ -79,6 +102,19 @@ class GroupController {
     try {
       const detailedGroupData = await this.groupService.detailedGroup(groupId);
       return res.status(201).json(detailedGroupData);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  // 그룹 나가기(userId가 group의 userId가 아닐경우)
+  groupOut = async (req, res, next) => {
+    try {
+      const { groupId } = req.params;
+      const { userId } = res.locals.user;
+      const groupOutData = await this.groupService.groupOut(userId, groupId);
+
+      res.status(200).json(groupOutData);
     } catch (error) {
       next(error);
     }

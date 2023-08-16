@@ -82,54 +82,112 @@ class GroupRepository {
 
   // 여기서부터 그룹 상세보기 필요한 데이터
   // Groups - 해당 groupId의 groupId,groupName,place,startDate,endDate
-  async detailedGroup (groupId){
+  async detailedGroup(groupId) {
     const detailedGroupData = await Groups.findOne({
       where: {
-        groupId : groupId
+        groupId: groupId,
       },
-      attributes:["groupId","thumbnailUrl","groupName","place","startDate","endDate"]
-    })
-    return detailedGroupData
+      attributes: [
+        "groupId",
+        "thumbnailUrl",
+        "groupName",
+        "place",
+        "startDate",
+        "endDate",
+      ],
+    });
+    return detailedGroupData;
   }
   // Participant - 해당 groupId의 userIds
-  async findUserIds(groupId){
+  async findUserIds(groupId) {
     const participantData = await Participants.findAll({
-      where:{
-        groupId:groupId
+      where: {
+        groupId: groupId,
       },
-      attributes:["userId"]
-    })
+      attributes: ["userId"],
+    });
 
-    const userIds = participantData.map((participant)=> participant.userId)
-    return userIds
+    const userIds = participantData.map((participant) => participant.userId);
+    return userIds;
   }
-  
+
   // Users - 해당 userIds의 nickname,profileUrl
-  async findUsersByUserIds(userIds){
+  async findUsersByUserIds(userIds) {
     const userData = await Users.findAll({
-      where:{
-        userId:{[Op.in]:userIds}
+      where: {
+        userId: { [Op.in]: userIds },
       },
-      attributes:["nickname","profileUrl"]
-    })
-    return userData
+      attributes: ["userId", "nickname", "profileUrl"],
+    });
+    return userData;
   }
   // findUserIds + findUsersByUserIds
-  async findUsers (groupId){
-    const userIds = await this.findUserIds(groupId)
-    const users = await this.findUsersByUserIds(userIds)
+  async findUsers(groupId) {
+    const userIds = await this.findUserIds(groupId);
+    const users = await this.findUsersByUserIds(userIds);
 
-    return users
-  }  
+    return users;
+  }
   // Memories - 해당 groupId를 가지는 모든 레코드의 memoryId,imageUrl,title
-  async findMemoriesByGroupId(groupId){
+  async findMemoriesByGroupId(groupId) {
     const memoryData = await Memories.findAll({
-      where:{
-        groupId:groupId
+      where: {
+        groupId: groupId,
       },
-      attributes :["memoryId","imageUrl","title"]
-    })
-    return memoryData
+      attributes: ["memoryId", "imageUrl", "title"],
+    });
+    return memoryData;
+  }
+
+  // 그룹 나가기
+  async groupOut(userId, groupId) {
+    const groupOutData = await Participants.destroy({
+      where: {
+        groupId: groupId,
+        userId: userId,
+      },
+    });
+    return groupOutData;
+  }
+
+  // 작성자인지 확인
+  async checkCreator(userId, groupId) {
+    const checkCreatorData = await Groups.findOne({
+      where: { groupId: groupId, userId: userId },
+    });
+    return checkCreatorData !== null;
+  }
+
+  // 참여자가 몇명 남았는지 확인  = params가 현재 약간 이상해서 21은 안되고 "21"은 작동함 이거 왜이럼?  
+  async participantsCount(groupId){
+    try {
+      const count = await Participants.count({where : {groupId:groupId}})
+
+      return count
+    }catch(error){
+      console.log(error)
+    }
+  }
+
+  // 날짜 검색
+  async searchDate(userId, searchStartDate, searchEndDate) {
+    const groupIds = await this.findGroupIds(userId);
+    console.log(groupIds)
+    const searchDateData = await Groups.findAll({
+      where: {
+        groupId: {
+          [Op.in]: groupIds,
+        },
+        startDate: {
+          [Op.lte]: searchEndDate,
+        },
+        endDate: {
+          [Op.gte]: searchStartDate,
+        },
+      },
+    });
+
+    return searchDateData;
   }
 }
 

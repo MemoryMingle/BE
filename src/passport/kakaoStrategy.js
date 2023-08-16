@@ -38,7 +38,6 @@ module.exports = () => {
                         })
                         done(null, newUser); // 회원가입하고 로그인 인증 완료
                     }
-                    // !일단 해보고 여기서 토큰 발급 가능한지 추후 확인
                 } catch (error) {
                     console.error(error);
                     done(error);
