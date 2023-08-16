@@ -8,9 +8,18 @@ class UserRepository {
       where: {
         nickname: nickname,
       },
-      attributes :["userId","loginId","nickname","profileUrl"]
-    });    
+      attributes: ["userId", "loginId", "nickname", "profileUrl"],
+    });
     return findByNicknameData;
+  };
+
+  // 접속한 유저 정보 확인
+  userInfoByUserId = async (userId) => {
+    const userInfoData = await Users.findOne({
+      where: { userId: userId },
+      attributes: ["userId", "loginId", "nickname", "profileUrl"],
+    });
+    return userInfoData;
   };
 }
 

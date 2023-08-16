@@ -12,9 +12,18 @@ class UserController {
         nickname
       );
 
-      res
-        .status(201)
-        .json({ findByNicknameData });
+      res.status(201).json({ findByNicknameData });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  userInfoByUserId = async (req, res, next) => {
+    try {
+      const { userId } = res.locals.user;
+      const userInfoData = await this.userService.userInfoByUserId(userId);
+
+      res.status(201).json({ userInfoData });
     } catch (error) {
       next(error);
     }
