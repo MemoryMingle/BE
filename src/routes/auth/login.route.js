@@ -2,7 +2,7 @@ const express = require("express");
 const passport = require("passport");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
-const asyncHandler = require('../middlewares/asyncHandler')
+const asyncHandler = require('../../middlewares/asyncHandler')
 
 router.post('/', passport.authenticate('local', { session: false }), async (req, res) => {
     // 위에서 done이 req.user로 반환된다.

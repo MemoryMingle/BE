@@ -1,6 +1,6 @@
 const express = require("express");
-const asyncHandler = require('../middlewares/asyncHandler')
-const SiginupController = require("../controllers/signup.controllers");
+const asyncHandler = require('../../middlewares/asyncHandler')
+const SiginupController = require("../../controllers/signup.controller");
 const siginupController = new SiginupController();
 
 const router = express.Router();
