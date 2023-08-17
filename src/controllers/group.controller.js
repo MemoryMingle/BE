@@ -76,7 +76,7 @@ class GroupController {
   // 내가 만든 그룹 수정
   updateMyGroup = async (req, res, next) => {
     try {
-      const { groupName, thumbnailUrl, place, startDate, endDate } = req.body;
+      const { groupName, thumbnailUrl, place, participant, startDate, endDate } = req.body;
       const { groupId } = req.params;
       const { userId } = res.locals.user;
       const updateMyGroupData = await this.groupService.updateMyGroup(
@@ -85,6 +85,7 @@ class GroupController {
         groupName,
         thumbnailUrl,
         place,
+        participant,
         startDate,
         endDate
       );
