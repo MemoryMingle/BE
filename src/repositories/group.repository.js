@@ -1,4 +1,4 @@
-const { Groups, Participants, Users, Memories } = require("../models");
+const { Groups, Participants, Users, Memories, sequelize } = require("../models");
 const { Op } = require("sequelize");
 
 class GroupRepository {
@@ -21,7 +21,33 @@ class GroupRepository {
         endDate,
       },
       options
-    );
+    )
+  }
+
+  async updateMyGroup(
+    userId,
+    groupId,
+    groupName,
+    thumbnailUrl,
+    place,    
+    startDate,
+    endDate,    
+  ) {    
+        const updateMyGroupData = await Groups.update(
+      {
+        groupName,
+        thumbnailUrl,
+        place,
+        startDate,
+        endDate,
+      },
+      { where: { userId: userId, groupId: groupId } }
+    );      
+    
+  }
+
+  async deleteParticipants(groupId) {
+    return Participants.destroy({where:{groupId:groupId}})
   }
 
   async bulkCreateParticipants(participantRecords, options) {
@@ -57,28 +83,7 @@ class GroupRepository {
     const groups = await this.findGroupByGroupIds(groupIds);
 
     return groups;
-  }
-
-  async updateMyGroup(
-    userId,
-    groupId,
-    groupName,
-    thumbnailUrl,
-    place,
-    startDate,
-    endDate
-  ) {
-    const updateMyGroupData = await Groups.update(
-      {
-        groupName,
-        thumbnailUrl,
-        place,
-        startDate,
-        endDate,
-      },
-      { where: { userId: userId, groupId: groupId } }
-    );
-  }
+  } 
 
   // 여기서부터 그룹 상세보기 필요한 데이터
   // Groups - 해당 groupId의 groupId,groupName,place,startDate,endDate
