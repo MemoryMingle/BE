@@ -62,20 +62,12 @@ module.exports = (sequelize, DataTypes) => {
       kakaoId: {
         type: DataTypes.STRING,
       },
-      createdAt: {
-        allowNull: false,
-        type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW,
-      },
-      updatedAt: {
-        allowNull: false,
-        type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW,
-      },
     },
     {
       sequelize,
       modelName: "Users",
+      timestamps: true,
+      paranoid: true,  // 소프트 딜리트 옵션 추가
     }
   );
   return Users;

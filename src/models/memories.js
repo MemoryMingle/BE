@@ -23,6 +23,7 @@ module.exports = (sequelize, DataTypes) => {
       this.hasMany(models.Comments, {
         sourceKey: "memoryId",
         foreignKey: "memoryId",
+        onDelete: 'CASCADE'
       });
     }
   }
@@ -37,10 +38,18 @@ module.exports = (sequelize, DataTypes) => {
       userId: {
         allowNull: false,
         type: DataTypes.INTEGER,
+        references: {
+          model: "Users",
+          key: "userId",
+        },
       },
       groupId: {
         allowNull: false,
         type: DataTypes.INTEGER,
+        references: {
+          model: 'Groups',
+          key: 'groupId',
+        },
       },
       title: {
         allowNull: false,
