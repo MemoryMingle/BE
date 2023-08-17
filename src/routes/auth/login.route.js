@@ -2,10 +2,10 @@ const express = require("express");
 const passport = require("passport");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
-const asyncHandler = require('../../middlewares/asyncHandler')
-const noCache = require('../../middlewares/noCache');
+const asyncHandler = require('../../utils/asyncHandler')
+const noCache = require('../../utils/noCache');
 
-router.post('/', noCache, passport.authenticate('local', { session: false }), async (req, res) => {
+router.post('/', passport.authenticate('local', { session: false }), async (req, res) => {
     // 위에서 done이 req.user로 반환된다.
     res.cookie("MM", `Bearer ${req.user.accessToken}`, {
         secure: true,

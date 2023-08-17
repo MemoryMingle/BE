@@ -1,8 +1,8 @@
 const jwt = require("jsonwebtoken");
 const { Users } = require("../models");
 require("dotenv").config();
-const asyncHandler = require('../middlewares/asyncHandler')
-const CustomError = require('../middlewares/errorMiddleware');
+const asyncHandler = require('./asyncHandler')
+const CustomError = require('./error');
 
 module.exports = asyncHandler(async (req, res, next) => {
     const { MM } = req.cookies;

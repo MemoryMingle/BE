@@ -1,6 +1,6 @@
 const SignupService = require('../services/signup.service');
-const { signupSchema } = require('../middlewares/validationMiddleware');
-const CustomError = require('../middlewares/errorMiddleware');
+const { signupSchema } = require('../utils/validation');
+const CustomError = require('../utils/error');
 
 
 

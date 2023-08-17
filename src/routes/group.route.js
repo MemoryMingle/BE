@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const authMiddleware = require("../middlewares/authMiddleware");
+const authMiddleware = require("../utils/authMiddleware");
 const GroupController = require("../controllers/group.controller");
 const groupController = new GroupController();
 
@@ -10,6 +10,6 @@ router.put("/:groupId", authMiddleware, groupController.updateMyGroup);
 
 router.get("/:groupId", authMiddleware, groupController.detailedGroup);
 router.delete("/:groupId/groupout", authMiddleware, groupController.groupOut);
-router.get("/search/:searchDate",authMiddleware,groupController.searchDate)
+router.get("/search/:searchDate", authMiddleware, groupController.searchDate)
 
 module.exports = router;

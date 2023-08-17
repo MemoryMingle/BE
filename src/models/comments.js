@@ -13,7 +13,6 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(models.Memories, {
         foreignKey: "memoryId",
         targetKey: "memoryId",
-        // onDelete: 'CASCADE',
       });
 
       this.belongsTo(models.Users, {
@@ -33,6 +32,10 @@ module.exports = (sequelize, DataTypes) => {
       memoryId: {
         allowNull: false,
         type: DataTypes.INTEGER,
+        references: {
+          model: "Memories",
+          key: "memoryId",
+        },
       },
       comment: {
         allowNull: false,
@@ -41,6 +44,10 @@ module.exports = (sequelize, DataTypes) => {
       userId: {
         allowNull: false,
         type: DataTypes.INTEGER,
+        references: {
+          model: "Users",
+          key: "userId",
+        },
       },
       createdAt: {
         allowNull: false,
