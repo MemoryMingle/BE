@@ -62,12 +62,13 @@ class GroupService {
     startDate,
     endDate
   ) => {
+    const placeString = JSON.stringify(place)
     const updateMyGroupData = await this.groupRepository.updateMyGroup(
       userId,
       groupId,
       groupName,
       thumbnailUrl,
-      place,
+      placeString,
       startDate,
       endDate
     );
