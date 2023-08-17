@@ -31,9 +31,14 @@ class UserInfoController {
         const { userId } = res.locals.user;
         const { adminVerification } = req.body;
         const confirmRequest = req.confirmRequest;
+
+        const maxListeners = 10;  // 임계값 설정
         let totalDeletedCount = 0;
         const processDelete = async () => {
             if (confirmRequest.getCurrentRequests() !== 0) {
+                if (confirmRequest.listenerCount('requestCompleted') >= maxListeners) {
+                    throw new CustomError("동시 삭제 시도 횟수가 너무 많습니다.", 404)
+                }
                 const listener = () => {
                     confirmRequest.off('requestCompleted', listener); // 이벤트 리스너 제거
                     processDelete();

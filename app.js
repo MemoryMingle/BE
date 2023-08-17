@@ -9,18 +9,21 @@ require('./src/passport/localStrategy')
 require('./src/passport/kakaoStrategy')();
 require("dotenv").config();
 
-const confirmRequest = new ConfirmRequest();
 const app = express();
 const PORT = process.env.PORT || 3000;
 const indexRouter = require("./src/routes/index.route")
+const confirmRequest = new ConfirmRequest();
 
-app.use((req, res, next) => {
-    confirmRequest.increment();
-    res.on('finish', () => {
-        confirmRequest.decrement();
+app.use(async (req, res, next) => {
+    req.confirmRequest = confirmRequest;
+
+    await req.confirmRequest.increment();
+    res.on('finish', async () => {
+        await req.confirmRequest.decrement();
     });
     next();
 });
+
 
 app.use(
     session({
