@@ -28,11 +28,14 @@ class GroupService {
         { transaction }
       );
 
+      const groupId = group.groupId;
       // 참여자 레코드 생성
-      const participantRecords = participants.map((participantId) => ({
-        userId: participantId,
-        groupId: group.groupId,
-      }));
+      const participantRecords = [...participants, userId].map(
+        (participantId) => ({
+          userId: participantId,
+          groupId: groupId,
+        })
+      );
       await this.groupRepository.bulkCreateParticipants(participantRecords, {
         transaction,
       });
@@ -46,33 +49,54 @@ class GroupService {
     }
   };
 
-  // userId가 포함된 participant를 가지는 Groups 조회
-  findMyGroup = async (userId) => {
-    const groups = await this.groupRepository.findMyGroup(userId);
-
-    return groups;
-  };
-
   updateMyGroup = async (
     userId,
     groupId,
     groupName,
     thumbnailUrl,
     place,
+    participants,
     startDate,
     endDate
   ) => {
-    const updateMyGroupData = await this.groupRepository.updateMyGroup(
-      userId,
-      groupId,
-      groupName,
-      thumbnailUrl,
-      place,
-      startDate,
-      endDate
-    );
+    const transaction = await sequelize.transaction();
+    const placeString = JSON.stringify(place);
+    try {
+      const updateMyGroupData = await this.groupRepository.updateMyGroup(
+        userId,
+        groupId,
+        groupName,
+        thumbnailUrl,
+        placeString,
+        startDate,
+        endDate,
+        { transaction }
+      );
 
-    return { success: true };
+      await this.groupRepository.deleteParticipants(groupId);
+
+      const participantRecords = [...participants, userId].map(
+        (participantId) => ({
+          userId: participantId,
+          groupId: groupId,
+        })
+      );
+      await this.groupRepository.bulkCreateParticipants(participantRecords, {
+        transaction,
+      });
+
+      await transaction.commit();
+    } catch (error) {
+      await transaction.rollback();
+      throw(error);
+    }
+  };
+
+  // userId가 포함된 participant를 가지는 Groups 조회
+  findMyGroup = async (userId) => {
+    const groups = await this.groupRepository.findMyGroup(userId);
+
+    return groups;
   };
 
   // 그룹 상세보기
