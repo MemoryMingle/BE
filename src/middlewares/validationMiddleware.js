@@ -1,11 +1,11 @@
 const Joi = require('joi');
 
 const signupSchema = Joi.object().keys({
-    loginId: Joi.string().min(5).max(15).alphanum().required().messages({
+    loginId: Joi.string().min(5).max(20).alphanum().required().messages({
         'string.base': 'loginId는 문자열이어야 합니다.',
         'string.alphanum': '알파벳 대소문자와 숫자만 입력 가능합니다.',
         'string.min': 'loginId는 5자이상입니다.',
-        'string.max': 'loginId는 15자이하입니다.',
+        'string.max': 'loginId는 20자이하입니다.',
         'string.required': 'loginId를 입력해주세요.',
     }),
 
@@ -14,7 +14,7 @@ const signupSchema = Joi.object().keys({
         'string.max': '닉네임은 10자이하입니다.',
     }),
 
-    password: Joi.string().pattern(new RegExp("^(?=^[^\s]*$)(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})")).max(16).required().messages({
+    password: Joi.string().pattern(new RegExp("^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})")).max(16).required().messages({
         'string.pattern.base': 'password는 최소 8자리 이상이며, 영문, 숫자, 특수문자(!@#$%^&*)가 모두 포함되어야 합니다.',
         'string.max': 'password는 16자 이하입니다.',
         'string.required': '요청한 데이터 형식이 올바르지 않습니다.',
@@ -44,7 +44,7 @@ const passwordSchema = Joi.object().keys({
         'string.max': 'password는 16자 이하입니다.',
         'string.required': '요청한 데이터 형식이 올바르지 않습니다.',
     }),
-    changedPassword: Joi.string().pattern(new RegExp("^(?=^[^\s]*$)(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})")).max(16).required().messages({
+    changedPassword: Joi.string().pattern(new RegExp("^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})")).max(16).required().messages({
         'string.pattern.base': 'password는 최소 8자리 이상이며, 영문, 숫자, 특수문자(!@#$%^&*)가 모두 포함되어야 합니다.',
         'string.max': 'password는 16자 이하입니다.',
         'string.required': '요청한 데이터 형식이 올바르지 않습니다.',
