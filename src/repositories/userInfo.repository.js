@@ -1,9 +1,15 @@
 const { Users } = require("../models")
 
 class UserInfoRepository {
-    changeMyInfo = async (userId, nickname, profileUrl) => {
+    changeProfile = async (userId, profileUrl) => {
         await Users.update(
-            { nickname, profileUrl },
+            { profileUrl },
+            { where: { userId } }
+        );
+    }
+    changeNickname = async (userId, nickname) => {
+        await Users.update(
+            { nickname },
             { where: { userId } }
         );
     }

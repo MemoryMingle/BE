@@ -5,11 +5,17 @@ const { passwordSchema } = require('../middlewares/validationMiddleware');
 class UserInfoController {
     userInfoService = new UserInfoService();
 
-    changeUserInfo = async (req, res, next) => {
+    changeProfile = async (req, res, next) => {
         const { userId } = res.locals.user;
-        const { nickname, profileUrl } = req.body;
-        await this.userInfoService.changeMyInfo(userId, nickname, profileUrl)
+        const { profileUrl } = req.body;
+        await this.userInfoService.changeProfile(userId, profileUrl)
         res.status(201).json({ message: '프로필 변경이 완료되었습니다.' });
+    }
+    changeNickname = async (req, res, next) => {
+        const { userId } = res.locals.user;
+        const { nickname } = req.body;
+        await this.userInfoService.changeNickname(userId, nickname)
+        res.status(201).json({ message: '닉네임 변경이 완료되었습니다.' });
     }
     changePassword = async (req, res, next) => {
         const { userId } = res.locals.user;
