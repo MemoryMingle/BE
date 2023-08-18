@@ -1,5 +1,5 @@
 const CommentRepository = require("../repositories/comment.repository")
-const CustomError = require('../middlewares/errorMiddleware');
+const CustomError = require('../utils/error');
 class CommentService {
     commentRepository = new CommentRepository()
 
