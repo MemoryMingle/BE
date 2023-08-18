@@ -12,7 +12,7 @@ class MemoryService {
         if (!participantCheckData) {
             throw new CustomError("참여자가 아닙니다.", 400);
         }
-        const findOneMemoryData = await this.memoryRepository.findOneMemory(userId, groupId, memoryId)
+        const findOneMemoryData = await this.memoryRepository.findOneMemory(memoryId)
         return findOneMemoryData
     }
     findUpdateMemory = async (memoryId) => {
