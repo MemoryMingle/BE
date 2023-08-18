@@ -4,8 +4,12 @@ const CustomError = require('../middlewares/errorMiddleware');
 
 class UserInfoService {
     userInfoRepository = new UserInfoRepository();
-    changeMyInfo = async (userId, nickname, profileUrl) => {
-        const changeMyInfoDate = await this.userInfoRepository.changeMyInfo(userId, nickname, profileUrl)
+
+    changeProfile = async (userId, profileUrl) => {
+        await this.userInfoRepository.changeProfile(userId, profileUrl)
+    }
+    changeNickname = async (userId, nickname) => {
+        await this.userInfoRepository.changeNickname(userId, nickname)
     }
     changePassword = async (userId, originalPassword, changedPassword) => {
         const user = await this.userInfoRepository.originalCheck(userId)

@@ -6,7 +6,8 @@ const userInfoController = new UserInfoController();
 
 const router = express.Router();
 
-router.put("/profile", authMiddleware, asyncHandler(userInfoController.changeUserInfo));
+router.put("/profile", authMiddleware, asyncHandler(userInfoController.changeProfile));
+router.put("/nickname", authMiddleware, asyncHandler(userInfoController.changeNickname));
 router.put("/password", authMiddleware, asyncHandler(userInfoController.changePassword));
 
 
