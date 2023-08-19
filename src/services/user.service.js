@@ -4,9 +4,10 @@ class UserService {
   userRepository = new UserRepository();
 
   // 닉네임 기반 유저정보
-  findByNickname = async (nickname) => {
+  findByNickname = async (nickname, userId) => {
     const findByNicknameData = await this.userRepository.findByNickname(
-      nickname
+      nickname,
+      userId
     );
 
     return findByNicknameData;

@@ -3,10 +3,11 @@ const { Op } = require("sequelize");
 
 class UserRepository {
   // 닉네임으로 Users 정보 불러오기
-  findByNickname = async (nickname) => {
+  findByNickname = async (nickname, userId) => {
     const findByNicknameData = await Users.findAll({
       where: {
         nickname: nickname,
+        userId: { [Op.ne]: userId },
       },
       attributes: ["userId", "loginId", "nickname", "profileUrl"],
     });
