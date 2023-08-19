@@ -4,14 +4,26 @@ const cors = require("cors");
 const morgan = require("morgan");
 const passport = require('passport');
 const session = require('express-session');
+const ConfirmRequest = require('./src/middlewares/confirmRequestMiddleware');
 require('./src/passport/localStrategy')
 require('./src/passport/kakaoStrategy')();
-
 require("dotenv").config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const indexRouter = require("./src/routes/index.route");
+const indexRouter = require("./src/routes/index.route")
+const confirmRequest = new ConfirmRequest();
+
+app.use(async (req, res, next) => {
+    req.confirmRequest = confirmRequest;
+
+    await req.confirmRequest.increment();
+    res.on('finish', async () => {
+        await req.confirmRequest.decrement();
+    });
+    next();
+});
+
 
 app.use(
     session({
@@ -51,7 +63,6 @@ app.use(
     })
 );
 
-
 app.use(morgan('dev'));
 
 app.get("/", (_, res) => {
@@ -68,7 +79,6 @@ app.use((err, req, res, next) => {
         message: message
     });
 });
-
 
 app.listen(PORT, () => {
     console.log(`http://localhost:${PORT}`);

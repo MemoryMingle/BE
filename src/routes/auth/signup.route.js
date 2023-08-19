@@ -1,5 +1,5 @@
 const express = require("express");
-const asyncHandler = require('../../middlewares/asyncHandler')
+const asyncHandler = require('../../utils/asyncHandler')
 const SignupController = require("../../controllers/signup.controller");
 const signupController = new SignupController();
 

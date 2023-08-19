@@ -18,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
       this.hasMany(models.Memories, {
         sourceKey: "groupId",
         foreignKey: "groupId",
+        onDelete: 'CASCADE'
       });
 
       this.hasMany(models.Participants, {
@@ -38,6 +39,10 @@ module.exports = (sequelize, DataTypes) => {
       userId: {
         allowNull: false,
         type: DataTypes.INTEGER,
+        references: {
+          model: "Users",
+          key: "userId",
+        },
       },
       groupName: {
         allowNull: false,
@@ -46,7 +51,6 @@ module.exports = (sequelize, DataTypes) => {
       thumbnailUrl: {
         allowNull: false,
         type: DataTypes.STRING,
-        defaultValue: "https://t1.daumcdn.net/cfile/tistory/243FE450575F82662D",
       },
       place: {
         allowNull: true,

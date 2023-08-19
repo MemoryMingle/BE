@@ -32,10 +32,18 @@ module.exports = (sequelize, DataTypes) => {
       groupId: {
         allowNull: false,
         type: DataTypes.INTEGER,
+        references: {
+          model: 'Groups',
+          key: 'groupId',
+        },
       },
       userId: {
         allowNull: false,
         type: DataTypes.INTEGER,
+        references: {
+          model: "Users",
+          key: "userId",
+        },
       },
       createdAt: {
         allowNull: false,

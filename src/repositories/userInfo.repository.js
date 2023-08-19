@@ -1,13 +1,19 @@
 const { Users } = require("../models")
 
 class UserInfoRepository {
-    changeMyInfo = async (userId, nickname, profileUrl) => {
+    changeProfile = async (userId, profileUrl) => {
         await Users.update(
-            { nickname, profileUrl },
+            { profileUrl },
             { where: { userId } }
         );
     }
-    originalCheck = async (userId) => {
+    changeNickname = async (userId, nickname) => {
+        await Users.update(
+            { nickname },
+            { where: { userId } }
+        );
+    }
+    passwordCheck = async (userId) => {
         const user = await Users.findByPk(userId)
         return user
     }
@@ -15,6 +21,23 @@ class UserInfoRepository {
         await Users.update(
             { password: hashPassword },
             { where: { userId } }
+        );
+    }
+    deleteUserInfo = async (userId) => {
+        await Users.destroy(
+            { where: { userId } }
+        );
+    }
+    deleteAllUserInfo = async () => {
+        await Users.destroy(
+            {
+                where: {
+                    deletedAt: {
+                        [Sequelize.Op.ne]: null
+                    }
+                },
+                limit: 5
+            }
         );
     }
 }
