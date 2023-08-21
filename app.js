@@ -4,7 +4,7 @@ const cors = require("cors");
 const morgan = require("morgan");
 const passport = require('passport');
 const session = require('express-session');
-const ConfirmRequest = require('./src/middlewares/confirmRequestMiddleware');
+const ConfirmRequest = require('./src/utils/confirmRequest');
 require('./src/passport/localStrategy')
 require('./src/passport/kakaoStrategy')();
 require("dotenv").config();

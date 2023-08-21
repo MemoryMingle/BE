@@ -1,6 +1,6 @@
 const express = require("express");
 const asyncHandler = require('../../utils/asyncHandler')
-const authMiddleware = require("../../middlewares/authMiddleware");
+const authMiddleware = require("../../utils/authMiddleware");
 const UserInfoController = require("../../controllers/userInfo.controller");
 const userInfoController = new UserInfoController();
 
