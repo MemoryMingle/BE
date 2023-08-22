@@ -1,4 +1,5 @@
 const { Users } = require("../models")
+const { Op } = require("sequelize")
 
 class UserInfoRepository {
     changeProfile = async (userId, profileUrl) => {
@@ -29,16 +30,18 @@ class UserInfoRepository {
         );
     }
     deleteAllUserInfo = async () => {
-        await Users.destroy(
+        const deleteCount = await Users.destroy(
             {
                 where: {
                     deletedAt: {
-                        [Sequelize.Op.ne]: null
+                        [Op.ne]: null
                     }
                 },
-                limit: 5
+                limit: 3,
+                force: true
             }
         );
+        return deleteCount
     }
 }
 module.exports = UserInfoRepository

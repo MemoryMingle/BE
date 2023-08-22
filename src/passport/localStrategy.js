@@ -14,8 +14,11 @@ passport.use(
     async (loginId, password, done) => {
       try {
         const user = await Users.findOne({ where: { loginId } });
+        if (!user) {
+          throw new CustomError("아이디 혹은 비밀번호를 확인해주세요", 400);
+        }
         const checkPassword = bcrypt.compareSync(password, user.password);
-        if (!user || !checkPassword) {
+        if (!checkPassword) {
           throw new CustomError("아이디 혹은 비밀번호를 확인해주세요", 400);
         }
         //JWT 토큰 발급

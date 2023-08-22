@@ -3,13 +3,13 @@ const passport = require("passport");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
 const asyncHandler = require('../../utils/asyncHandler')
-const noCache = require('../../utils/noCache');
+
 
 router.post('/', passport.authenticate('local', { session: false }), async (req, res) => {
     // 위에서 done이 req.user로 반환된다.
     res.cookie("MM", `Bearer ${req.user.accessToken}`, {
         secure: true,
-        httpOnly: true,
+        httpOnly: false,
         sameSite: "none",
     });
     res.status(200).json({ message: "로그인 완료" });
@@ -31,7 +31,7 @@ router.get(
         // JWT를 쿠키에 담아 클라이언트에게 전달
         res.cookie("MM", `Bearer ${accessToken}`, {
             secure: true,
-            httpOnly: true,
+            httpOnly: false,
             sameSite: "none",
         });
         res.redirect('http://localhost:3000/groupmain')

@@ -6,7 +6,8 @@ class SignupService {
 
     signup = async (loginId, password) => {
         const hashPassword = bcrypt.hashSync(password, 10)
-        await this.signupRepository.signup(loginId, hashPassword);
+        const userId = await this.signupRepository.signup(loginId, hashPassword);
+        return userId
     };
     checkDuplicate = async (loginId) => {
         const checkDuplicateData = await this.signupRepository.checkDuplicate(loginId);
