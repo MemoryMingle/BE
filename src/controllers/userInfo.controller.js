@@ -14,6 +14,7 @@ class UserInfoController {
         } else {
             throw new CustomError("이미지 업로드 중 문제 발생", 400)
         }
+
         await this.userInfoService.changeProfile(userId, profileUrl)
         res.status(201).json({ message: '프로필 변경이 완료되었습니다.' });
     }
