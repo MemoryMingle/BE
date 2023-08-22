@@ -1,7 +1,7 @@
 const UserInfoService = require('../services/userInfo.service');
 const CustomError = require('../utils/error');
 const { passwordSchema } = require('../utils/validation');
-const uploadImageToCloudinary = require('../utils/uploadToCloudinary');
+const uploadImageToCloudinary = require('../utils/uploadToCloudinary.profile');
 
 class UserInfoController {
     userInfoService = new UserInfoService();
