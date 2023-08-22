@@ -111,6 +111,7 @@ class GroupService {
     );
 
     const detailedGroupData = {
+      userId:groupData.userId,
       groupId: groupData.groupId,
       groupName: groupData.groupName,
       place: groupData.place,
