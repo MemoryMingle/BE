@@ -2,7 +2,7 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const CustomError = require("../middlewares/errorMiddleware");
+const CustomError = require("../utils/error");
 const { Users } = require("../models");
 
 passport.use(
@@ -13,9 +13,12 @@ passport.use(
     },
     async (loginId, password, done) => {
       try {
-        const user = await Users.findOne({ where: { loginId } });        
-        const checkPassword = bcrypt.compareSync(password, user.password);        
-        if (!user || !checkPassword) {
+        const user = await Users.findOne({ where: { loginId } });
+        if (!user) {
+          throw new CustomError("아이디 혹은 비밀번호를 확인해주세요", 400);
+        }
+        const checkPassword = bcrypt.compareSync(password, user.password);
+        if (!checkPassword) {
           throw new CustomError("아이디 혹은 비밀번호를 확인해주세요", 400);
         }
         //JWT 토큰 발급

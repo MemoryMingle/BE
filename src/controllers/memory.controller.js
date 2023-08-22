@@ -1,4 +1,6 @@
 const MemoryService = require("../services/memory.service")
+const uploadImageToCloudinary = require('../utils/uploadToCloudinary');
+const CustomError = require('../utils/error');
 
 class MemoryController {
     memoryService = new MemoryService()
@@ -6,16 +8,22 @@ class MemoryController {
     createMemory = async (req, res, next) => {
         const { userId } = res.locals.user;
         const { groupId } = req.params;
-        const { title, imageUrl } = req.body;
-        const createMemoryData = await this.memoryService.createMemory(userId, groupId, title, imageUrl);
-        res
-            .status(200)
-            .json({
-                success: true,
-                message: "Memory를 생성하였습니다."
-            })
+        const { title } = req.body; // imageUrl을 여기에서 제거
+        let imageUrl;  // 이미지 URL 초기화
+        if (req.file) {
+            // 이미지 업로드 및 URL 받아오기
+            imageUrl = await uploadImageToCloudinary(req.file.path);
+        } else {
+            throw new CustomError("이미지 업로드 중 문제 발생", 400)
+        }
+        const createMemoryData = await this.memoryService.createMemory(userId, groupId, title, imageUrl)
+        res.status(200).json({
+            success: true,
+            message: "Memory를 생성하였습니다."
+        });
 
-    }
+    };
+
     findOneMemory = async (req, res, next) => {
         const { userId } = res.locals.user;
         const { groupId, memoryId } = req.params;
@@ -41,7 +49,14 @@ class MemoryController {
     updateMemory = async (req, res, next) => {
         const { userId } = res.locals.user;
         const { memoryId } = req.params;
-        const { title, imageUrl } = req.body
+        const { title } = req.body
+        let imageUrl;  // 이미지 URL 초기화
+        if (req.file) {
+            // 이미지 업로드 및 URL 받아오기
+            imageUrl = await uploadImageToCloudinary(req.file.path);
+        } else {
+            throw new CustomError("이미지 업로드 중 문제 발생", 400)
+        }
         const updateMemoryData = await this.memoryService.updateMemory(userId, memoryId, title, imageUrl)
         res
             .status(200)

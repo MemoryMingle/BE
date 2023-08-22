@@ -93,6 +93,7 @@ class GroupRepository {
         groupId: groupId,
       },
       attributes: [
+        "userId",
         "groupId",
         "thumbnailUrl",
         "groupName",

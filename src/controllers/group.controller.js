@@ -1,4 +1,5 @@
 const GroupService = require("../services/group.service");
+const uploadImageToCloudinary = require("../utils/uploadToCloudinary");
 
 class GroupController {
   groupService = new GroupService();
@@ -7,15 +8,8 @@ class GroupController {
   createGroup = async (req, res, next) => {
     try {
       const { userId } = res.locals.user;
-      const {
-        groupName,
-        thumbnailUrl,
-        place,
-        participant,
-        startDate,
-        endDate,
-      } = req.body;
-
+      const thumbnailUrl = await uploadImageToCloudinary(req.file.path);      
+      const { groupName, place, participant, startDate, endDate } = req.body;      
       const participantPlusUserId = participant.concat(JSON.stringify(userId));
       const createGroupData = await this.groupService.createGroup(
         userId,
@@ -76,7 +70,8 @@ class GroupController {
   // 내가 만든 그룹 수정
   updateMyGroup = async (req, res, next) => {
     try {
-      const { groupName, thumbnailUrl, place, participant, startDate, endDate } = req.body;
+      const thumbnailUrl = await uploadImageToCloudinary(req.file.path);
+      const { groupName, place, participant, startDate, endDate } = req.body;
       const { groupId } = req.params;
       const { userId } = res.locals.user;
       const updateMyGroupData = await this.groupService.updateMyGroup(

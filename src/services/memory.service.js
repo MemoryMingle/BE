@@ -1,5 +1,5 @@
 const MemoryRepository = require("../repositories/memory.repository")
-const CustomError = require('../middlewares/errorMiddleware');
+const CustomError = require('../utils/error');
 class MemoryService {
     memoryRepository = new MemoryRepository()
 

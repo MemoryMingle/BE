@@ -7,9 +7,11 @@ class UserController {
   findByNickname = async (req, res, next) => {
     try {
       const { nickname } = req.params;
+      const { userId } = res.locals.user;
 
       const findByNicknameData = await this.userService.findByNickname(
-        nickname
+        nickname,
+        userId
       );
 
       res.status(201).json({ findByNicknameData });

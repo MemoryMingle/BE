@@ -1,6 +1,8 @@
 const SignupService = require('../services/signup.service');
-const { signupSchema } = require('../middlewares/validationMiddleware');
-const CustomError = require('../middlewares/errorMiddleware');
+const { signupSchema } = require('../utils/validation');
+const CustomError = require('../utils/error');
+const jwt = require("jsonwebtoken");
+const uploadImageToCloudinary = require('../utils/uploadToCloudinary');
 
 
 
@@ -13,8 +15,23 @@ class SignupController {
         if (error) {
             throw new CustomError(error.details[0].message, 400);
         }
-        await this.signupService.signup(loginId, password);
-        res.status(201).json({ message: '회원가입이 완료되었습니다.' });
+        const userId = await this.signupService.signup(loginId, password);
+        const accessToken = jwt.sign(
+            { userId: userId },
+            process.env.JWT_SECRET,
+            {
+                expiresIn: "1h",
+            }
+        );
+        res.cookie("MM", `Bearer ${accessToken}`, {
+            secure: true,
+            httpOnly: false,
+            sameSite: "none",
+        });
+        res.status(201).json({
+            userId: userId,
+            message: '회원가입이 완료되었습니다.'
+        });
     };
     checkDuplicate = async (req, res, next) => {
         const { loginId } = req.body;
@@ -32,9 +49,16 @@ class SignupController {
         }
     }
     updateProfile = async (req, res, next) => {
-        const { nickname, profileUrl, loginId } = req.body;
+        const { nickname, loginId } = req.body;
         if (!nickname) {
             nickname = "닉네임"
+        }
+        let profileUrl;  // 이미지 URL 초기화
+        if (req.file) {
+            // 이미지 업로드 및 URL 받아오기
+            profileUrl = await uploadImageToCloudinary(req.file.path);
+        } else {
+            console.log("프로필 이미지 없음")
         }
         const updateProfileData = await this.signupService.updateProfile(loginId, nickname, profileUrl)
         res.status(201).json({ message: '프로필 변경이 완료되었습니다.' });
