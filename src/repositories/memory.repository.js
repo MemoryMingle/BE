@@ -21,7 +21,7 @@ class MemoryRepository {
     findOneMemory = async (memoryId) => {
         const findOneMemoryData = await Memories.findOne({
             where: { memoryId },
-            attributes: ["memoryId", "title", "imageUrl"],
+            attributes: ["memoryId", "title", "imageUrl", "createdAt"],
             raw: true,
             include: [
                 {
@@ -32,7 +32,7 @@ class MemoryRepository {
         })
         const memoryComments = await Comments.findAll({
             where: { memoryId },
-            attributes: ["commentId", "comment"],
+            attributes: ["commentId", "comment", "createdAt"],
             group: ["commentId"],
             raw: true,
             include: [
@@ -42,6 +42,7 @@ class MemoryRepository {
                 }
             ]
         })
+        console.log(findOneMemoryData)
         return [findOneMemoryData, memoryComments]
     }
     findUpdateMemory = async (memoryId) => {

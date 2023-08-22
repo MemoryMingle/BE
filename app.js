@@ -24,7 +24,6 @@ app.use(async (req, res, next) => {
     next();
 });
 
-
 app.use(
     session({
         secret: process.env.SESSION_SECRET, // 세션 ID 를 서명하는데 사용되는 키

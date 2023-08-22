@@ -7,7 +7,8 @@ class SignupRepository {
             loginId,
             password: hashPassword
         });
-        return user;
+        const userId = user.userId
+        return userId;
     };
     checkDuplicate = async (loginId) => {
         const checkDuplicateData = await Users.findOne({ where: { loginId } })
