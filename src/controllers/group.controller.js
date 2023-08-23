@@ -8,9 +8,11 @@ class GroupController {
   createGroup = async (req, res, next) => {
     try {
       const { userId } = res.locals.user;
-      const thumbnailUrl = await uploadImageToCloudinary(req.file.path);      
+      const thumbnailUrl = await uploadImageToCloudinary(req.file.path);
       const { groupName, place, participant, startDate, endDate } = req.body;
-      const participants = JSON.parse(participant)          
+      const participants = JSON.parse(participant)
+      console.log(participants)
+
       const participantPlusUserId = participants.concat(JSON.stringify(userId));
       const createGroupData = await this.groupService.createGroup(
         userId,
@@ -37,6 +39,7 @@ class GroupController {
       const findMyGroupData = await this.groupService.findMyGroup(userId);
       res.status(201).json({
         success: true,
+        userId,
         msg: "Group 조회에 성공하였습니다.",
         findMyGroupData,
       });
