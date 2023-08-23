@@ -15,7 +15,6 @@ const uploadImageToCloudinary = async (filePath) => {
         folder: 'TEST',
         transformation: [{
             width: 1000,
-            height: 1000,
             crop: "scale"
         }],
         format: 'webp',     // 확장자를 WebP로 변경
