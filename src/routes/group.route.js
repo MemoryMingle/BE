@@ -19,6 +19,7 @@ router.put(
   groupController.updateMyGroup
 );
 router.get("/:groupId", authMiddleware, groupController.detailedGroup);
+router.get("/:groupId/groupData", authMiddleware, groupController.groupData);
 router.delete("/:groupId/groupout", authMiddleware, groupController.groupOut);
 router.get("/search/:searchDate", authMiddleware, groupController.searchDate);
 

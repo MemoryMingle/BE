@@ -1,4 +1,10 @@
-const { Groups, Participants, Users, Memories, sequelize } = require("../models");
+const {
+  Groups,
+  Participants,
+  Users,
+  Memories,
+  sequelize,
+} = require("../models");
 const { Op } = require("sequelize");
 
 class GroupRepository {
@@ -21,7 +27,7 @@ class GroupRepository {
         endDate,
       },
       options
-    )
+    );
   }
 
   async updateMyGroup(
@@ -29,11 +35,11 @@ class GroupRepository {
     groupId,
     groupName,
     thumbnailUrl,
-    place,    
+    place,
     startDate,
-    endDate,    
-  ) {    
-        const updateMyGroupData = await Groups.update(
+    endDate
+  ) {
+    const updateMyGroupData = await Groups.update(
       {
         groupName,
         thumbnailUrl,
@@ -42,12 +48,11 @@ class GroupRepository {
         endDate,
       },
       { where: { userId: userId, groupId: groupId } }
-    );      
-    
+    );
   }
 
   async deleteParticipants(groupId) {
-    return Participants.destroy({where:{groupId:groupId}})
+    return Participants.destroy({ where: { groupId: groupId } });
   }
 
   async bulkCreateParticipants(participantRecords, options) {
@@ -83,7 +88,7 @@ class GroupRepository {
     const groups = await this.findGroupByGroupIds(groupIds);
 
     return groups;
-  } 
+  }
 
   // 여기서부터 그룹 상세보기 필요한 데이터
   // Groups - 해당 groupId의 groupId,groupName,place,startDate,endDate
@@ -164,21 +169,21 @@ class GroupRepository {
     return checkCreatorData !== null;
   }
 
-  // 참여자가 몇명 남았는지 확인  = params가 현재 약간 이상해서 21은 안되고 "21"은 작동함 이거 왜이럼?  
-  async participantsCount(groupId){
+  // 참여자가 몇명 남았는지 확인  = params가 현재 약간 이상해서 21은 안되고 "21"은 작동함 이거 왜이럼?
+  async participantsCount(groupId) {
     try {
-      const count = await Participants.count({where : {groupId:groupId}})
+      const count = await Participants.count({ where: { groupId: groupId } });
 
-      return count
-    }catch(error){
-      console.log(error)
+      return count;
+    } catch (error) {
+      console.log(error);
     }
   }
 
   // 날짜 검색
   async searchDate(userId, searchStartDate, searchEndDate) {
     const groupIds = await this.findGroupIds(userId);
-    console.log(groupIds)
+    console.log(groupIds);
     const searchDateData = await Groups.findAll({
       where: {
         groupId: {

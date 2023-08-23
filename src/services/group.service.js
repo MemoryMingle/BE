@@ -14,7 +14,7 @@ class GroupService {
     startDate,
     endDate
   ) => {
-    const transaction = await sequelize.transaction(); // sequelize.transaction() 사용    
+    const transaction = await sequelize.transaction(); // sequelize.transaction() 사용
     try {
       // 그룹 생성
       const group = await this.groupRepository.createGroup(
@@ -29,12 +29,10 @@ class GroupService {
 
       const groupId = group.groupId;
       // 참여자 레코드 생성
-      const participantRecords = participants.map(
-        (participantId) => ({
-          userId: participantId,
-          groupId: groupId,
-        })
-      );
+      const participantRecords = participants.map((participantId) => ({
+        userId: participantId,
+        groupId: groupId,
+      }));
       await this.groupRepository.bulkCreateParticipants(participantRecords, {
         transaction,
       });
@@ -87,7 +85,7 @@ class GroupService {
       await transaction.commit();
     } catch (error) {
       await transaction.rollback();
-      throw(error);
+      throw error;
     }
   };
 
@@ -110,7 +108,7 @@ class GroupService {
     );
 
     const detailedGroupData = {
-      userId:groupData.userId,
+      userId: groupData.userId,
       groupId: groupData.groupId,
       groupName: groupData.groupName,
       place: groupData.place,
@@ -122,6 +120,23 @@ class GroupService {
     };
 
     return detailedGroupData;
+  };
+
+  groupData = async (groupId) => {
+    const groupData = await this.groupRepository.detailedGroup(groupId);
+    const participantData = await this.groupRepository.findUsers(groupId);
+
+    const groupDataCollection = {
+      groupId: groupData.groupId,
+      groupName: groupData.groupName,
+      place: groupData.place,
+      thumbnailUrl: groupData.thumbnailUrl,
+      startDate: groupData.startDate,
+      endDate: groupData.endDate,
+      participants: participantData,
+    };
+
+    return groupDataCollection;
   };
 
   // 그룹 나가기(작성자인지 체크하고, 맞으면 참여자 더 있는지 확인하고 더 있으면 막기/ 나머지 다 나가기)
