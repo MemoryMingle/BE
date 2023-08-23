@@ -30,7 +30,7 @@ class GroupService {
 
       const groupId = group.groupId;
       // 참여자 레코드 생성
-      const participantRecords = [...participants, userId].map(
+      const participantRecords = participants.map(
         (participantId) => ({
           userId: participantId,
           groupId: groupId,
