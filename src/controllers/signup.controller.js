@@ -61,7 +61,10 @@ class SignupController {
             console.log("프로필 이미지 없음")
         }
         const updateProfileData = await this.signupService.updateProfile(loginId, nickname, profileUrl)
-        res.status(201).json({ message: '프로필 변경이 완료되었습니다.' });
+        res.status(201).json({
+            profileUrl,
+            message: '프로필 변경이 완료되었습니다.'
+        });
     }
 }
 

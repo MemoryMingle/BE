@@ -12,10 +12,14 @@ class UserInfoController {
         if (req.file) {
             profileUrl = await uploadImageToCloudinary(req.file.path);
         } else {
-            throw new CustomError("이미지 업로드 중 문제 발생", 400)
+            throw new CustomError("요청하신 프로필 이미지가 없습니다.", 400)
         }
+
         await this.userInfoService.changeProfile(userId, profileUrl)
-        res.status(201).json({ message: '프로필 변경이 완료되었습니다.' });
+        res.status(201).json({
+            profileUrl,
+            message: '프로필 변경이 완료되었습니다.'
+        });
     }
     changeNickname = async (req, res, next) => {
         const { userId } = res.locals.user;
