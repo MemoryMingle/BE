@@ -1,7 +1,7 @@
 const UserInfoService = require('../services/userInfo.service');
 const CustomError = require('../utils/error');
 const { passwordSchema } = require('../utils/validation');
-const uploadImageToCloudinary = require('../utils/uploadToCloudinary');
+const uploadToProfile = require('../utils/uploadToProfile');
 
 class UserInfoController {
     userInfoService = new UserInfoService();
@@ -10,7 +10,7 @@ class UserInfoController {
         const { userId } = res.locals.user;
         let profileUrl;
         if (req.file) {
-            profileUrl = await uploadImageToCloudinary(req.file.path);
+            profileUrl = await uploadToProfile(req.file.path);
         } else {
             throw new CustomError("요청하신 프로필 이미지가 없습니다.", 400)
         }
