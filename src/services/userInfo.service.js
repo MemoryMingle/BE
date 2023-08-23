@@ -9,6 +9,9 @@ class UserInfoService {
     changeProfile = async (userId, profileUrl) => {
         await this.userInfoRepository.changeProfile(userId, profileUrl)
     }
+    defaultProfile = async (userId) => {
+        await this.userInfoRepository.defaultProfile(userId)
+    }
     changeNickname = async (userId, nickname) => {
         await this.userInfoRepository.changeNickname(userId, nickname)
     }

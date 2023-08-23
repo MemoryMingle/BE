@@ -21,6 +21,13 @@ class UserInfoController {
             message: '프로필 변경이 완료되었습니다.'
         });
     }
+    defaultProfile = async (req, res, next) => {
+        const { userId } = res.locals.user;
+        await this.userInfoService.defaultProfile(userId)
+        res.status(201).json({
+            message: '프로필 삭제가 완료되었습니다.'
+        });
+    }
     changeNickname = async (req, res, next) => {
         const { userId } = res.locals.user;
         const { nickname } = req.body;
