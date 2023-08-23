@@ -9,7 +9,7 @@ cloudinary.config({
     api_secret: process.env.YOUR_API_SECRET
 });
 
-const uploadImageToCloudinary = async (filePath) => {
+const uploadToProfile = async (filePath) => {
     // Cloudinary에 이미지 업로드
     const result = await cloudinary.uploader.upload(filePath, {
         folder: 'TEST',
@@ -35,4 +35,4 @@ const uploadImageToCloudinary = async (filePath) => {
     return result.url;  // Cloudinary에서의 이미지 URL 반환
 }
 
-module.exports = uploadImageToCloudinary;
+module.exports = uploadToProfile;

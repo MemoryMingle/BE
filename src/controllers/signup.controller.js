@@ -2,7 +2,7 @@ const SignupService = require('../services/signup.service');
 const { signupSchema } = require('../utils/validation');
 const CustomError = require('../utils/error');
 const jwt = require("jsonwebtoken");
-const uploadImageToCloudinary = require('../utils/uploadToCloudinary');
+const uploadToProfile = require('../utils/uploadToProfile');
 
 
 
@@ -56,7 +56,7 @@ class SignupController {
         let profileUrl;  // 이미지 URL 초기화
         if (req.file) {
             // 이미지 업로드 및 URL 받아오기
-            profileUrl = await uploadImageToCloudinary(req.file.path);
+            profileUrl = await uploadToProfile(req.file.path);
         } else {
             console.log("프로필 이미지 없음")
         }
