@@ -10,8 +10,7 @@ class GroupController {
       const { userId } = res.locals.user;
       const thumbnailUrl = await uploadImageToCloudinary(req.file.path);
       const { groupName, place, participant, startDate, endDate } = req.body;
-      const participants = JSON.parse(participant)
-      console.log(participants)
+      const participants = JSON.parse(participant);
 
       const participantPlusUserId = participants.concat(JSON.stringify(userId));
       const createGroupData = await this.groupService.createGroup(
@@ -74,17 +73,27 @@ class GroupController {
   // 내가 만든 그룹 수정
   updateMyGroup = async (req, res, next) => {
     try {
-      const thumbnailUrl = await uploadImageToCloudinary(req.file.path);
       const { groupName, place, participant, startDate, endDate } = req.body;
       const { groupId } = req.params;
       const { userId } = res.locals.user;
+
+      let thumbnailUrl;
+      let participants;
+      if (req.file) {
+        thumbnailUrl = await uploadImageToCloudinary(req.file.path);
+        participants = JSON.parse(participant);
+      } else {
+        thumbnailUrl = req.body.thumbnailUrl;
+        participants = participant;
+      }
+
       const updateMyGroupData = await this.groupService.updateMyGroup(
         userId,
         groupId,
         groupName,
         thumbnailUrl,
         place,
-        participant,
+        participants,
         startDate,
         endDate
       );
@@ -102,6 +111,16 @@ class GroupController {
     try {
       const detailedGroupData = await this.groupService.detailedGroup(groupId);
       return res.status(201).json(detailedGroupData);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  groupData = async (req, res, next) => {
+    const { groupId } = req.params;
+    try {
+      const groupDataCollection = await this.groupService.groupData(groupId);
+      return res.status(201).json(groupDataCollection);
     } catch (error) {
       next(error);
     }
