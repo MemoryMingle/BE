@@ -5,6 +5,7 @@ const morgan = require("morgan");
 const passport = require('passport');
 const session = require('express-session');
 const ConfirmRequest = require('./src/utils/confirmRequest');
+const redis = require('redis');
 require('./src/passport/localStrategy')
 require('./src/passport/kakaoStrategy')();
 require("dotenv").config();
@@ -13,6 +14,16 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const indexRouter = require("./src/routes/index.route")
 const confirmRequest = new ConfirmRequest();
+
+const redisClient = redis.createClient({
+    host: process.env.REDIS_HOST || 'localhost',
+    port: process.env.REDIS_PORT || 6379
+});
+
+redisClient.on('error', (err) => {
+    console.log('Redis Error:', err);
+});
+
 
 app.use(async (req, res, next) => {
     req.confirmRequest = confirmRequest;

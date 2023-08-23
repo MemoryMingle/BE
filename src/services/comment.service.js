@@ -14,7 +14,6 @@ class CommentService {
         }
         if (commentCheckData.userId !== userId) {
             throw new CustomError("글쓴이가 아닙니다.", 400);
-
         }
         const updateCommentData = await this.commentRepository.updateComment(commentId, comment)
         return updateCommentData
