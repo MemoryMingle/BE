@@ -12,6 +12,7 @@ class GroupController {
       const { groupName, place, participant, startDate, endDate } = req.body;
       const participants = JSON.parse(participant)
       console.log(participants)
+
       const participantPlusUserId = participants.concat(JSON.stringify(userId));
       const createGroupData = await this.groupService.createGroup(
         userId,
