@@ -56,15 +56,14 @@ class GroupService {
     startDate,
     endDate
   ) => {
-    const transaction = await sequelize.transaction();
-    const placeString = JSON.stringify(place);
+    const transaction = await sequelize.transaction();    
     try {
       const updateMyGroupData = await this.groupRepository.updateMyGroup(
         userId,
         groupId,
         groupName,
         thumbnailUrl,
-        placeString,
+        place,
         startDate,
         endDate,
         { transaction }
