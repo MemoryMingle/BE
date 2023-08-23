@@ -8,6 +8,12 @@ class UserInfoRepository {
             { where: { userId } }
         );
     }
+    defaultProfile = async (userId) => {
+        await Users.update(
+            { profileUrl: "https://t1.daumcdn.net/cfile/tistory/243FE450575F82662D" },
+            { where: { userId } }
+        );
+    }
     changeNickname = async (userId, nickname) => {
         await Users.update(
             { nickname },
