@@ -76,17 +76,16 @@ class GroupController {
       const { groupName, place, participant, startDate, endDate } = req.body;
       const { groupId } = req.params;
       const { userId } = res.locals.user;
-
+      const participants = JSON.parse(participant);
+      
       let thumbnailUrl;
-      let participants;
+      
       if (req.file) {
         thumbnailUrl = await uploadImageToCloudinary(req.file.path);
-        participants = JSON.parse(participant);
       } else {
         thumbnailUrl = req.body.thumbnailUrl;
-        participants = participant;
       }
-
+      console.log(participants);
       const updateMyGroupData = await this.groupService.updateMyGroup(
         userId,
         groupId,
