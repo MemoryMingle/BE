@@ -9,10 +9,13 @@ router.post('/', passport.authenticate('local', { session: false }), async (req,
     // 위에서 done이 req.user로 반환된다.
     res.cookie("MM", `Bearer ${req.user.accessToken}`, {
         secure: true,
-        httpOnly: true,
+        httpOnly: false,
         sameSite: "none",
     });
-    res.status(200).json({ message: "로그인 완료" });
+    res.status(200).json({
+        refreshToken: req.user.refreshToken,
+        message: "로그인 완료"
+    });
 });
 
 // 카카오 로그인

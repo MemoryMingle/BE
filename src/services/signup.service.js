@@ -5,7 +5,7 @@ class SignupService {
     signupRepository = new SignupRepository();
 
     signup = async (loginId, password) => {
-        const hashPassword = bcrypt.hashSync(password, 10)
+        const hashPassword = bcrypt.hash(password, 10)
         const userId = await this.signupRepository.signup(loginId, hashPassword);
         return userId
     };
