@@ -12,7 +12,14 @@ cloudinary.config({
 const uploadImageToCloudinary = async (filePath) => {
     // Cloudinary에 이미지 업로드
     const result = await cloudinary.uploader.upload(filePath, {
-        folder: 'TEST'
+        folder: 'TEST',
+        transformation: [{
+            width: 1000,
+            height: 1000,
+            crop: "scale"
+        }],
+        format: 'webp',     // 확장자를 WebP로 변경
+        quality: 'auto'     // 품질 자동 최적화
     });
 
     // 업로드가 성공하면 서버의 임시 파일 삭제

@@ -32,6 +32,7 @@ class MemoryController {
         res
             .status(200)
             .json({
+                userId,
                 memory: findOneMemoryData,
                 comments: memoryComments
             })

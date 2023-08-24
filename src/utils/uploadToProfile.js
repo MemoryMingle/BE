@@ -20,7 +20,9 @@ const uploadToProfile = async (filePath) => {
                 width: 300,
                 height: 300
             }
-        ]
+        ],
+        format: 'webp',     // 확장자를 WebP로 변경
+        quality: 'auto'     // 품질 자동 최적화
     });
 
     // 업로드가 성공하면 서버의 임시 파일 삭제
