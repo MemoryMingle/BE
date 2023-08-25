@@ -53,7 +53,7 @@ app.use(cookieParser());
 app.use(passport.initialize());
 app.use(passport.session());
 
-const allowedOrigins = ['http://localhost:3000', 'https://fe-psi-five.vercel.app'];
+const allowedOrigins = ['http://localhost:3000', 'https://fe-psi-five.vercel.app', 'https://dbacsnb65qkyl.cloudfront.net/'];
 
 app.use(
     cors({

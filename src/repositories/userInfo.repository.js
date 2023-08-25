@@ -1,5 +1,6 @@
-const { Users } = require("../models")
+const { Users, Participants } = require("../models")
 const { Op } = require("sequelize")
+const applyBeforeDestroyHook = require('../utils/hooks')
 
 class UserInfoRepository {
     changeProfile = async (userId, profileUrl) => {
@@ -31,8 +32,16 @@ class UserInfoRepository {
         );
     }
     deleteUserInfo = async (userId) => {
-        await Users.destroy(
-            { where: { userId } }
+        const user = await Users.findByPk(userId);
+        await applyBeforeDestroyHook(user);
+        await user.destroy();
+    }
+    deleteParticipants = async (userId) => {
+        await Participants.destroy(
+            {
+                where: { userId },
+                limit: 10,
+            },
         );
     }
     deleteAllUserInfo = async () => {
@@ -43,11 +52,11 @@ class UserInfoRepository {
                         [Op.ne]: null
                     }
                 },
-                limit: 3,
-                force: true
-            }
+                limit: 10,
+                force: true,
+            },
         );
-        return deleteCount
+        return deleteCount;
     }
 }
 module.exports = UserInfoRepository

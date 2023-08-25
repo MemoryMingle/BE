@@ -18,7 +18,7 @@ class UserRepository {
   userInfoByUserId = async (userId) => {
     const userInfoData = await Users.findOne({
       where: { userId: userId },
-      attributes: ["userId", "loginId", "nickname", "profileUrl"],
+      attributes: ["userId", "loginId", "nickname", "profileUrl", "providerType"],
     });
     return userInfoData;
   };

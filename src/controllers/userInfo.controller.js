@@ -59,7 +59,7 @@ class UserInfoController {
         let totalDeletedCount = 0;
         const processDelete = async () => {
             console.log("현재 처리 중 요청 갯수 : ", confirmRequest.getCurrentRequests())
-            if (confirmRequest.getCurrentRequests() > 5) {
+            if (confirmRequest.getCurrentRequests() > 10) {
                 if (confirmRequest.listenerCount('requestCompleted') >= maxListeners) {
                     throw new CustomError("동시 삭제 시도 횟수가 너무 많습니다.", 404)
                 }
@@ -72,11 +72,10 @@ class UserInfoController {
             }
             // 5개의 데이터를 삭제
             const deletedCount = await this.userInfoService.deleteAllUserInfo(userId, adminVerification);
-            console.log("1회 삭제 갯수: ", deletedCount)
             // 삭제된 데이터 수를 누적
             totalDeletedCount += deletedCount;
             // 삭제된 데이터 수가 5개 미만이면 종료
-            if (deletedCount < 1) {
+            if (deletedCount < 5) {
                 return res.status(200).json({ message: `총 ${totalDeletedCount}개의 회원 정보 삭제 작업이 완료되었습니다.` });
             }
             // 계속 삭제 처리

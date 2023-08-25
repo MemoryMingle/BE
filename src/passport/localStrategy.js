@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const CustomError = require("../utils/error");
 const { Users } = require("../models");
-const { saveRefreshToken, deleteRefreshToken } = require('../utils/tokenManager.js');
+const { saveRefreshToken, deleteRefreshToken } = require('../utils/tokenManager.redis');
 
 passport.use(
   new LocalStrategy(
@@ -18,7 +18,9 @@ passport.use(
         if (!user) {
           throw new CustomError("아이디 혹은 비밀번호를 확인해주세요", 400);
         }
-
+        if (user.deletedAt) {
+          throw new CustomError("탈퇴한 회원입니다.", 400);
+        }
         // 비동기로 비밀번호 검증
         const checkPassword = await bcrypt.compare(password, user.password);
         if (!checkPassword) {
