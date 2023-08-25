@@ -5,12 +5,15 @@ const groupRouter = require("./group.route");
 const memoryRouter = require("./memory.route")
 const userRouter = require("./user.route")
 const commentRouter = require("./comment.route")
+const dummyRoutes = require("./dummy.routs")
 
 
 router.get("/", (req, res) => {
   res.send("이게 왜 안됨?");
 });
 
+
+router.use("/dummy", dummyRoutes);
 router.use("/auth", authRouter);
 router.use("/group", groupRouter);
 groupRouter.use("/:groupId/memory", memoryRouter);

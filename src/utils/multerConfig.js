@@ -16,24 +16,6 @@ const storage = multer.diskStorage({
     }
 });
 
-// const fileFilter = (req, file, cb) => {
-//     // 파일 형식을 검사하여 이미지만 허용하는 경우
-//     if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
-//         cb(null, true);  // 이미지인 경우, 파일 저장 허용
-//     } else {
-//         cb(null, false);  // 이미지가 아닌 경우, 파일 저장 거부
-//     }
-// };
-
-// const upload = multer({
-//     storage: storage,
-//     limits: {
-//         fileSize: 1024 * 1024 * 5  // 5MB로 파일 크기 제한
-//     },
-//     fileFilter: fileFilter
-// });
-
-
 const upload = multer({ storage: storage });
 
 
