@@ -1,7 +1,8 @@
 const UserInfoRepository = require('../repositories/userInfo.repository');
 const bcrypt = require('bcrypt');
 const CustomError = require('../utils/error');
-const { passwordSchema } = require('../utils/validation');
+const { sequelize } = require("../models")
+
 
 class UserInfoService {
     userInfoRepository = new UserInfoRepository();
@@ -36,10 +37,10 @@ class UserInfoService {
         if (userId !== 1 || adminVerification !== "관리자 확인") {
             throw new CustomError("관리자가 아닙니다.", 404)
         }
-        const deleteCount = await this.userInfoRepository.deleteAllUserInfo(userId)
-        return deleteCount
+        await this.userInfoRepository.deleteParticipants(userId)
+        const deleteCount = await this.userInfoRepository.deleteAllUserInfo();
+        return deleteCount;
     }
-
 }
 module.exports = UserInfoService;
 

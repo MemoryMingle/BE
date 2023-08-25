@@ -3,6 +3,7 @@ const { signupSchema } = require('../utils/validation');
 const CustomError = require('../utils/error');
 const jwt = require("jsonwebtoken");
 const uploadToProfile = require('../utils/uploadToProfile');
+const { saveRefreshToken, deleteRefreshToken } = require('../utils/tokenManager.redis');
 
 
 
@@ -20,12 +21,27 @@ class SignupController {
             { userId: userId },
             process.env.JWT_SECRET,
             {
-                expiresIn: "1h",
+                expiresIn: "15m",
             }
         );
+        const refreshToken = jwt.sign(
+            { userId: userId },
+            process.env.JWT_REFRESH_SECRET,
+            {
+                expiresIn: "7d",
+            }
+        );
+        await deleteRefreshToken(userId);
+        await saveRefreshToken(userId, refreshToken);
+
         res.cookie("MM", `Bearer ${accessToken}`, {
             secure: true,
-            httpOnly: false,
+            httpOnly: true,
+            sameSite: "none",
+        });
+        res.cookie("refreshToken", refreshToken, {
+            secure: true,
+            httpOnly: true,
             sameSite: "none",
         });
         res.status(201).json({
@@ -33,6 +49,7 @@ class SignupController {
             message: '회원가입이 완료되었습니다.'
         });
     };
+
     checkDuplicate = async (req, res, next) => {
         const { loginId } = req.body;
         const checkDuplicateData = await this.signupService.checkDuplicate(loginId)
@@ -49,10 +66,7 @@ class SignupController {
         }
     }
     updateProfile = async (req, res, next) => {
-        const { nickname, loginId } = req.body;
-        if (!nickname) {
-            nickname = "닉네임"
-        }
+        let { nickname = "닉네임", loginId } = req.body;
         let profileUrl;  // 이미지 URL 초기화
         if (req.file) {
             // 이미지 업로드 및 URL 받아오기

@@ -24,6 +24,7 @@ module.exports = (sequelize, DataTypes) => {
       this.hasMany(models.Participants, {
         sourceKey: "groupId",
         foreignKey: "groupId",
+        onDelete: 'CASCADE'
       });
     }
   }
