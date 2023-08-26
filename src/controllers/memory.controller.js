@@ -28,13 +28,13 @@ class MemoryController {
     findOneMemory = async (req, res, next) => {
         const { userId } = res.locals.user;
         const { groupId, memoryId } = req.params;
-        const [findOneMemoryData, memoryComments] = await this.memoryService.findOneMemory(userId, groupId, memoryId)
+        const [findOneMemoryData, findCommentData, findOneUserData] = await this.memoryService.findOneMemory(userId, groupId, memoryId)
         res
             .status(200)
             .json({
-                userId,
                 memory: findOneMemoryData,
-                comments: memoryComments
+                comments: findCommentData,
+                user: findOneUserData
             })
     }
     findUpdateMemory = async (req, res, next) => {
