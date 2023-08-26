@@ -21,7 +21,7 @@ class MemoryRepository {
     findOneMemory = async (memoryId) => {
         const findOneMemoryData = await Memories.findOne({
             where: { memoryId },
-            attributes: ["memoryId", "title", "imageUrl", "createdAt"],
+            attributes: ["userId", "memoryId", "title", "imageUrl", "createdAt"],
             raw: true,
             include: [
                 {
@@ -32,7 +32,7 @@ class MemoryRepository {
         })
         const memoryComments = await Comments.findAll({
             where: { memoryId },
-            attributes: ["commentId", "comment", "createdAt"],
+            attributes: ["userId", "commentId", "comment", "createdAt"],
             group: ["commentId"],
             raw: true,
             include: [
