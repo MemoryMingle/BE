@@ -30,7 +30,10 @@ class MemoryRepository {
                 }
             ]
         })
-        const memoryComments = await Comments.findAll({
+        return findOneMemoryData
+    }
+    findComment = async (memoryId) => {
+        const findCommentData = await Comments.findAll({
             where: { memoryId },
             attributes: ["commentId", "comment", "createdAt"],
             group: ["commentId"],
@@ -42,8 +45,14 @@ class MemoryRepository {
                 }
             ]
         })
-        console.log(findOneMemoryData)
-        return [findOneMemoryData, memoryComments]
+        return findCommentData
+    }
+    findOneUser = async (userId) => {
+        const findOneUserData = await Users.findOne({
+            where: { userId },
+            attributes: ["userId", "nickname", "profileUrl"],
+        })
+        return findOneUserData
     }
     findUpdateMemory = async (memoryId) => {
         const findUpdateMemoryData = await Memories.findOne({
