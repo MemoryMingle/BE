@@ -5,7 +5,7 @@ class CommentController {
 
     cerateComment = async (req, res, next) => {
 
-        const { userId } = res.locals.user;
+        const userId = res.locals.user;
         const { memoryId } = req.params;
         const { comment } = req.body;
         const ceratCommentData = await this.commentService.cerateComment(userId, memoryId, comment);
@@ -19,7 +19,7 @@ class CommentController {
 
     }
     updateComment = async (req, res, next) => {
-        const { userId } = res.locals.user;
+        const userId = res.locals.user;
         const { commentId } = req.params;
         const { comment } = req.body;
 
@@ -33,7 +33,7 @@ class CommentController {
             });
     }
     deleteComment = async (req, res, next) => {
-        const { userId } = res.locals.user;
+        const userId = res.locals.user;
         const { commentId } = req.params;
 
         const deleteCommentData = await this.commentService.deleteComment(userId, commentId);

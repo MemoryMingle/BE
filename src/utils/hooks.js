@@ -1,12 +1,12 @@
-const { Groups, Memories, Comments, Participants, sequelize } = require("../models");
+const { Groups, Memories, Comments, Participants, sequelize, Sequelize } = require("../models");
 const CustomError = require('../utils/error');
 
 const applyBeforeDestroyHook = async (user) => {
-    const transaction = await sequelize.transaction();
-    console.log("훅실행중")
+    const transaction = await sequelize.transaction({
+        isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.READ_COMMITTED // 격리 수준 설정
+    });
     try {
         // 그룹, 메모리, 코멘트의 userId를 1로 바꾼다.
-        const Group = await Groups.findOne({ where: { userId: user.userId } });
         await Groups.update({ userId: 1 }, { where: { userId: user.userId }, transaction });
         await Memories.update({ userId: 1 }, { where: { userId: user.userId }, transaction });
         await Comments.update({ userId: 1 }, { where: { userId: user.userId }, transaction });
