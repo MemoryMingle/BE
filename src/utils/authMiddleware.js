@@ -9,16 +9,12 @@ module.exports = asyncHandler(async (req, res, next) => {
     const [type, token] = (MM ?? "").split(" ");
 
     if (!type || !token || type !== "Bearer") {
-        throw new CustomError("로그인이 필요한 기능입니다1.", 403);
+        throw new CustomError("로그인이 필요한 기능입니다.", 403);
     }
     try {
         const decodeToken = jwt.verify(token, process.env.JWT_SECRET);
         const userId = decodeToken.userId;
-        const findUser = await Users.findOne({ where: { userId } });
-        if (!findUser) {
-            throw new CustomError("로그인이 필요한 기능입니다2.", 403);
-        }
-        res.locals.user = findUser;
+        res.locals.user = userId;
         next();
     } catch (err) {
         // 만약 토큰 검증이 실패했다면, 새로운 토큰을 발급
