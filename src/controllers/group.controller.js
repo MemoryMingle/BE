@@ -7,7 +7,7 @@ class GroupController {
   // 그룹 추가
   createGroup = async (req, res, next) => {
     try {
-      const { userId } = res.locals.user;
+      const userId = res.locals.user;
       const thumbnailUrl = await uploadImageToCloudinary(req.file.path);
       const { groupName, place, participant, startDate, endDate } = req.body;
       const participants = JSON.parse(participant);
@@ -34,7 +34,7 @@ class GroupController {
   // 내가 참여한 그룹 전체 조회
   findMyGroup = async (req, res, next) => {
     try {
-      const { userId } = res.locals.user;
+      const userId = res.locals.user;
       const findMyGroupData = await this.groupService.findMyGroup(userId);
       res.status(201).json({
         success: true,
@@ -50,7 +50,7 @@ class GroupController {
   // 날짜별 겸색
   searchDate = async (req, res, next) => {
     try {
-      const { userId } = res.locals.user;
+      const userId = res.locals.user;
       const { searchDate } = req.params;
       const searchDateRange = searchDate.split("~");
       const searchStartDate = searchDateRange[0];
@@ -75,11 +75,11 @@ class GroupController {
     try {
       const { groupName, place, participant, startDate, endDate } = req.body;
       const { groupId } = req.params;
-      const { userId } = res.locals.user;
+      const userId = res.locals.user;
       const participants = JSON.parse(participant);
-      
+
       let thumbnailUrl;
-      
+
       if (req.file) {
         thumbnailUrl = await uploadImageToCloudinary(req.file.path);
       } else {
@@ -129,7 +129,7 @@ class GroupController {
   groupOut = async (req, res, next) => {
     try {
       const { groupId } = req.params;
-      const { userId } = res.locals.user;
+      const userId = res.locals.user;
       const groupOutData = await this.groupService.groupOut(userId, groupId);
 
       res.status(200).json(groupOutData);

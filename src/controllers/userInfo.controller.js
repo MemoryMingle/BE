@@ -7,7 +7,7 @@ class UserInfoController {
     userInfoService = new UserInfoService();
 
     changeProfile = async (req, res, next) => {
-        const { userId } = res.locals.user;
+        const userId = res.locals.user;
         let profileUrl;
         if (req.file) {
             profileUrl = await uploadToProfile(req.file.path);
@@ -22,20 +22,20 @@ class UserInfoController {
         });
     }
     defaultProfile = async (req, res, next) => {
-        const { userId } = res.locals.user;
+        const userId = res.locals.user;
         await this.userInfoService.defaultProfile(userId)
         res.status(201).json({
             message: '프로필 삭제가 완료되었습니다.'
         });
     }
     changeNickname = async (req, res, next) => {
-        const { userId } = res.locals.user;
+        const userId = res.locals.user;
         const { nickname } = req.body;
         await this.userInfoService.changeNickname(userId, nickname)
         res.status(201).json({ message: '닉네임 변경이 완료되었습니다.' });
     }
     changePassword = async (req, res, next) => {
-        const { userId } = res.locals.user;
+        const userId = res.locals.user;
         const { originalPassword, changedPassword, changedConfirm } = req.body;
         const { error } = passwordSchema.validate(req.body);
         if (error) {
@@ -45,13 +45,13 @@ class UserInfoController {
         res.status(200).json({ message: '비밀번호 변경이 완료되었습니다.' });
     }
     deleteUserInfo = async (req, res, next) => {
-        const { userId } = res.locals.user;
+        const userId = res.locals.user;
         const { password } = req.body;
         await this.userInfoService.deleteUserInfo(userId, password)
         res.status(200).json({ message: '회원 탈퇴가 완료되었습니다.' });
     }
     deleteAllUserInfo = async (req, res, next) => {
-        const { userId } = res.locals.user;
+        const userId = res.locals.user;
         const { adminVerification } = req.body;
         const confirmRequest = req.confirmRequest;
 
