@@ -9,7 +9,7 @@ class UserRepository {
         nickname: nickname,
         userId: { [Op.ne]: userId },
       },
-      attributes: ["userId", "loginId", "nickname", "profileUrl"],
+      attributes: ["userId", "loginId", "nickname", "profileUrl", "kakaoId"],
     });
     return findByNicknameData;
   };
@@ -18,7 +18,7 @@ class UserRepository {
   userInfoByUserId = async (userId) => {
     const userInfoData = await Users.findOne({
       where: { userId: userId },
-      attributes: ["userId", "loginId", "nickname", "profileUrl", "providerType"],
+      attributes: ["userId", "loginId", "nickname", "profileUrl", "providerType", "kakaoId"],
     });
     return userInfoData;
   };
