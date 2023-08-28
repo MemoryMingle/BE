@@ -38,6 +38,7 @@ class MemoryRepository {
             attributes: ["userId", "commentId", "comment", "createdAt"],
             group: ["commentId"],
             raw: true,
+            order: [['createdAt', 'DESC']],
             include: [
                 {
                     model: Users,
