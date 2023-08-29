@@ -5,8 +5,7 @@ const { Users } = require("../models");
 const regenerateToken = require("../utils/regenerateToken"); // 새로운 토큰을 발급하는 로직
 
 module.exports = asyncHandler(async (req, res, next) => {
-    // const { MM } = req.cookies;
-    const { MM } = req.headers;
+    const { MM } = req.cookies;
     const [type, token] = (MM ?? "").split(" ");
 
     if (!type || !token || type !== "Bearer") {
