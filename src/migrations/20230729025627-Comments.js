@@ -16,8 +16,8 @@ module.exports = {
         references: {
           model: 'Memories',
           key: 'memoryId',
-          onDelete: 'CASCADE'
         },
+        onDelete: 'CASCADE',
       },
       comment: {
         allowNull: false,

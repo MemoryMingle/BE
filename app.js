@@ -84,6 +84,9 @@ app.use("/api", indexRouter);
 app.use((err, req, res, next) => {
     const statusCode = err.statusCode || 500;
     const message = err.message || '잘못된 요청입니다.';
+
+    req.confirmRequest.decrement();
+
     res.status(statusCode).send({
         success: false,
         message: message
