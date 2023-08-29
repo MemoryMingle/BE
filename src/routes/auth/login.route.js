@@ -16,16 +16,18 @@ router.get('/', authMiddleware, asyncHandler(async (req, res) => {
 }))
 router.post('/', passport.authenticate('local', { session: false }), async (req, res) => {
     // 위에서 done이 req.user로 반환된다.
-    res.cookie("MM", `Bearer ${req.user.accessToken}`, {
-        secure: true,
-        httpOnly: true,
-        sameSite: "none",
-    });
-    res.cookie("refreshToken", req.user.refreshToken, {
-        secure: true,
-        httpOnly: true,
-        sameSite: "none",
-    });
+    // res.cookie("MM", `Bearer ${req.user.accessToken}`, {
+    //     secure: true,
+    //     httpOnly: true,
+    //     sameSite: "none",
+    // });
+    // res.cookie("refreshToken", req.user.refreshToken, {
+    //     secure: true,
+    //     httpOnly: true,
+    //     sameSite: "none",
+    // });
+    res.setHeader("Authorization", `Bearer ${req.user.accessToken}`);
+    res.setHeader("Refresh-Token", req.user.refreshToken);
     res.status(200).json({
         userId: req.user.user.userId,
         message: "로그인 완료"
