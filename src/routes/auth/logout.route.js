@@ -7,7 +7,7 @@ const asyncHandler = require("../../utils/asyncHandler.js")
 
 router.post('/', authMiddleware, asyncHandler(async (req, res) => {
     // 레디스에서 리프레시 토큰을 제거합니다.
-    const { userId } = res.locals.user // 엑세스 토큰 또는 다른 출처에서 사용자 ID를 가져옵니다.
+    const userId = res.locals.user // 엑세스 토큰 또는 다른 출처에서 사용자 ID를 가져옵니다.
     await redisCli.del(`refreshToken:${userId}`);
     // 엑세스 토큰 쿠키를 제거합니다.
     res.clearCookie('MM', {

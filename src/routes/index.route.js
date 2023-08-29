@@ -6,18 +6,20 @@ const memoryRouter = require("./memory.route")
 const userRouter = require("./user.route")
 const commentRouter = require("./comment.route")
 const dummyRoutes = require("./dummy.routs")
+const signedRoutes = require("./signed.route")
 
 
 router.get("/", (req, res) => {
   res.send("이게 왜 안됨?");
 });
 
-
 router.use("/dummy", dummyRoutes);
+router.use("/signed", signedRoutes);
 router.use("/auth", authRouter);
 router.use("/group", groupRouter);
 groupRouter.use("/:groupId/memory", memoryRouter);
 memoryRouter.use("/:memoryId/comment", commentRouter);
+
 
 
 // 닉네임 기반 검색

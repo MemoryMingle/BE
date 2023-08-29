@@ -7,7 +7,7 @@ class MemoryController {
     memoryService = new MemoryService()
 
     createMemory = async (req, res, next) => {
-        const { userId } = res.locals.user;
+        const userId = res.locals.user;
         const { groupId } = req.params;
         const { title } = req.body; // imageUrl을 여기에서 제거
         let imageUrl;  // 이미지 URL 초기화
@@ -26,7 +26,7 @@ class MemoryController {
     };
 
     findOneMemory = async (req, res, next) => {
-        const { userId } = res.locals.user;
+        const userId = res.locals.user;
         const { groupId, memoryId } = req.params;
         const [findOneMemoryData, findCommentData, findOneUserData] = await this.memoryService.findOneMemory(userId, groupId, memoryId)
         res
@@ -39,7 +39,7 @@ class MemoryController {
     }
     findUpdateMemory = async (req, res, next) => {
         // null인 경우와 그룹 유저 검사할건지에 대한 확인이 필요함
-        const { userId } = res.locals.user;
+        const userId = res.locals.user;
         const { memoryId } = req.params;
         const findUpdateMemoryData = await this.memoryService.findUpdateMemory(userId, memoryId)
         res
@@ -49,7 +49,7 @@ class MemoryController {
             })
     }
     updateMemory = async (req, res, next) => {
-        const { userId } = res.locals.user;
+        const userId = res.locals.user;
         const { memoryId } = req.params;
         const { title } = req.body
         let imageUrl;  // 이미지 URL 초기화
@@ -68,7 +68,7 @@ class MemoryController {
             })
     }
     deleteMemory = async (req, res, next) => {
-        const { userId } = res.locals.user;
+        const userId = res.locals.user;
         const { memoryId } = req.params;
         const deleteMemoryData = await this.memoryService.deleteMemory(userId, memoryId)
         res
