@@ -59,7 +59,6 @@ app.use(
     cors({
         origin: function (origin, callback) {
             if (!origin) return callback(null, true);  // origin이 제공되지 않은 경우 요청을 허용한다
-
             // origin이 허용된 origin 중 하나인지 확인한다
             if (allowedOrigins.indexOf(origin) === -1) {
                 const errorMsg = '이 사이트의 CORS 정책은 지정된 Origin에서의 접근을 허용하지 않습니다.';
@@ -68,6 +67,7 @@ app.use(
 
             return callback(null, true);
         },
+        exposedHeaders: ['MM', 'RefreshToken'],
         methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
         credentials: true,
     })
