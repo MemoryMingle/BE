@@ -6,9 +6,14 @@ const asyncHandler = require('../../utils/asyncHandler')
 const { saveRefreshToken, deleteRefreshToken } = require('../../utils/tokenManager.redis');
 const axios = require("axios");
 const { Users } = require("../../models")
+const authMiddleware = require("../../utils/authMiddleware")
 
-
-
+router.get('/', authMiddleware, asyncHandler(async (req, res) => {
+    res.status(200).json({
+        success: true,
+        message: "로그인 됨"
+    });
+}))
 router.post('/', passport.authenticate('local', { session: false }), async (req, res) => {
     // 위에서 done이 req.user로 반환된다.
     res.cookie("MM", `Bearer ${req.user.accessToken}`, {
