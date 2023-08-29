@@ -33,7 +33,6 @@ router.post('/', passport.authenticate('local', { session: false }), async (req,
 });
 
 router.get("/kakao", passport.authenticate("kakao", { session: false }));
-
 router.get(
     "/kakao/callback",
     passport.authenticate("kakao", { failureRedirect: "/", session: false }),
@@ -66,6 +65,7 @@ router.get(
         });
         res.redirect("http://localhost:3000/groupmain")
     })
-)
+);
+
 
 module.exports = router;
