@@ -36,14 +36,6 @@ class UserInfoRepository {
         await applyBeforeDestroyHook(user);
         await user.destroy();
     }
-    deleteParticipants = async (userId) => {
-        await Participants.destroy(
-            {
-                where: { userId },
-                limit: 10,
-            },
-        );
-    }
     deleteAllUserInfo = async () => {
         const deleteCount = await Users.destroy(
             {

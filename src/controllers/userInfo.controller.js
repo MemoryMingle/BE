@@ -56,20 +56,36 @@ class UserInfoController {
         const confirmRequest = req.confirmRequest;
 
         const maxListeners = 5;  // 임계값 설정
+        const timeoutDuration = 15 * 1000; // 5초
         let totalDeletedCount = 0;
+
+        const timeoutFunc = (listener) => {
+            return setTimeout(() => {
+                confirmRequest.off('requestCompleted', listener); // 이벤트 리스너 제거
+                console.error("요청이 너무 오래 걸립니다."); // 또는 적절한 에러 처리
+            }, timeoutDuration);
+        };
+
         const processDelete = async () => {
-            console.log("현재 처리 중 요청 갯수 : ", confirmRequest.getCurrentRequests())
-            if (confirmRequest.getCurrentRequests() > 10) {
+            console.log("현재 처리 중 요청 갯수 : ", confirmRequest.getCurrentRequests());
+
+            if (confirmRequest.getCurrentRequests() > 5) {
                 if (confirmRequest.listenerCount('requestCompleted') >= maxListeners) {
-                    throw new CustomError("동시 삭제 시도 횟수가 너무 많습니다.", 404)
+                    throw new CustomError("동시 삭제 시도 횟수가 너무 많습니다.", 404);
                 }
+
                 const listener = () => {
+                    clearTimeout(timeout); // 타임아웃 제거
                     confirmRequest.off('requestCompleted', listener); // 이벤트 리스너 제거
                     processDelete();
                 };
+
+                const timeout = timeoutFunc(listener);
+
                 confirmRequest.once('requestCompleted', listener);
                 return;
             }
+
             // 5개의 데이터를 삭제
             const deletedCount = await this.userInfoService.deleteAllUserInfo(userId, adminVerification);
             // 삭제된 데이터 수를 누적
@@ -80,7 +96,8 @@ class UserInfoController {
             }
             // 계속 삭제 처리
             processDelete();
-        }
+        };
+
         await processDelete();
     }
 }

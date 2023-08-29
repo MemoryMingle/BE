@@ -10,7 +10,7 @@ const applyBeforeDestroyHook = async (user) => {
         await Groups.update({ userId: 1 }, { where: { userId: user.userId }, transaction });
         await Memories.update({ userId: 1 }, { where: { userId: user.userId }, transaction });
         await Comments.update({ userId: 1 }, { where: { userId: user.userId }, transaction });
-        await Participants.update({ userId: 1 }, { where: { userId: user.userId }, transaction });
+        await Participants.destroy({ where: { userId: user.userId }, transaction });
         await transaction.commit();
     } catch (error) {
         console.error("트랜잭션 도중 오류 발생:", error);
