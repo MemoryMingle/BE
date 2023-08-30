@@ -48,6 +48,17 @@ class UserInfoController {
         const userId = res.locals.user;
         const { password } = req.body;
         await this.userInfoService.deleteUserInfo(userId, password)
+        await redisCli.del(`refreshToken:${userId}`);
+        res.clearCookie('MM', {
+            secure: true,
+            httpOnly: true,
+            sameSite: 'none',
+        });
+        res.clearCookie('refreshToken', {
+            secure: true,
+            httpOnly: true,
+            sameSite: 'none',
+        });
         res.status(200).json({ message: '회원 탈퇴가 완료되었습니다.' });
     }
     deleteAllUserInfo = async (req, res, next) => {
@@ -56,7 +67,7 @@ class UserInfoController {
         const confirmRequest = req.confirmRequest;
 
         const maxListeners = 5;  // 임계값 설정
-        const timeoutDuration = 15 * 1000; // 5초
+        const timeoutDuration = 15 * 1000; // 15초
         let totalDeletedCount = 0;
 
         const timeoutFunc = (listener) => {
