@@ -63,7 +63,7 @@ router.get(
             httpOnly: true,
             sameSite: "none",
         });
-        res.redirect("http://localhost:3000/groupmain")
+        res.redirect("https://memorymingle.shop/groupmain")
     })
 );
 
