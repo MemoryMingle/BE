@@ -4,8 +4,6 @@ const jwt = require("jsonwebtoken");
 const router = express.Router();
 const asyncHandler = require('../../utils/asyncHandler')
 const { saveRefreshToken, deleteRefreshToken } = require('../../utils/tokenManager.redis');
-const axios = require("axios");
-const { Users } = require("../../models")
 const authMiddleware = require("../../utils/authMiddleware")
 
 router.get('/', authMiddleware, asyncHandler(async (req, res) => {

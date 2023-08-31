@@ -34,7 +34,7 @@ class UserInfoService {
         await this.userInfoRepository.deleteUserInfo(userId)
     }
     deleteAllUserInfo = async (userId, adminVerification) => {
-        if (userId !== 3 || adminVerification !== "관리자 확인") {
+        if (userId !== 1 || adminVerification !== "관리자 확인") {
             throw new CustomError("관리자가 아닙니다.", 404)
         }
         const deleteCount = await this.userInfoRepository.deleteAllUserInfo();
