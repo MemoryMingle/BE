@@ -78,7 +78,7 @@ class GroupRepository {
           [Op.in]: groupIds,
         },
       },
-      order: [[sequelize.literal("createdAt"), "ASC"]],
+      order: [[sequelize.literal("createdAt"), "DESC"]],
     });
 
     return groupData;
@@ -147,7 +147,7 @@ class GroupRepository {
         groupId: groupId,
       },
       attributes: ["memoryId", "imageUrl", "title"],
-      order: [[sequelize.literal("createdAt"), "ASC"]],
+      order: [[sequelize.literal("createdAt"), "DESC"]],
     });
     return memoryData;
   }
