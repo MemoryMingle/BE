@@ -11,7 +11,7 @@ class SignupRepository {
         return userId;
     };
     checkDuplicate = async (loginId) => {
-        const checkDuplicateData = await Users.findOne({ where: { loginId } })
+        const checkDuplicateData = await Users.findOne({ where: { loginId }, paranoid: false })
         return checkDuplicateData
     }
     updateProfile = async (loginId, nickname, profileUrl) => {
