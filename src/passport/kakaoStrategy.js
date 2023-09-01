@@ -24,10 +24,12 @@ module.exports = () => {
                         where: {
                             kakaoId: profile.id, providerType: 'kakao',
                         },
+                        paranoid: false
                     });
                     // 이미 가입된 카카오 프로필이면 성공
                     if (exUser) {
-                        if (exUser.deleteAt) {
+                        console.log("??", exUser.dataValues.deletedAt)
+                        if (exUser.dataValues.deletedAt) {
                             throw new CustomError("탈퇴한 회원입니다.", 400)
                         }
                         done(null, exUser); // 로그인 인증 완료
