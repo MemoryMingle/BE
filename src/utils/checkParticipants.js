@@ -12,7 +12,7 @@ module.exports = asyncHandler(async (req, res, next) => {
     });
 
     if (!checkAuth) {
-      throw new CustomError("참여자만 불러올 수 있습니다.");
+      throw new CustomError("참여자만 불러올 수 있습니다.", 400);
     }
     next();
   } catch (err) {
