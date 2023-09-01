@@ -40,8 +40,8 @@ class MemoryController {
     findUpdateMemory = async (req, res, next) => {
         // null인 경우와 그룹 유저 검사할건지에 대한 확인이 필요함
         const userId = res.locals.user;
-        const { memoryId } = req.params;
-        const findUpdateMemoryData = await this.memoryService.findUpdateMemory(userId, memoryId)
+        const { groupId, memoryId } = req.params;
+        const findUpdateMemoryData = await this.memoryService.findUpdateMemory(userId, groupId, memoryId)
         res
             .status(200)
             .json({
@@ -50,7 +50,7 @@ class MemoryController {
     }
     updateMemory = async (req, res, next) => {
         const userId = res.locals.user;
-        const { memoryId } = req.params;
+        const { groupId, memoryId } = req.params;
         const { title } = req.body
         let imageUrl;  // 이미지 URL 초기화
         if (req.file) {
@@ -59,7 +59,7 @@ class MemoryController {
         } else {
             throw new CustomError("이미지 업로드 중 문제 발생", 400)
         }
-        const updateMemoryData = await this.memoryService.updateMemory(userId, memoryId, title, imageUrl)
+        const updateMemoryData = await this.memoryService.updateMemory(userId, groupId, memoryId, title, imageUrl)
         res
             .status(200)
             .json({

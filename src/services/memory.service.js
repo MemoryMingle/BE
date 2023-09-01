@@ -8,26 +8,25 @@ class MemoryService {
         return createMemoryData
     }
     findOneMemory = async (userId, groupId, memoryId) => {
-        const participantCheckData = await this.memoryRepository.participantCheck(userId, groupId)
-        if (!participantCheckData) {
-            throw new CustomError("참여자가 아닙니다.", 400);
-        }
         const findOneMemoryData = await this.memoryRepository.findOneMemory(memoryId)
+        if (findOneMemoryData.groupId !== Number(groupId)) {
+            throw new CustomError("잘못된 접근입니다.", 400)
+        }
         const findCommentData = await this.memoryRepository.findComment(memoryId)
         const findOneUserData = await this.memoryRepository.findOneUser(userId)
         return [findOneMemoryData, findCommentData, findOneUserData]
     }
-    findUpdateMemory = async (memoryId) => {
+    findUpdateMemory = async (userId, groupId, memoryId) => {
         const findUpdateMemoryData = await this.memoryRepository.findUpdateMemory(memoryId)
-        if (findUpdateMemoryData.userId !== userId) {
-            throw new CustomError("글쓴이가 아닙니다.", 400);
+        if (findUpdateMemoryData.userId !== Number(userId) || findUpdateMemoryData.groupId !== Number(groupId)) {
+            throw new CustomError("잘못된 접근입니다.", 400);
         }
         return findUpdateMemoryData
     }
-    updateMemory = async (userId, memoryId, title, imageUrl) => {
+    updateMemory = async (userId, groupId, memoryId, title, imageUrl) => {
         const memoryCheckData = await this.memoryRepository.memoryCheck(memoryId)
-        if (memoryCheckData.userId !== userId) {
-            throw new CustomError("글쓴이가 아닙니다.", 400);
+        if (memoryCheckData.userId !== Number(userId) || memoryCheckData.groupId !== Number(groupId)) {
+            throw new CustomError("잘못된 접근입니다.", 400);
         }
         const updateMemoryData = await this.memoryRepository.updateMemory(memoryId, title, imageUrl)
         return updateMemoryData

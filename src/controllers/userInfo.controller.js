@@ -47,8 +47,11 @@ class UserInfoController {
     }
     deleteUserInfo = async (req, res, next) => {
         const userId = res.locals.user;
-        const { password } = req.body;
-        await this.userInfoService.deleteUserInfo(userId, password)
+        const { deleteCheck } = req.body;
+        if (deleteCheck !== "떠날래요") {
+            throw new CustomError("떠날래요를 입력해주세요.", 400)
+        }
+        await this.userInfoService.deleteUserInfo(userId)
         await redisCli.del(`refreshToken:${userId}`);
         res.clearCookie('MM', {
             secure: true,

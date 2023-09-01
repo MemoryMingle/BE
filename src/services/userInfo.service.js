@@ -25,12 +25,7 @@ class UserInfoService {
         const hashPassword = bcrypt.hashSync(changedPassword, 10)
         await this.userInfoRepository.changePassword(userId, hashPassword)
     }
-    deleteUserInfo = async (userId, password) => {
-        const user = await this.userInfoRepository.passwordCheck(userId)
-        const checkPassword = bcrypt.compareSync(password, user.password);
-        if (!user || !checkPassword) {
-            throw new CustomError("비밀번호를 확인해주세요.", 400)
-        }
+    deleteUserInfo = async (userId) => {
         await this.userInfoRepository.deleteUserInfo(userId)
     }
     deleteAllUserInfo = async (userId, adminVerification) => {

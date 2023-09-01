@@ -21,7 +21,7 @@ class MemoryRepository {
     findOneMemory = async (memoryId) => {
         const findOneMemoryData = await Memories.findOne({
             where: { memoryId },
-            attributes: ["userId", "memoryId", "title", "imageUrl", "createdAt"],
+            attributes: ["userId", "groupId", "memoryId", "title", "imageUrl", "createdAt"],
             raw: true,
             include: [
                 {
@@ -58,12 +58,15 @@ class MemoryRepository {
     findUpdateMemory = async (memoryId) => {
         const findUpdateMemoryData = await Memories.findOne({
             where: { memoryId },
-            attributes: ["memoryId", "title", "imageUrl"]
+            attributes: ["userId", "groupId", "memoryId", "title", "imageUrl"]
         })
         return findUpdateMemoryData
     }
     memoryCheck = async (memoryId) => {
-        const checkData = await Memories.findByPk(memoryId)
+        const checkData = await Memories.findOne({
+            where: { memoryId },
+            attributes: ["userId", "groupId"]
+        })
         return checkData
     }
     updateMemory = async (memoryId, title, imageUrl) => {
