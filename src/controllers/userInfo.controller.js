@@ -2,6 +2,7 @@ const UserInfoService = require('../services/userInfo.service');
 const CustomError = require('../utils/error');
 const { passwordSchema } = require('../utils/validation');
 const uploadToProfile = require('../utils/uploadToProfile');
+const redisCli = require('../utils/redisClient');
 
 class UserInfoController {
     userInfoService = new UserInfoService();
