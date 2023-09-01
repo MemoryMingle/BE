@@ -33,7 +33,7 @@ router.post('/', passport.authenticate('local', { session: false }), async (req,
 router.get("/kakao", passport.authenticate("kakao", { session: false }));
 router.get(
     "/kakao/callback",
-    passport.authenticate("kakao", { failureRedirect: "/", session: false }),
+    passport.authenticate("kakao", { failureRedirect: "https://memorymingle.shop/login?error=KakaoLoginFailed", session: false }),
     asyncHandler(async (req, res) => {
         const user = req.user;
 

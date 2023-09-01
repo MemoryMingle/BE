@@ -30,7 +30,7 @@ module.exports = () => {
                     if (exUser) {
                         console.log("??", exUser.dataValues.deletedAt)
                         if (exUser.dataValues.deletedAt) {
-                            throw new CustomError("탈퇴한 회원입니다.", 400)
+                            done(null, false, { message: '탈퇴한 회원입니다.' });
                         }
                         done(null, exUser); // 로그인 인증 완료
                     } else {
