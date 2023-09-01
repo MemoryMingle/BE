@@ -1,5 +1,6 @@
 const passport = require('passport');
 const KakaoStrategy = require('passport-kakao').Strategy;
+const CustomError = require("../utils/error")
 
 const { Users } = require('../models');
 
@@ -22,11 +23,13 @@ module.exports = () => {
                         // 카카오 플랫폼에서 로그인 했고 & snsId필드에 카카오 아이디가 일치할경우
                         where: {
                             kakaoId: profile.id, providerType: 'kakao',
-                            deletedAt: null
                         },
                     });
                     // 이미 가입된 카카오 프로필이면 성공
                     if (exUser) {
+                        if (exUser.deleteAt) {
+                            throw new CustomError("탈퇴한 회원입니다.", 400)
+                        }
                         done(null, exUser); // 로그인 인증 완료
                     } else {
                         // 가입되지 않는 유저면 회원가입 시키고 로그인을 시킨다
