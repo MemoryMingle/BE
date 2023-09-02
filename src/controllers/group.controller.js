@@ -51,8 +51,8 @@ class GroupController {
   searchDate = async (req, res, next) => {
     try {
       const userId = res.locals.user;
-      const { searchDate } = req.params;
-      const searchDateRange = searchDate.split("~");
+      const { date } = req.params;
+      const searchDateRange = date.split("~");
       const searchStartDate = searchDateRange[0];
       const searchEndDate = searchDateRange[1];
       const searchDateData = await this.groupService.searchDate(
@@ -64,6 +64,44 @@ class GroupController {
         success: true,
         msg: "Group 검색에 성공하였습니다.",
         searchDateData,
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  // 그룹명별 검색
+  searchGroupName = async (req, res, next) => {
+    try {
+      const userId = res.locals.user;
+      const { groupName } = req.params;
+      const searchGroupNameData = await this.groupService.searchGroupName(
+        userId,
+        groupName
+      );
+      res.status(201).json({
+        success: true,
+        msg: "Group 검색에 성공하였습니다.",
+        searchGroupNameData,
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  // 장소별 검색
+  searchPlace = async (req, res, next) => {
+    try {
+      const userId = res.locals.user;
+      const { place } = req.params;
+      const searchPlaceData = await this.groupService.searchPlace(
+        userId,
+        place
+      );
+      res.status(201).json({
+        success: true,
+        msg: "Group 검색에 성공하였습니다.",
+        searchPlaceData,
       });
     } catch (error) {
       next(error);

@@ -185,7 +185,6 @@ class GroupRepository {
   // 날짜 검색
   async searchDate(userId, searchStartDate, searchEndDate) {
     const groupIds = await this.findGroupIds(userId);
-    console.log(groupIds);
     const searchDateData = await Groups.findAll({
       where: {
         groupId: {
@@ -201,6 +200,38 @@ class GroupRepository {
     });
 
     return searchDateData;
+  }
+
+  async searchGroupName(userId, groupName) {
+    const groupIds = await this.findGroupIds(userId);
+    const searchGroupNameData = await Groups.findAll({
+      where: {
+        groupId: {
+          [Op.in]: groupIds,
+        },
+        groupName: {
+          [Op.like]: `%${groupName}%`,
+        },
+      },
+    });
+
+    return searchGroupNameData;
+  }
+
+  async searchPlace(userId, place) {
+    const groupIds = await this.findGroupIds(userId);
+    const searchPlaceData = await Groups.findAll({
+      where: {
+        groupId: {
+          [Op.in]: groupIds,
+        },
+        place: {
+          [Op.like]: `%${place}%`,
+        },
+      },
+    });
+
+    return searchPlaceData;
   }
 }
 

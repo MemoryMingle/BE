@@ -32,6 +32,12 @@ router.get(
   groupController.groupData
 );
 router.delete("/:groupId/groupout", authMiddleware, groupController.groupOut);
-router.get("/search/:searchDate", authMiddleware, groupController.searchDate);
+router.get("/search/date/:date", authMiddleware, groupController.searchDate);
+router.get(
+  "/search/groupName/:groupName",
+  authMiddleware,
+  groupController.searchGroupName
+);
+router.get("/search/place/:place", authMiddleware, groupController.searchPlace);
 
 module.exports = router;

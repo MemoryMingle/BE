@@ -56,7 +56,7 @@ class GroupService {
     startDate,
     endDate
   ) => {
-    const transaction = await sequelize.transaction();    
+    const transaction = await sequelize.transaction();
     try {
       const updateMyGroupData = await this.groupRepository.updateMyGroup(
         userId,
@@ -173,6 +173,24 @@ class GroupService {
     );
 
     return searchDateData;
+  };
+
+  searchGroupName = async (userId, groupName) => {
+    const searchGroupNameData = await this.groupRepository.searchGroupName(
+      userId,
+      groupName
+    );
+
+    return searchGroupNameData;
+  };
+
+  searchPlace = async (userId, place) => {
+    const searchPlaceData = await this.groupRepository.searchPlace(
+      userId,
+      place
+    );
+
+    return searchPlaceData;
   };
 }
 
