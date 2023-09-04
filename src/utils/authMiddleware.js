@@ -9,7 +9,7 @@ module.exports = asyncHandler(async (req, res, next) => {
     const [type, token] = (MM ?? "").split(" ");
 
     if (!type || !token || type !== "Bearer") {
-        throw new CustomError("로그인이 필요한 기능입니다.", 403);
+        throw new CustomError("로그인이 필요한 기능입니다.", 400);
     }
     try {
         const decodeToken = jwt.verify(token, process.env.JWT_SECRET);

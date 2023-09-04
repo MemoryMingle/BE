@@ -11,7 +11,7 @@ class UserInfoRepository {
     }
     defaultProfile = async (userId) => {
         await Users.update(
-            { profileUrl: "https://t1.daumcdn.net/cfile/tistory/243FE450575F82662D" },
+            { profileUrl: "https://res.cloudinary.com/dxl01ypgw/image/upload/v1693664401/TEST/KakaoTalk_20230902_231524661_lm2zxh.png" },
             { where: { userId } }
         );
     }
