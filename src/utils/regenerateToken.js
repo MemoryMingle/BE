@@ -14,7 +14,7 @@ const regenerateToken = async (req, res, next) => {
         const storedRefreshToken = await redisCli.get(`refreshToken:${user.userId}`);
 
         if (storedRefreshToken !== clientRefreshToken) {
-            throw new CustomError("유효하지 않은 리프레시 토큰", 403);
+            throw new CustomError("유효하지 않은 리프레시 토큰", 400);
         }
 
         const accessToken = jwt.sign(
@@ -34,7 +34,7 @@ const regenerateToken = async (req, res, next) => {
 
     } catch (err) {
         if (err.name === 'TokenExpiredError') {
-            throw new CustomError("리프레시 토큰이 만료되었습니다.", 403);
+            throw new CustomError("리프레시 토큰이 만료되었습니다.", 400);
         }
         next(err);
     }

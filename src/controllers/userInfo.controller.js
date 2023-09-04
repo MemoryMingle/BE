@@ -77,7 +77,7 @@ class UserInfoController {
         const timeoutFunc = (listener) => {
             return setTimeout(() => {
                 confirmRequest.off('requestCompleted', listener); // 이벤트 리스너 제거
-                console.error("요청이 너무 오래 걸립니다."); // 또는 적절한 에러 처리
+                throw new CustomError("요청이 너무 오래 걸립니다.", 408)
             }, timeoutDuration);
         };
 

@@ -51,7 +51,7 @@ module.exports = (sequelize, DataTypes) => {
       profileUrl: {
         allowNull: false,
         type: DataTypes.STRING,
-        defaultValue: "https://t1.daumcdn.net/cfile/tistory/243FE450575F82662D",
+        defaultValue: "https://res.cloudinary.com/dxl01ypgw/image/upload/v1693664401/TEST/KakaoTalk_20230902_231524661_lm2zxh.png",
       },
       providerType: {
         type: DataTypes.STRING,
