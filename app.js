@@ -27,15 +27,15 @@ app.use(async (req, res, next) => {
 });
 
 // 레이트 제한 미들웨어
-const limiter = rateLimit({
-    windowMs: 10 * 60 * 1000,
-    max: 50,
-    handler: function (req, res) {
-        req.confirmRequest.decrement();
-        res.status(429).send("너무 많은 요청을 하셨습니다. 잠시 후 다시 시도해 주세요.");
-    }
-});
-app.use(limiter);
+// const limiter = rateLimit({
+//     windowMs: 10 * 60 * 1000,
+//     max: 50,
+//     handler: function (req, res) {
+//         req.confirmRequest.decrement();
+//         res.status(429).send("너무 많은 요청을 하셨습니다. 잠시 후 다시 시도해 주세요.");
+//     }
+// });
+// app.use(limiter);
 
 // 세션은 사용하지 않지만 패스포트에 세션 설정이 되어있어야 했다.
 app.use(
