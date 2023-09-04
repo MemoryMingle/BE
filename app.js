@@ -57,7 +57,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 const allowedOrigins = process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',') : [];
-
 app.use(
     cors({
         origin: function (origin, callback) {
