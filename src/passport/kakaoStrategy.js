@@ -28,7 +28,6 @@ module.exports = () => {
                     });
                     // 이미 가입된 카카오 프로필이면 성공
                     if (exUser) {
-                        console.log("??", exUser.dataValues.deletedAt)
                         if (exUser.dataValues.deletedAt) {
                             done(null, false, { message: '탈퇴한 회원입니다.' });
                         }
