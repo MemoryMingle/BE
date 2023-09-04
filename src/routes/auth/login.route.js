@@ -17,14 +17,12 @@ router.post('/', passport.authenticate('local', { session: false }), async (req,
     res.cookie("MM", `Bearer ${req.user.accessToken}`, {
         secure: true,
         httpOnly: true,
-        sameSite: "none",
-        domain: ".memorymingle.shop"
+        sameSite: "none"
     });
     res.cookie("refreshToken", req.user.refreshToken, {
         secure: true,
         httpOnly: true,
-        sameSite: "none",
-        domain: ".memorymingle.shop"
+        sameSite: "none"
     });
     res.status(200).json({
         userId: req.user.user.userId,
