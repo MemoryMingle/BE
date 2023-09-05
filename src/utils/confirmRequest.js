@@ -37,4 +37,5 @@ class ConfirmRequest extends EventEmitter {
     }
 }
 
-module.exports = ConfirmRequest;
+const confirmRequestInstance = new ConfirmRequest();
+module.exports = confirmRequestInstance;
