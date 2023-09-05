@@ -6,7 +6,6 @@ const generateSignedUploadParams = require("../utils/signedUpload")
 
 router.get('/', authMiddleware, asyncHandler(async (req, res) => {
     const { signature, timestamp } = await generateSignedUploadParams();
-    console.log(signature, timestamp)
     res.status(200).json({
         success: true,
         signature,

@@ -35,7 +35,7 @@ class userInfoCheckDelete {
                     where: {
                         deletedAt: {
                             [Op.ne]: null,
-                            [Op.lt]: sevenDaysAgo  // Less than 7 days ago
+                            // [Op.lt]: sevenDaysAgo  // Less than 7 days ago
                         }
                     },
                     limit: 10,
@@ -45,12 +45,12 @@ class userInfoCheckDelete {
                 if (deletedCount < 5) {
                     return `총 ${totalDeletedCount}개의 회원 정보 삭제 작업이 완료되었습니다.`;
                 } else {
-                    processDelete();
+                    return await processDelete();
                 }
             };
             return await processDelete();
         } catch (error) {
-            console.error("스케줄러 에러", error);
+            console.error("스케줄러 삭제 처리 중 에러", error);
         }
     }
 }

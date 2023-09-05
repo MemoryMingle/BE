@@ -82,7 +82,6 @@ class UserInfoController {
         };
 
         const processDelete = async () => {
-            console.log("현재 처리 중 요청 갯수 : ", confirmRequest.getCurrentRequests());
 
             if (confirmRequest.getCurrentRequests() > 5) {
                 if (confirmRequest.listenerCount('requestCompleted') >= maxListeners) {

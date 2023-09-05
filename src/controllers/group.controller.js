@@ -85,7 +85,6 @@ class GroupController {
       } else {
         thumbnailUrl = req.body.thumbnailUrl;
       }
-      console.log(participants);
       const updateMyGroupData = await this.groupService.updateMyGroup(
         userId,
         groupId,

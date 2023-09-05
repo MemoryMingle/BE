@@ -8,7 +8,6 @@ const appRoot = path.dirname(require.main.filename);
 const uploadDir = path.join(appRoot, 'uploads');
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        console.log('Multer destination function called');
         cb(null, uploadDir);  // 이전에 계산한 'uploads' 디렉토리의 절대 경로를 사용합니다.
     },
     filename: function (req, file, cb) {

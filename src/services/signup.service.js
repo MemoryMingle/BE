@@ -6,7 +6,6 @@ class SignupService {
 
     signup = async (loginId, password) => {
         const hashPassword = await bcrypt.hash(password, 10)
-        console.log(hashPassword)
         const userId = await this.signupRepository.signup(loginId, hashPassword);
         return userId
     };

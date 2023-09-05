@@ -178,14 +178,13 @@ class GroupRepository {
 
       return count;
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
   // 날짜 검색
   async searchDate(userId, searchStartDate, searchEndDate) {
     const groupIds = await this.findGroupIds(userId);
-    console.log(groupIds);
     const searchDateData = await Groups.findAll({
       where: {
         groupId: {
