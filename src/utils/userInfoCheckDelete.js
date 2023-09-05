@@ -35,7 +35,7 @@ class userInfoCheckDelete {
                     where: {
                         deletedAt: {
                             [Op.ne]: null,
-                            // [Op.lt]: sevenDaysAgo  // Less than 7 days ago
+                            [Op.lt]: sevenDaysAgo  // Less than 7 days ago
                         }
                     },
                     limit: 10,
