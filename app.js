@@ -2,18 +2,19 @@ const express = require("express");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const morgan = require("morgan");
+const indexRouter = require("./src/routes/index.route")
 const passport = require('passport');
 const session = require('express-session');
-const ConfirmRequest = require('./src/utils/confirmRequest');
+const confirmRequest = require('./src/utils/confirmRequest');
 const rateLimit = require("express-rate-limit");
+const scheduleDelete = require('./src/utils/scheduler');  // 경로는 실제 파일 위치에 맞게 변경해 주세요.
 require('./src/passport/localStrategy')
 require('./src/passport/kakaoStrategy')();
 require("dotenv").config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const indexRouter = require("./src/routes/index.route")
-const confirmRequest = new ConfirmRequest();
+
 
 // 요청 수 관리 미들웨어
 app.use(async (req, res, next) => {
@@ -36,6 +37,8 @@ app.use(async (req, res, next) => {
 //     }
 // });
 // app.use(limiter);
+
+scheduleDelete();
 
 // 세션은 사용하지 않지만 패스포트에 세션 설정이 되어있어야 했다.
 app.use(
@@ -99,57 +102,3 @@ app.listen(PORT, () => {
     console.log(`http://localhost:${PORT}`);
 });
 
-
-
-deleteAllUserInfo = async (req, res, next) => {
-    const userId = res.locals.user;
-    const { adminVerification } = req.body;
-    const confirmRequest = req.confirmRequest;
-
-    const maxListeners = 5;  // 임계값 설정
-    const timeoutDuration = 15 * 1000; // 15초
-    let totalDeletedCount = 0;
-
-    const timeoutFunc = (listener) => {
-        return setTimeout(() => {
-            confirmRequest.off('requestCompleted', listener);
-            // 이벤트 리스너 제거
-            throw new CustomError("요청이 너무 오래 걸립니다.", 408)
-        }, timeoutDuration);
-    };
-
-    const processDelete = async () => {
-        console.log("현재 처리 중 요청 갯수 : ", confirmRequest.getCurrentRequests());
-
-        if (confirmRequest.getCurrentRequests() > 5) {
-            if (confirmRequest.listenerCount('requestCompleted') >= maxListeners) {
-                throw new CustomError("동시 삭제 시도 횟수가 너무 많습니다.", 404);
-            }
-
-            const listener = () => {
-                clearTimeout(timeout); // 타임아웃 제거
-                confirmRequest.off('requestCompleted', listener);
-                // 이벤트 리스너 제거
-                processDelete();
-            };
-
-            const timeout = timeoutFunc(listener);
-
-            confirmRequest.once('requestCompleted', listener);
-            return;
-        }
-
-        // 5개의 데이터를 삭제
-        const deletedCount = await this.userInfoService.deleteAllUserInfo(userId, adminVerification);
-        // 삭제된 데이터 수를 누적
-        totalDeletedCount += deletedCount;
-        // 삭제된 데이터 수가 5개 미만이면 종료
-        if (deletedCount < 5) {
-            return res.status(200).json({ message: `총 ${totalDeletedCount}개의 회원 정보 삭제 작업이 완료되었습니다.` });
-        }
-        // 계속 삭제 처리
-        processDelete();
-    };
-
-    await processDelete();
-}
