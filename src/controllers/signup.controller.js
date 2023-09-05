@@ -72,7 +72,7 @@ class SignupController {
             // 이미지 업로드 및 URL 받아오기
             profileUrl = await uploadToProfile(req.file.path);
         } else {
-            console.log("프로필 이미지 없음")
+            throw new CustomError("프로필 이미지 없음", 400);
         }
         const updateProfileData = await this.signupService.updateProfile(loginId, nickname, profileUrl)
         res.status(201).json({

@@ -15,7 +15,7 @@ require("dotenv").config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-
+console.log(new Date())
 // 요청 수 관리 미들웨어
 app.use(async (req, res, next) => {
     req.confirmRequest = confirmRequest;

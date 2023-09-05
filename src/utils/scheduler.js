@@ -7,7 +7,7 @@ const scheduleDeleteAllUserInfo = () => {
         const userInfoCheckDelete = new UserInfoCheckDelete();
         try {
             const result = await userInfoCheckDelete.execute();
-            console.log(result);
+            console.log(result, "삭제 완료")
         } catch (error) {
             throw new CustomError("스케줄러 에러", 400)
         }

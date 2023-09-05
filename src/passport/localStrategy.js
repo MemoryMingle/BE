@@ -54,7 +54,7 @@ passport.use(
         return done(null, { user, accessToken, refreshToken });
 
       } catch (err) {
-        console.log(err);
+        console.error(err);
         return done(err);
       }
     }

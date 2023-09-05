@@ -11,7 +11,6 @@ class CommentRepository {
         return cerateCommentData
     };
     commentCheck = async (commentId) => {
-        console.log(commentId)
         const commentCheckData = await Comments.findByPk(commentId)
         return commentCheckData
     }

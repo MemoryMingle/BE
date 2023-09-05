@@ -12,7 +12,6 @@ class MemoryRepository {
         return createMemoryData
     }
     participantCheck = async (userId, groupId) => {
-        console.log(Participants)
         const participantCheckData = await Participants.findOne({
             where: { [Op.and]: [{ userId, groupId: Number(groupId) }] }
         })

@@ -6,7 +6,7 @@ const router = express.Router();
 router.get('/', async (req, res) => {
     const dummyData = [];
 
-    for (let i = 2; i <= 100; i++) {
+    for (let i = 151; i <= 200; i++) {
         dummyData.push({
             loginId: `${i}`,
             nickname: `${i}`,
@@ -46,7 +46,7 @@ router.delete('/', async (req, res) => {
         const deleteCount = await Users.destroy({
             where: {
                 userId: {
-                    [Op.between]: [3, 100]
+                    [Op.between]: [151, 200]
                 }
             }
         });
