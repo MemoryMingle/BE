@@ -11,8 +11,7 @@ module.exports = function (io) {
     
     socket.on("register", (userId) => {
       userSockets[userId] = socket.id; // userId와 socket.id를 연결
-      console.log("아이디 확인", userId);
-      console.log("연결 확인2", userSockets);
+      console.log("아이디 연결 확인", userSockets);
     });
 
     socket.on("disconnect", () => {

@@ -148,7 +148,7 @@ class GroupController {
     const { groupId } = req.params;
     const userId = res.locals.user
     try {
-      const detailedGroupData = await this.groupService.detailedGroup(groupId,userId);
+      const detailedGroupData = await this.groupService.detailedGroup(groupId, userId);
       return res.status(201).json(detailedGroupData);
     } catch (error) {
       next(error);
@@ -184,8 +184,8 @@ class GroupController {
     const userId = res.locals.user;
     try {
       const newUser = await Participants.create({ groupId, userId });
-
-      io.emitToUser(userId, "newUserAdded", { userId });
+      const data = await Groups.findByPk(groupId)
+      io.emitToUser(userId, "newUserAdded", { userId, thumbnailUrl: data.thumbnailUrl, groupName: data.groupName });
 
       res.status(201).json({ newUser });
     } catch (error) {
