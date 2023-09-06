@@ -13,9 +13,7 @@ router.get(
   "/",
   authMiddleware,
   asyncHandler(async (req, res) => {
-    const userId = req.locals.user
     res.status(200).json({
-      userId,
       success: true,
       message: "로그인 됨",
     });
