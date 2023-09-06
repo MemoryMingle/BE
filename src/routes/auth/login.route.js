@@ -30,6 +30,7 @@ router.post(
         next(err);
       }
       req.user = user;
+      console.log(req.user)
       next();
     })(req, res, next);
   },
