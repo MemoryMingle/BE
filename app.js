@@ -15,10 +15,25 @@ require('./src/passport/localStrategy')
 require('./src/passport/kakaoStrategy')();
 require("dotenv").config();
 
+const allowedOrigins = process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',') : [];
 const app = express();
 const PORT = process.env.PORT || 3000;
 const server = http.createServer(app);
-const io = socketIO(server);
+const io = socketIO(server, {
+    cors: {
+        origin: function (origin, callback) {
+            if (!origin) return callback(null, true);  // origin이 제공되지 않은 경우 요청을 허용한다
+            // origin이 허용된 origin 중 하나인지 확인한다
+            if (allowedOrigins.indexOf(origin) === -1) {
+                const errorMsg = '이 사이트의 CORS 정책은 지정된 Origin에서의 접근을 허용하지 않습니다.';
+                return callback(new Error(errorMsg), false);
+            }
+            return callback(null, true);
+        },
+        methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+        credentials: true,
+    }
+});
 socketManager(io);
 
 // 요청 수 관리 미들웨어
@@ -67,7 +82,6 @@ app.use(cookieParser());
 app.use(passport.initialize());
 app.use(passport.session());
 
-const allowedOrigins = process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',') : [];
 app.use(
     cors({
         origin: function (origin, callback) {
@@ -77,10 +91,8 @@ app.use(
                 const errorMsg = '이 사이트의 CORS 정책은 지정된 Origin에서의 접근을 허용하지 않습니다.';
                 return callback(new Error(errorMsg), false);
             }
-
             return callback(null, true);
         },
-        exposedHeaders: ['MM', 'RefreshToken'],
         methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
         credentials: true,
     })

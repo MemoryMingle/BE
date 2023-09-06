@@ -13,12 +13,6 @@ router.post(
   groupController.createGroup
 );
 
-router.post(
-  "/:groupId",
-  authMiddleware,
-  groupController.socketGroup
-);
-
 router.get("/", authMiddleware, groupController.findMyGroup);
 router.put(
   "/:groupId",
@@ -40,5 +34,11 @@ router.get(
 );
 router.delete("/:groupId/groupout", authMiddleware, groupController.groupOut);
 router.get("/search/:searchDate", authMiddleware, groupController.searchDate);
+
+router.post(
+  "/:groupId",
+  authMiddleware,
+  groupController.socketGroup
+);
 
 module.exports = router;
