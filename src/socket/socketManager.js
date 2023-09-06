@@ -29,9 +29,10 @@ module.exports = function (io) {
   io.emitToUser = function(userId, event, data) {
     console.log("함수실행")
     const socketId = userSockets[userId];
+    console.log("1",socketId)
     if (socketId) {
       io.to(socketId).emit(event, data);
-    }
+    }else{console.log("2",socketId)}
   };
 };
 // jwt.verify(token, 'your-secret-key', (err, decoded) => {

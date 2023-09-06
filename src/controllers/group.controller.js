@@ -185,6 +185,7 @@ class GroupController {
     try {
       const newUser = await Participants.create({ groupId, userId });
       const data = await Groups.findByPk(groupId)
+      console.log("실행되냐?")
       io.emitToUser(userId, "newUserAdded", { userId, thumbnailUrl: data.thumbnailUrl, groupName: data.groupName });
 
       res.status(201).json({ newUser });
