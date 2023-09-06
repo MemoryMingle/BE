@@ -1,7 +1,7 @@
 const GroupService = require("../services/group.service");
 const uploadImageToCloudinary = require("../utils/uploadToCloudinary");
-const { Groups, Participants } = require("../models")
-const socketManager = require("../soket/socketManager")
+const { Groups, Participants } = require("../models");
+const socketManager = require("../socket/socketManager");
 
 class GroupController {
   groupService = new GroupService();
@@ -178,19 +178,19 @@ class GroupController {
   };
 
   socketGroup = async (req, res, next) => {
-    const io = req.io
+    const io = req.io;
     const { groupId } = req.params;
     const userId = res.locals.user;
     try {
       const newUser = await Participants.create({ groupId, userId });
 
-      io.emitToUser(userId, 'newUserAdded', { userId })
+      io.emitToUser(userId, "newUserAdded", { userId });
 
       res.status(201).json({ newUser });
     } catch (error) {
-      res.status(500).json({ error: 'An error occurred' });
+      res.status(500).json({ error: "An error occurred" });
     }
-  }
+  };
 }
 
 module.exports = GroupController;

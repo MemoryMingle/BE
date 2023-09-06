@@ -2,7 +2,6 @@
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Users extends Model {
-
     static associate(models) {
       // define association here
 
@@ -24,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
       this.hasMany(models.Participants, {
         sourceKey: "userId",
         foreignKey: "userId",
-        onDelete: 'CASCADE'
+        onDelete: "CASCADE",
       });
     }
   }
@@ -43,7 +42,7 @@ module.exports = (sequelize, DataTypes) => {
       nickname: {
         allowNull: false,
         type: DataTypes.STRING,
-        defaultValue: "닉네임"
+        defaultValue: "닉네임",
       },
       password: {
         type: DataTypes.STRING,
@@ -51,7 +50,8 @@ module.exports = (sequelize, DataTypes) => {
       profileUrl: {
         allowNull: false,
         type: DataTypes.STRING,
-        defaultValue: "https://res.cloudinary.com/dxl01ypgw/image/upload/v1693664401/TEST/KakaoTalk_20230902_231524661_lm2zxh.png",
+        defaultValue:
+          "https://res.cloudinary.com/dxl01ypgw/image/upload/v1693664401/TEST/KakaoTalk_20230902_231524661_lm2zxh.png",
       },
       providerType: {
         type: DataTypes.STRING,
@@ -64,7 +64,7 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       modelName: "Users",
       timestamps: true,
-      paranoid: true,  // 소프트 딜리트 옵션 추가
+      paranoid: true, // 소프트 딜리트 옵션 추가
     }
   );
   return Users;

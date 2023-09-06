@@ -4,7 +4,10 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const CustomError = require("../utils/error");
 const { Users } = require("../models");
-const { saveRefreshToken, deleteRefreshToken } = require('../utils/tokenManager.redis');
+const {
+  saveRefreshToken,
+  deleteRefreshToken,
+} = require("../utils/tokenManager.redis");
 
 passport.use(
   new LocalStrategy(
@@ -52,7 +55,6 @@ passport.use(
         await saveRefreshToken(user.userId, refreshToken);
 
         return done(null, { user, accessToken, refreshToken });
-
       } catch (err) {
         console.error(err);
         return done(err);

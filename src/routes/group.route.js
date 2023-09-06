@@ -41,10 +41,6 @@ router.get(
 );
 router.get("/search/place/:place", authMiddleware, groupController.searchPlace);
 
-router.post(
-  "/:groupId",
-  authMiddleware,
-  groupController.socketGroup
-);
+router.post("/:groupId", authMiddleware, groupController.socketGroup);
 
 module.exports = router;

@@ -18,13 +18,13 @@ module.exports = (sequelize, DataTypes) => {
       this.hasMany(models.Memories, {
         sourceKey: "groupId",
         foreignKey: "groupId",
-        onDelete: 'CASCADE'
+        onDelete: "CASCADE",
       });
 
       this.hasMany(models.Participants, {
         sourceKey: "groupId",
         foreignKey: "groupId",
-        onDelete: 'CASCADE'
+        onDelete: "CASCADE",
       });
     }
   }

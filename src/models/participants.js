@@ -13,13 +13,13 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(models.Groups, {
         targetKey: "groupId",
         foreignKey: "groupId",
-        onDelete: 'CASCADE'
+        onDelete: "CASCADE",
       });
 
       this.belongsTo(models.Users, {
         foreignKey: "userId",
         targetKey: "userId",
-        onDelete: 'CASCADE'
+        onDelete: "CASCADE",
       });
     }
   }
@@ -35,8 +35,8 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.INTEGER,
         references: {
-          model: 'Groups',
-          key: 'groupId',
+          model: "Groups",
+          key: "groupId",
         },
       },
       userId: {
