@@ -27,6 +27,7 @@ module.exports = function (io) {
 
   // 이 함수는 특정 유저에게 소켓 이벤트를 발송합니다.
   io.emitToUser = function(userId, event, data) {
+    console.log("함수실행")
     const socketId = userSockets[userId];
     if (socketId) {
       io.to(socketId).emit(event, data);
