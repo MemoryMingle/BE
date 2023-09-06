@@ -3,6 +3,7 @@ const CustomError = require('../utils/error');
 const { passwordSchema } = require('../utils/validation');
 const uploadToProfile = require('../utils/uploadToProfile');
 const redisCli = require('../utils/redisClient');
+const confirmRequest = require("../utils/confirmRequest")
 
 class UserInfoController {
     userInfoService = new UserInfoService();
@@ -68,7 +69,6 @@ class UserInfoController {
     deleteAllUserInfo = async (req, res, next) => {
         const userId = res.locals.user;
         const { adminVerification } = req.body;
-        const confirmRequest = req.confirmRequest;
 
         const maxListeners = 5;  // 임계값 설정
         const timeoutDuration = 15 * 1000; // 15초
