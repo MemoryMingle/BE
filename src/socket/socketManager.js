@@ -5,8 +5,14 @@ module.exports = function (io) {
   io.on("connection", (socket) => {
     console.log(`New client connected: ${socket.id}`);
 
+    socket.on('error', (error) => {
+      console.log('Socket Error:', error);
+    });
+    
     socket.on("register", (userId) => {
       userSockets[userId] = socket.id; // userId와 socket.id를 연결
+      console.log("아이디 확인", userId);
+      console.log("연결 확인2", userSockets);
     });
 
     socket.on("disconnect", () => {
@@ -21,18 +27,13 @@ module.exports = function (io) {
   });
 
   // 이 함수는 특정 유저에게 소켓 이벤트를 발송합니다.
-  function emitToUser(userId, event, data) {
+  io.emitToUser = function(userId, event, data) {
     const socketId = userSockets[userId];
     if (socketId) {
       io.to(socketId).emit(event, data);
     }
-  }
-
-  return {
-    emitToUser: emitToUser,
   };
 };
-
 // jwt.verify(token, 'your-secret-key', (err, decoded) => {
 //     if (err) {
 //         // 토큰이 유효하지 않은 경우 연결 거부
