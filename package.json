@@ -31,7 +31,8 @@
     "passport-kakao": "^1.0.1",
     "passport-local": "^1.0.0",
     "redis": "^4.6.7",
-    "sequelize": "^6.32.1"
+    "sequelize": "^6.32.1",
+    "socket.io": "^4.7.2"
   },
   "devDependencies": {
     "nodemon": "^3.0.1",
