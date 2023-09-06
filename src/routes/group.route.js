@@ -12,6 +12,13 @@ router.post(
   upload.single("thumbnailUrl"),
   groupController.createGroup
 );
+
+router.post(
+  "/:groupId",
+  authMiddleware,
+  groupController.socketGroup
+);
+
 router.get("/", authMiddleware, groupController.findMyGroup);
 router.put(
   "/:groupId",

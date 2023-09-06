@@ -3,7 +3,7 @@ const confirmRequest = require('./confirmRequest');
 const { Users } = require("../models")
 const { Op } = require('sequelize')
 
-class userInfoCheckDelete {
+class serverCheckDelete {
     async execute() {
         try {
             const maxListeners = 5;
@@ -55,4 +55,4 @@ class userInfoCheckDelete {
     }
 }
 
-module.exports = userInfoCheckDelete;
+module.exports = serverCheckDelete;

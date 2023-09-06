@@ -7,23 +7,31 @@ const passport = require('passport');
 const session = require('express-session');
 const confirmRequest = require('./src/utils/confirmRequest');
 const rateLimit = require("express-rate-limit");
-const scheduleDelete = require('./src/utils/scheduler');  // 경로는 실제 파일 위치에 맞게 변경해 주세요.
+const scheduleDelete = require('./src/utils/scheduler');
+const http = require('http');
+const socketIO = require('socket.io');
+const socketManager = require('./src/soket/socketManager')
 require('./src/passport/localStrategy')
 require('./src/passport/kakaoStrategy')();
 require("dotenv").config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const server = http.createServer(app);
+const io = socketIO(server);
+socketManager(io);
 
-console.log(new Date())
 // 요청 수 관리 미들웨어
 app.use(async (req, res, next) => {
-    req.confirmRequest = confirmRequest;
-
-    await req.confirmRequest.increment();
+    await confirmRequest.increment();
     res.on('finish', async () => {
-        await req.confirmRequest.decrement();
+        await confirmRequest.decrement();
     });
+    next();
+});
+
+app.use((req, res, next) => {
+    req.io = io;
     next();
 });
 
