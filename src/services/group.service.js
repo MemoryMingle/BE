@@ -96,7 +96,7 @@ class GroupService {
   };
 
   // 그룹 상세보기
-  detailedGroup = async (groupId) => {
+  detailedGroup = async (groupId, userId) => {
     // 그룹정보
     const groupData = await this.groupRepository.detailedGroup(groupId);
     // 참여자 정보
@@ -105,6 +105,12 @@ class GroupService {
     const memoryData = await this.groupRepository.findMemoriesByGroupId(
       groupId
     );
+
+    participantData.sort((a, b) => {
+      if (a.userId === userId) return -1;
+      if (b.userId === userId) return 1;
+      return 0;
+    });
 
     const detailedGroupData = {
       userId: groupData.userId,

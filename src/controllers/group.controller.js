@@ -146,8 +146,9 @@ class GroupController {
   // 그룹 상세보기
   detailedGroup = async (req, res, next) => {
     const { groupId } = req.params;
+    const userId = res.locals.user
     try {
-      const detailedGroupData = await this.groupService.detailedGroup(groupId);
+      const detailedGroupData = await this.groupService.detailedGroup(groupId,userId);
       return res.status(201).json(detailedGroupData);
     } catch (error) {
       next(error);
