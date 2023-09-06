@@ -1,43 +1,29 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-
-  class Groups extends Model {
+  class Notifications extends Model {
     static associate(models) {
-      // define association here
 
       this.belongsTo(models.Users, {
         foreignKey: "userId",
         targetKey: "userId",
-      });
-
-      this.hasMany(models.Memories, {
-        sourceKey: "groupId",
-        foreignKey: "groupId",
         onDelete: "CASCADE",
       });
 
-      this.hasMany(models.Participants, {
-        sourceKey: "groupId",
+      this.belongsTo(models.Groups, {
         foreignKey: "groupId",
-        onDelete: "CASCADE",
-      });
-
-      this.hasMany(models.Notifications, {
-        sourceKey: "groupId",
-        foreignKey: "groupId",
+        targetKey: "groupId",
         onDelete: "CASCADE",
       });
     }
   }
-  Groups.init(
+  Notifications.init(
     {
-      groupId: {
+      notificationId: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        autoIncrement: true,
-        type: DataTypes.INTEGER,
+        type: DataTypes.INTEGER
       },
       userId: {
         allowNull: false,
@@ -47,41 +33,40 @@ module.exports = (sequelize, DataTypes) => {
           key: "userId",
         },
       },
-      groupName: {
+      groupId: {
         allowNull: false,
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
+        references: {
+          model: "Groups",
+          key: "groupId",
+        },
       },
       thumbnailUrl: {
         allowNull: false,
         type: DataTypes.STRING,
       },
-      place: {
-        allowNull: true,
+      message: {
         type: DataTypes.STRING,
+        allowNull: false
       },
-      startDate: {
+      status: {
+        type: DataTypes.STRING,
         allowNull: false,
-        type: DataTypes.DATE,
-      },
-      endDate: {
-        allowNull: false,
-        type: DataTypes.DATE,
+        defaultValue: 'unChecked'
       },
       createdAt: {
         allowNull: false,
-        type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW,
+        type: DataTypes.DATE
       },
       updatedAt: {
         allowNull: false,
-        type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW,
-      },
+        type: DataTypes.DATE
+      }
     },
     {
       sequelize,
-      modelName: "Groups",
+      modelName: "Notifications",
     }
   );
-  return Groups;
+  return Notifications;
 };

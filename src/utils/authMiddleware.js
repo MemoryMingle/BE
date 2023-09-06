@@ -7,7 +7,6 @@ const regenerateToken = require("../utils/regenerateToken"); // 새로운 토큰
 module.exports = asyncHandler(async (req, res, next) => {
   const { MM } = req.cookies;
   const [type, token] = (MM ?? "").split(" ");
-  console.log("토큰:",token)
   if (!type || !token || type !== "Bearer") {
     throw new CustomError("로그인이 필요한 기능입니다.", 400);
   }
@@ -32,10 +31,12 @@ module.exports = asyncHandler(async (req, res, next) => {
           httpOnly: true,
           sameSite: "none",
         });
-        res.locals.user = jwt.verify(
+        const decodeToken = jwt.verify(
           newTokens.accessToken,
           process.env.JWT_SECRET
         );
+        const userId = decodeToken.userId
+        res.locals.user = userId;
         next();
       } catch (newTokenErr) {
         next(newTokenErr);

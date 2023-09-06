@@ -13,7 +13,9 @@ router.get(
   "/",
   authMiddleware,
   asyncHandler(async (req, res) => {
+    const userId = req.locals.user
     res.status(200).json({
+      userId,
       success: true,
       message: "로그인 됨",
     });
@@ -25,10 +27,10 @@ router.post(
     passport.authenticate("local", { session: false }, (err, user, info) => {
       console.log(err)
       if (err) {
-        return next(err); 
+        next(err);
       }
-      req.user = user; 
-      next(); 
+      req.user = user;
+      next();
     })(req, res, next);
   },
   async (req, res) => {
