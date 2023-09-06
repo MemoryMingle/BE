@@ -6,7 +6,7 @@ class UserRepository {
   findByNickname = async (nickname, userId) => {
     const findByNicknameData = await Users.findAll({
       where: {
-        nickname: nickname,
+        nickname: { [Op.like]: `%${nickname}%` },
         userId: { [Op.ne]: userId },
       },
       attributes: ["userId", "loginId", "nickname", "profileUrl", "kakaoId"],
@@ -18,7 +18,14 @@ class UserRepository {
   userInfoByUserId = async (userId) => {
     const userInfoData = await Users.findOne({
       where: { userId: userId },
-      attributes: ["userId", "loginId", "nickname", "profileUrl", "providerType", "kakaoId"],
+      attributes: [
+        "userId",
+        "loginId",
+        "nickname",
+        "profileUrl",
+        "providerType",
+        "kakaoId",
+      ],
     });
     return userInfoData;
   };
