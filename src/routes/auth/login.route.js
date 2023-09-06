@@ -21,9 +21,17 @@ router.get(
 );
 router.post(
   "/",
-  passport.authenticate("local", { session: false }),
+  (req, res, next) => {
+    passport.authenticate("local", { session: false }, (err, user, info) => {
+      console.log(err)
+      if (err) {
+        return next(err); 
+      }
+      req.user = user; 
+      next(); 
+    })(req, res, next);
+  },
   async (req, res) => {
-    // 위에서 done이 req.user로 반환된다.
     res.cookie("MM", `Bearer ${req.user.accessToken}`, {
       secure: true,
       httpOnly: true,
