@@ -11,6 +11,7 @@ const scheduleDelete = require("./src/utils/scheduler");
 const http = require("http");
 const socketIO = require("socket.io");
 const socketManager = require("./src/socket/socketManager");
+const { swaggerUi, specs } = require("./swagger/swagger")
 require("./src/passport/localStrategy");
 require("./src/passport/kakaoStrategy")();
 require("dotenv").config();
@@ -108,6 +109,9 @@ app.use(morgan("dev"));
 app.get("/", (_, res) => {
   return res.send("이게 왜 됨?");
 });
+console.log(specs);
+
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 app.use("/api", indexRouter);
 
