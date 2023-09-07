@@ -66,7 +66,7 @@ class GroupRepository {
       },
       attributes: ["groupId"],
     });
-    console.log(participantData)
+    console.log(participantData);
 
     const groupIds = participantData.map((participant) => participant.groupId);
     return groupIds;
@@ -172,7 +172,7 @@ class GroupRepository {
     return checkCreatorData !== null;
   }
 
-  // 참여자가 몇명 남았는지 확인  = params가 현재 약간 이상해서 21은 안되고 "21"은 작동함 이거 왜이럼?
+  // 참여자가 몇명 남았는지 확인
   async participantsCount(groupId) {
     try {
       const count = await Participants.count({ where: { groupId: groupId } });
@@ -205,7 +205,6 @@ class GroupRepository {
 
   async searchGroupName(userId, groupName) {
     const groupIds = await this.findGroupIds(userId);
-    console.log(groupIds)
     const searchGroupNameData = await Groups.findAll({
       where: {
         groupId: {
@@ -222,9 +221,41 @@ class GroupRepository {
         },
       ],
     });
-    
 
-    return searchGroupNameData;
+    const userIds = searchGroupNameData
+      .map((group) =>
+        group.Participants.map((participant) => participant.userId)
+      )
+      .flat();
+
+    const userNicknames = await Users.findAll({
+      where: {
+        userId: {
+          [Op.in]: userIds,
+        },
+      },
+      attributes: ["userId", "nickname"],
+    });
+
+    const searchData = searchGroupNameData.map((group) => {
+      const participants = group.Participants.map((participant) => {
+        const user = userNicknames.find(
+          (user) => user.userId === participant.userId
+        );
+        return user ? user.nickname : null;
+      });
+
+      return {
+        groupName: group.groupName,
+        groupId: group.groupId,
+        startDate: group.startDate,
+        endDate: group.endDate,
+        thumbnailUrl: group.thumbnailUrl,
+        participants: participants,
+      };
+    });
+
+    return searchData;
   }
 
   async searchPlace(userId, place) {
