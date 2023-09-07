@@ -52,7 +52,6 @@ const router = express.Router();
  *      '400':
  *        description: 잘못된 요청입니다. 이 에러는 유효성 검사에 실패했을 때에 따라 다른 메시지로 응답할 수 있습니다.
  */
-
 router.post("/", asyncHandler(signupController.signup));
 
 router.post("/check", asyncHandler(signupController.checkDuplicate));
