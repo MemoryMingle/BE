@@ -1,7 +1,6 @@
 const UserInfoService = require("../services/userInfo.service");
 const CustomError = require("../utils/error");
-const { passwordSchema } = require("../utils/validation");
-const uploadToProfile = require("../utils/uploadToProfile");
+const { passwordSchema } = require("../utils/validation");;
 const redisCli = require("../utils/redisClient");
 const confirmRequest = require("../utils/confirmRequest");
 
@@ -10,12 +9,8 @@ class UserInfoController {
 
   changeProfile = async (req, res, next) => {
     const userId = res.locals.user;
-    let profileUrl;
-    if (req.file) {
-      profileUrl = await uploadToProfile(req.file.path);
-    } else {
-      throw new CustomError("요청하신 프로필 이미지가 없습니다.", 400);
-    }
+    const { profileUrl } = req.body;
+
 
     await this.userInfoService.changeProfile(userId, profileUrl);
     res.status(201).json({
