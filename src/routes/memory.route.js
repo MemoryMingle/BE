@@ -10,7 +10,6 @@ const memoryController = new MemoryController();
 router.post(
   "/",
   authMiddleware,
-  upload.single("imageUrl"),
   asyncHandler(memoryController.createMemory)
 );
 router.get(
