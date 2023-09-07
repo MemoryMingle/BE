@@ -109,7 +109,6 @@ app.use(morgan("dev"));
 app.get("/", (_, res) => {
   return res.send("이게 왜 됨?");
 });
-console.log(specs);
 
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(specs));
 
