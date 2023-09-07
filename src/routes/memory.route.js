@@ -3,14 +3,12 @@ const router = express.Router({ mergeParams: true });
 const asyncHandler = require("../utils/asyncHandler");
 const authMiddleware = require("../utils/authMiddleware");
 const checkParticipants = require("../utils/checkParticipants");
-const upload = require("../utils/multerConfig");
 const MemoryController = require("../controllers/memory.controller");
 const memoryController = new MemoryController();
 
 router.post(
   "/",
   authMiddleware,
-  upload.single("imageUrl"),
   asyncHandler(memoryController.createMemory)
 );
 router.get(
@@ -29,7 +27,6 @@ router.put(
   "/:memoryId",
   authMiddleware,
   checkParticipants,
-  upload.single("imageUrl"),
   asyncHandler(memoryController.updateMemory)
 );
 router.delete(
