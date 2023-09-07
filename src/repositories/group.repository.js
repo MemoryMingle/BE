@@ -66,6 +66,7 @@ class GroupRepository {
       },
       attributes: ["groupId"],
     });
+    console.log(participantData)
 
     const groupIds = participantData.map((participant) => participant.groupId);
     return groupIds;
@@ -204,6 +205,7 @@ class GroupRepository {
 
   async searchGroupName(userId, groupName) {
     const groupIds = await this.findGroupIds(userId);
+    console.log(groupIds)
     const searchGroupNameData = await Groups.findAll({
       where: {
         groupId: {
@@ -213,7 +215,14 @@ class GroupRepository {
           [Op.like]: `%${groupName}%`,
         },
       },
+      include: [
+        {
+          model: Participants,
+          attributes: ["userId"],
+        },
+      ],
     });
+    
 
     return searchGroupNameData;
   }
