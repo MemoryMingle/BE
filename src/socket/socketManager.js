@@ -33,27 +33,4 @@ module.exports = function (io) {
     }else{console.log("소켓 아디디 없음")}
   };
 };
-// jwt.verify(token, 'your-secret-key', (err, decoded) => {
-//     if (err) {
-//         // 토큰이 유효하지 않은 경우 연결 거부
-//         socket.disconnect();
-//         return;
-//     }
 
-//     console.log(`New client connected: ${socket.id}`);
-
-//     // 연결이 유효한 경우 userId와 socketId를 연결
-//     socket.on('register', (userId) => {
-//         userSockets[userId] = socket.id;
-//     });
-
-//     socket.on('disconnect', () => {
-//         // 연결이 끊어진 socket.id를 찾아서 삭제
-//         for (const userId in userSockets) {
-//             if (userSockets[userId] === socket.id) {
-//                 delete userSockets[userId];
-//                 break;
-//             }
-//         }
-//     });
-// });
