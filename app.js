@@ -7,9 +7,9 @@ const passport = require("passport");
 const confirmRequest = require("./src/utils/confirmRequest");
 const rateLimit = require("express-rate-limit");
 const scheduleDelete = require("./src/utils/scheduler");
-const http = require("http");
-const socketIO = require("socket.io");
-const socketManager = require("./src/socket/socketManager");
+// const http = require("http");
+// const socketIO = require("socket.io");
+// const socketManager = require("./src/socket/socketManager");
 require("./src/passport/localStrategy");
 require("./src/passport/kakaoStrategy")();
 require("dotenv").config();
@@ -19,24 +19,25 @@ const allowedOrigins = process.env.ALLOWED_ORIGINS
   : [];
 const app = express();
 const PORT = process.env.PORT || 3000;
-const server = http.createServer(app);
-const io = socketIO(server, {
-  cors: {
-    origin: function (origin, callback) {
-      if (!origin) return callback(null, true); // origin이 제공되지 않은 경우 요청을 허용한다
-      // origin이 허용된 origin 중 하나인지 확인한다
-      if (allowedOrigins.indexOf(origin) === -1) {
-        const errorMsg =
-          "이 사이트의 CORS 정책은 지정된 Origin에서의 접근을 허용하지 않습니다.";
-        return callback(new Error(errorMsg), false);
-      }
-      return callback(null, true);
-    },
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
-    credentials: true,
-  },
-});
-socketManager(io);
+// 소켓 부분 실패 주석처리 
+// const server = http.createServer(app);
+// const io = socketIO(server, {
+//   cors: {
+//     origin: function (origin, callback) {
+//       if (!origin) return callback(null, true); // origin이 제공되지 않은 경우 요청을 허용한다
+//       // origin이 허용된 origin 중 하나인지 확인한다
+//       if (allowedOrigins.indexOf(origin) === -1) {
+//         const errorMsg =
+//           "이 사이트의 CORS 정책은 지정된 Origin에서의 접근을 허용하지 않습니다.";
+//         return callback(new Error(errorMsg), false);
+//       }
+//       return callback(null, true);
+//     },
+//     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
+//     credentials: true,
+//   },
+// });
+// socketManager(io);
 
 app.use(
   cors({
@@ -73,7 +74,7 @@ const limiter = rateLimit({
     windowMs: 10 * 60 * 1000,
     max: 50,
     handler: function (req, res) {
-        req.confirmRequest.decrement();
+        confirmRequest.decrement();
         res.status(429).send("너무 많은 요청을 하셨습니다. 잠시 후 다시 시도해 주세요.");
     }
 });
@@ -106,6 +107,6 @@ app.use((err, req, res, next) => {
   });
 });
 
-server.listen(PORT, () => {
+app.listen(PORT, () => {
   console.log(`http://localhost:${PORT}`);
 });
