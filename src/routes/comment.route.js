@@ -5,7 +5,7 @@ const authMiddleware = require("../utils/authMiddleware");
 const CommentController = require("../controllers/comment.controller");
 const commentController = new CommentController();
 
-router.post("/", authMiddleware, asyncHandler(commentController.cerateComment));
+router.post("/", authMiddleware, asyncHandler(commentController.createComment));
 router.put(
   "/:commentId",
   authMiddleware,
