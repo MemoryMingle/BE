@@ -66,7 +66,6 @@ class GroupRepository {
       },
       attributes: ["groupId"],
     });
-    console.log(participantData);
 
     const groupIds = participantData.map((participant) => participant.groupId);
     return groupIds;

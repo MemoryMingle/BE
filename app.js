@@ -72,7 +72,7 @@ app.use(async (req, res, next) => {
 // 레이트 제한 미들웨어
 const limiter = rateLimit({
     windowMs: 10 * 60 * 1000,
-    max: 50,
+    max: 600,
     handler: function (req, res) {
         confirmRequest.decrement();
         res.status(429).send("너무 많은 요청을 하셨습니다. 잠시 후 다시 시도해 주세요.");
