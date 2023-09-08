@@ -7,7 +7,7 @@ class MemoryController {
   createMemory = async (req, res, next) => {
     const userId = res.locals.user;
     const { groupId } = req.params;
-    const { title, imageUrl } = req.body; // imageUrl을 여기에서 제거
+    const { title, imageUrl } = req.body; 
     const createMemoryData = await this.memoryService.createMemory(
       userId,
       groupId,
