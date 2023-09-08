@@ -64,10 +64,10 @@ app.use(async (req, res, next) => {
   next();
 });
 
-app.use((req, res, next) => {
-  req.io = io;
-  next();
-});
+// app.use((req, res, next) => {
+//   req.io = io;
+//   next();
+// });
 
 // 레이트 제한 미들웨어
 const limiter = rateLimit({
