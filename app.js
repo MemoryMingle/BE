@@ -4,7 +4,6 @@ const cors = require("cors");
 const morgan = require("morgan");
 const indexRouter = require("./src/routes/index.route");
 const passport = require("passport");
-const session = require("express-session");
 const confirmRequest = require("./src/utils/confirmRequest");
 const rateLimit = require("express-rate-limit");
 const scheduleDelete = require("./src/utils/scheduler");
@@ -71,36 +70,21 @@ app.use((req, res, next) => {
 });
 
 // 레이트 제한 미들웨어
-// const limiter = rateLimit({
-//     windowMs: 10 * 60 * 1000,
-//     max: 50,
-//     handler: function (req, res) {
-//         req.confirmRequest.decrement();
-//         res.status(429).send("너무 많은 요청을 하셨습니다. 잠시 후 다시 시도해 주세요.");
-//     }
-// });
-// app.use(limiter);
+const limiter = rateLimit({
+    windowMs: 10 * 60 * 1000,
+    max: 50,
+    handler: function (req, res) {
+        req.confirmRequest.decrement();
+        res.status(429).send("너무 많은 요청을 하셨습니다. 잠시 후 다시 시도해 주세요.");
+    }
+});
+app.use(limiter);
 
 scheduleDelete();
-
-// 세션은 사용하지 않지만 패스포트에 세션 설정이 되어있어야 했다.
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      httpOnly: true,
-      secure: true,
-      sameSite: "none",
-    },
-  })
-);
 
 app.use(express.json());
 app.use(cookieParser());
 app.use(passport.initialize());
-app.use(passport.session());
 
 
 app.use(morgan("dev"));
