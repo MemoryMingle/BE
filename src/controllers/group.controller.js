@@ -168,20 +168,21 @@ class GroupController {
     }
   };
 
-//   socketGroup = async (req, res, next) => {
-//     const io = req.io;
-//     const { groupId } = req.params;
-//     const userId = res.locals.user;
-//     try {
-//       const newUser = await Participants.create({ groupId, userId });
-//       const data = await Groups.findByPk(groupId)
-//       io.emitToUser(userId, "newUserAdded", { userId, thumbnailUrl: data.thumbnailUrl, groupName: data.groupName });
+  // 소켓IO 연결 테스트 
+  socketGroup = async (req, res, next) => {
+    const io = req.io;
+    const { groupId } = req.params;
+    const userId = res.locals.user;
+    try {
+      const newUser = await Participants.create({ groupId, userId });
+      const data = await Groups.findByPk(groupId)
+      io.emitToUser(userId, "newUserAdded", { userId, thumbnailUrl: data.thumbnailUrl, groupName: data.groupName });
 
-//       res.status(201).json({ newUser });
-//     } catch (error) {
-//       res.status(500).json({ error: "An error occurred" });
-//     }
-//   };
+      res.status(201).json({ newUser });
+    } catch (error) {
+      res.status(500).json({ error: "An error occurred" });
+    }
+  };
 }
 
 module.exports = GroupController;
