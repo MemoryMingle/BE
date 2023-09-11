@@ -38,6 +38,7 @@ router.get(
 );
 router.get("/search/place/:place", authMiddleware, groupController.searchPlace);
 
-// router.post("/:groupId", authMiddleware, groupController.socketGroup);
+// 소켓 IO 알림 테스트
+router.post("/:groupId", authMiddleware, groupController.socketGroup);
 
 module.exports = router;

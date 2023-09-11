@@ -7,9 +7,9 @@ const passport = require("passport");
 const confirmRequest = require("./src/utils/confirmRequest");
 const rateLimit = require("express-rate-limit");
 const scheduleDelete = require("./src/utils/scheduler");
-// const http = require("http");
-// const socketIO = require("socket.io");
-// const socketManager = require("./src/socket/socketManager");
+const http = require("http");
+const socketIO = require("socket.io");
+const socketManager = require("./src/socket/socketManager");
 require("./src/passport/localStrategy");
 require("./src/passport/kakaoStrategy")();
 require("dotenv").config();
@@ -19,25 +19,26 @@ const allowedOrigins = process.env.ALLOWED_ORIGINS
   : [];
 const app = express();
 const PORT = process.env.PORT || 3000;
-// 소켓 부분 실패 주석처리 
-// const server = http.createServer(app);
-// const io = socketIO(server, {
-//   cors: {
-//     origin: function (origin, callback) {
-//       if (!origin) return callback(null, true); // origin이 제공되지 않은 경우 요청을 허용한다
-//       // origin이 허용된 origin 중 하나인지 확인한다
-//       if (allowedOrigins.indexOf(origin) === -1) {
-//         const errorMsg =
-//           "이 사이트의 CORS 정책은 지정된 Origin에서의 접근을 허용하지 않습니다.";
-//         return callback(new Error(errorMsg), false);
-//       }
-//       return callback(null, true);
-//     },
-//     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
-//     credentials: true,
-//   },
-// });
-// socketManager(io);
+
+// 소켓IO 알림 부분 진행중
+const server = http.createServer(app);
+const io = socketIO(server, {
+  cors: {
+    origin: function (origin, callback) {
+      if (!origin) return callback(null, true); // origin이 제공되지 않은 경우 요청을 허용한다
+      // origin이 허용된 origin 중 하나인지 확인한다
+      if (allowedOrigins.indexOf(origin) === -1) {
+        const errorMsg =
+          "이 사이트의 CORS 정책은 지정된 Origin에서의 접근을 허용하지 않습니다.";
+        return callback(new Error(errorMsg), false);
+      }
+      return callback(null, true);
+    },
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
+    credentials: true,
+  },
+});
+socketManager(io);
 
 app.use(
   cors({
@@ -64,12 +65,12 @@ app.use(async (req, res, next) => {
   next();
 });
 
-// app.use((req, res, next) => {
-//   req.io = io;
-//   next();
-// });
+app.use((req, res, next) => {
+  req.io = io;
+  next();
+});
 
-// 레이트 제한 미들웨어
+// 레이트 제한 미들웨어 - 불필요한 API 요청이 있음 
 // const limiter = rateLimit({
 //     windowMs: 10 * 60 * 1000,
 //     max: 600,
