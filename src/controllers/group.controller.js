@@ -7,6 +7,7 @@ class GroupController {
   // 그룹 추가
   createGroup = async (req, res, next) => {
     try {
+      const io = req.io;
       const userId = res.locals.user;
       const { groupName, thumbnailUrl, place, participant, startDate, endDate } = req.body;
       const participants = JSON.parse(participant);
@@ -19,7 +20,8 @@ class GroupController {
         place,
         participantPlusUserId,
         startDate,
-        endDate
+        endDate,
+        io
       );
 
       res
