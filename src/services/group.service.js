@@ -12,7 +12,8 @@ class GroupService {
     place,
     participants,
     startDate,
-    endDate
+    endDate,
+    io
   ) => {
     const transaction = await sequelize.transaction(); // sequelize.transaction() 사용
     try {
@@ -29,14 +30,16 @@ class GroupService {
 
       const groupId = group.groupId;
       // 참여자 레코드 생성
-      const participantRecords = participants.map((participantId) => ({
-        userId: participantId,
+      const participantRecords = participants.map((participantid) => ({
+        userId: participantid,
         groupId: groupId,
       }));
       await this.groupRepository.bulkCreateParticipants(participantRecords, {
         transaction,
       });
-
+      participants.forEach((userId) => {
+        io.emitToUser(userId, "newUserAdded", { userId, groupId, thumbnailUrl, groupName });
+      });
       await transaction.commit();
 
       return group;
@@ -72,8 +75,8 @@ class GroupService {
       await this.groupRepository.deleteParticipants(groupId);
 
       const participantRecords = [...participants, userId].map(
-        (participantId) => ({
-          userId: participantId,
+        (participantid) => ({
+          userId: participantid,
           groupId: groupId,
         })
       );

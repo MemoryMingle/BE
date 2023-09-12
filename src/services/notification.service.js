@@ -14,11 +14,14 @@ class NotificationService {
         );
         return creatNotificationData;
     };
-    getNotificationData = async (userId) => {
-        const getNotificationDataData = await this.notificationRepository.getNotificationData(
+    getNotification = async (userId) => {
+        const groupIds = await this.notificationRepository.getGroupIds(
             userId
         );
-        return getNotificationDataData;
+        const notificationData = await this.notificationRepository.getNotification(
+            groupIds
+        );
+        return notificationData;
     };
     updataNotification = async (userId, notificationId) => {
         const updataNotificationData = await this.notificationRepository.updataNotification(
