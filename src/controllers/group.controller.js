@@ -11,7 +11,6 @@ class GroupController {
       const userId = res.locals.user;
       const { groupName, thumbnailUrl, place, participant, startDate, endDate } = req.body;
       const participants = JSON.parse(participant);
-
       const participantPlusUserId = participants.concat(JSON.stringify(userId));
       const createGroupData = await this.groupService.createGroup(
         userId,

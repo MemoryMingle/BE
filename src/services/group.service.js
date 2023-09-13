@@ -34,11 +34,33 @@ class GroupService {
         userId: participantid,
         groupId: groupId,
       }));
-      await this.groupRepository.bulkCreateParticipants(participantRecords, {
+      const emitDate = await this.groupRepository.bulkCreateParticipants(participantRecords, {
         transaction,
       });
-      participants.forEach((userId) => {
-        io.emitToUser(userId, "newUserAdded", { userId, groupId, thumbnailUrl, groupName });
+      // 테스트 종료 후 삭제
+      // emitDate.forEach((date) => {
+      //   console.log("emitDate", {
+      //     userId: date.userId,
+      //     groupId,
+      //     thumbnailUrl,
+      //     groupName,
+      //     participantid: date.participantid,
+      //     status: date.status
+      //   })
+      // })
+      emitDate.forEach((date) => {
+        io.emitToUser(
+          date.userId,
+          "newUserAdded",
+          {
+            userId: date.userId,
+            groupId,
+            thumbnailUrl,
+            groupName,
+            participantid: date.participantid,
+            status: date.status
+          }
+        );
       });
       await transaction.commit();
 
