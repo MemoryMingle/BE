@@ -21,10 +21,6 @@ class notificationController {
     };
     getNotification = async (req, res, next) => {
         const userId = res.locals.user;
-
-        // const {participantid, groupId, thumbnailUrl, groupName, status} = await this.notificationService.getNotification(
-        //     userId,
-        // );
         const notificationData = await this.notificationService.getNotification(
             userId,
         );
@@ -36,11 +32,11 @@ class notificationController {
     };
     updataNotification = async (req, res, next) => {
         const userId = res.locals.user;
-        const { notificationId } = req.body;
-
+        const { participants } = req.body;
+        const participantid = JSON.parse(participants);
         const updataNotificationData = await this.notificationService.updataNotification(
             userId,
-            notificationId
+            participantid
         );
 
         res.status(200).json({
