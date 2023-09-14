@@ -17,7 +17,6 @@ class NotificationService {
       where: { userId },
       attributes: ["groupId"]
     });
-    console.log(getGroupIdData)
     const groupIds = getGroupIdData.map((id) => {
       const Id = id.groupId;
       return Id;
