@@ -23,9 +23,9 @@ class NotificationService {
         );
         return notificationData;
     };
-    updataNotification = async (userId, notificationId) => {
+    updataNotification = async (userId, participantid) => {
         const updataNotificationData = await this.notificationRepository.updataNotification(
-            userId, notificationId
+            userId, participantid
         );
         return updataNotificationData;
     };

@@ -36,6 +36,7 @@ class NotificationService {
       attributes: ['groupId', 'thumbnailUrl', 'groupName'],
       group: ['groupId'],
       raw: true,
+      order: [[Participants, 'createdAt', 'DESC']],
       include: [
         {
           model: Participants,
@@ -45,13 +46,13 @@ class NotificationService {
     })
     return getGroupData;
   }
-  updataNotification = async (userId, notificationId) => {
+  updataNotification = async (userId, participantid) => {
     const deleteCommentData = await Participants.update(
-      { status: 'checked' },
+      { status: true },
       {
         where: {
           userId,
-          notificationId
+          participantid
         }
       });
     return deleteCommentData;

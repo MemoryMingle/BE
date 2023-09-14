@@ -37,8 +37,9 @@ class GroupService {
       const emitDate = await this.groupRepository.bulkCreateParticipants(participantRecords, {
         transaction,
       });
-      // 테스트 종료 후 삭제
+      // // 테스트 종료 후 삭제
       // emitDate.forEach((date) => {
+      //   if (String(userId) === date.userId) return
       //   console.log("emitDate", {
       //     userId: date.userId,
       //     groupId,
@@ -49,6 +50,7 @@ class GroupService {
       //   })
       // })
       emitDate.forEach((date) => {
+        if (String(userId) === date.userId) return
         io.emitToUser(
           date.userId,
           "newUserAdded",
@@ -61,7 +63,8 @@ class GroupService {
             status: date.status
           }
         );
-      });
+      }
+      );
       await transaction.commit();
 
       return group;
