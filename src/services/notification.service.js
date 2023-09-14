@@ -18,6 +18,9 @@ class NotificationService {
         const groupIds = await this.notificationRepository.getGroupIds(
             userId
         );
+        if(groupIds.length<1){
+            return "알림이 없습니다."
+        }
         const notificationData = await this.notificationRepository.getNotification(
             userId, groupIds
         );
