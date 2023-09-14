@@ -19,7 +19,7 @@ class NotificationService {
             userId
         );
         const notificationData = await this.notificationRepository.getNotification(
-            groupIds
+            userId, groupIds
         );
         return notificationData;
     };
