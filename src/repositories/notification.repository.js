@@ -17,21 +17,24 @@ class NotificationService {
       where: { userId },
       attributes: ["groupId"]
     });
+    console.log(getGroupIdData)
     const groupIds = getGroupIdData.map((id) => {
       const Id = id.groupId;
       return Id;
     })
-    console.log("??",groupIds)
     return groupIds;
   };
 
 
-  getNotification = async (groupIds) => {
+  getNotification = async (userId, groupIds) => {
     const getGroupData = await Groups.findAll({
       where: {
         groupId: {
           [Op.or]: groupIds,
         },
+        userId: {
+          [Op.ne]: userId
+        }
       },
       attributes: ['groupId', 'thumbnailUrl', 'groupName'],
       group: ['groupId'],
