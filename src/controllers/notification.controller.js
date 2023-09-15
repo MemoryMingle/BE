@@ -11,11 +11,10 @@ class notificationController {
             groupId,
             thumbnailUrl,
             message,
-            status
+            status,
         );
-
         res.status(200).json({
-            success: true,
+            success,
             message: "notification를 생성하였습니다.",
         });
     };
@@ -24,9 +23,10 @@ class notificationController {
         const notificationData = await this.notificationService.getNotification(
             userId,
         );
-
+        let success = true
+        if (notificationData === "알림이 없습니다.") success = false
         res.status(200).json({
-            success: true,
+            success,
             data: notificationData,
         });
     };
