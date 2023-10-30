@@ -33,4 +33,3 @@ module.exports = function (io) {
     }else{console.log("소켓 아디디 없음")}
   };
 };
-
