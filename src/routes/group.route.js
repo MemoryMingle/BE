@@ -2,14 +2,12 @@ const express = require("express");
 const router = express.Router();
 const authMiddleware = require("../utils/authMiddleware");
 const checkParticipants = require("../utils/checkParticipants");
-const upload = require("../utils/multerConfig");
 const GroupController = require("../controllers/group.controller");
 const groupController = new GroupController();
 
 router.post(
   "/",
   authMiddleware,
-  upload.single("thumbnailUrl"),
   groupController.createGroup
 );
 
@@ -17,7 +15,6 @@ router.get("/", authMiddleware, groupController.findMyGroup);
 router.put(
   "/:groupId",
   authMiddleware,
-  upload.single("thumbnailUrl"),
   groupController.updateMyGroup
 );
 router.get(
@@ -41,6 +38,7 @@ router.get(
 );
 router.get("/search/place/:place", authMiddleware, groupController.searchPlace);
 
+// 소켓 IO 알림 테스트
 router.post("/:groupId", authMiddleware, groupController.socketGroup);
 
 module.exports = router;

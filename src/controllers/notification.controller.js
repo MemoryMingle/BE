@@ -11,33 +11,32 @@ class notificationController {
             groupId,
             thumbnailUrl,
             message,
-            status
+            status,
         );
-
         res.status(200).json({
-            success: true,
+            success,
             message: "notification를 생성하였습니다.",
         });
     };
     getNotification = async (req, res, next) => {
         const userId = res.locals.user;
-
-        const getNotificationData = await this.notificationService.getNotificationData(
+        const notificationData = await this.notificationService.getNotification(
             userId,
         );
-
+        let success = true
+        if (notificationData === "알림이 없습니다.") success = false
         res.status(200).json({
-            success: true,
-            data: getNotificationData,
+            success,
+            data: notificationData,
         });
     };
     updataNotification = async (req, res, next) => {
         const userId = res.locals.user;
-        const { notificationId } = req.body;
-
-        const updataNotificationData = await this.notificationService.updataNotification( 
+        const { participants } = req.body;
+        const participantid = JSON.parse(participants);
+        const updataNotificationData = await this.notificationService.updataNotification(
             userId,
-            notificationId
+            participantid
         );
 
         res.status(200).json({

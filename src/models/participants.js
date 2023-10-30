@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Participants.init(
     {
-      participantId: {
+      participantid: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
@@ -41,6 +41,11 @@ module.exports = (sequelize, DataTypes) => {
           model: "Users",
           key: "userId",
         },
+      },
+      status: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
       },
       createdAt: {
         allowNull: false,

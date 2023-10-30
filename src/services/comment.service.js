@@ -3,8 +3,8 @@ const CustomError = require("../utils/error");
 class CommentService {
   commentRepository = new CommentRepository();
 
-  cerateComment = async (userId, memoryId, comment) => {
-    const cerateCommentData = await this.commentRepository.cerateComment(
+  createComment = async (userId, memoryId, comment) => {
+    const cerateCommentData = await this.commentRepository.createComment(
       userId,
       memoryId,
       comment

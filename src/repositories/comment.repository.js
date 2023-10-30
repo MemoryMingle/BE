@@ -1,7 +1,7 @@
 const { Comments } = require("../models");
 
 class CommentRepository {
-  cerateComment = async (userId, memoryId, comment) => {
+  createComment = async (userId, memoryId, comment) => {
     const cerateCommentData = await Comments.create({
       userId,
       memoryId,

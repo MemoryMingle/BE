@@ -3,11 +3,11 @@ const CommentService = require("../services/comment.service");
 class CommentController {
   commentService = new CommentService();
 
-  cerateComment = async (req, res, next) => {
+  createComment = async (req, res, next) => {
     const userId = res.locals.user;
     const { memoryId } = req.params;
     const { comment } = req.body;
-    const ceratCommentData = await this.commentService.cerateComment(
+    const ceratCommentData = await this.commentService.createComment(
       userId,
       memoryId,
       comment

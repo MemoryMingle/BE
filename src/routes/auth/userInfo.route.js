@@ -1,7 +1,6 @@
 const express = require("express");
 const asyncHandler = require("../../utils/asyncHandler");
 const authMiddleware = require("../../utils/authMiddleware");
-const upload = require("../../utils/multerConfig");
 const UserInfoController = require("../../controllers/userInfo.controller");
 const userInfoController = new UserInfoController();
 
@@ -10,7 +9,6 @@ const router = express.Router();
 router.put(
   "/profile",
   authMiddleware,
-  upload.single("profileUrl"),
   asyncHandler(userInfoController.changeProfile)
 );
 router.put(

@@ -12,7 +12,8 @@ class GroupService {
     place,
     participants,
     startDate,
-    endDate
+    endDate,
+    io
   ) => {
     const transaction = await sequelize.transaction(); // sequelize.transaction() 사용
     try {
@@ -29,14 +30,41 @@ class GroupService {
 
       const groupId = group.groupId;
       // 참여자 레코드 생성
-      const participantRecords = participants.map((participantId) => ({
-        userId: participantId,
+      const participantRecords = participants.map((participantid) => ({
+        userId: participantid,
         groupId: groupId,
       }));
-      await this.groupRepository.bulkCreateParticipants(participantRecords, {
+      const emitDate = await this.groupRepository.bulkCreateParticipants(participantRecords, {
         transaction,
       });
-
+      // // 테스트 종료 후 삭제
+      // emitDate.forEach((date) => {
+      //   if (String(userId) === date.userId) return
+      //   console.log("emitDate", {
+      //     userId: date.userId,
+      //     groupId,
+      //     thumbnailUrl,
+      //     groupName,
+      //     participantid: date.participantid,
+      //     status: date.status
+      //   })
+      // })
+      emitDate.forEach((date) => {
+        if (String(userId) === date.userId) return
+        io.emitToUser(
+          date.userId,
+          "newUserAdded",
+          {
+            userId: date.userId,
+            groupId,
+            thumbnailUrl,
+            groupName,
+            participantid: date.participantid,
+            status: date.status
+          }
+        );
+      }
+      );
       await transaction.commit();
 
       return group;
@@ -72,8 +100,8 @@ class GroupService {
       await this.groupRepository.deleteParticipants(groupId);
 
       const participantRecords = [...participants, userId].map(
-        (participantId) => ({
-          userId: participantId,
+        (participantid) => ({
+          userId: participantid,
           groupId: groupId,
         })
       );

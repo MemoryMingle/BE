@@ -14,15 +14,21 @@ class NotificationService {
         );
         return creatNotificationData;
     };
-    getNotificationData = async (userId) => {
-        const getNotificationDataData = await this.notificationRepository.getNotificationData(
+    getNotification = async (userId) => {
+        const groupIds = await this.notificationRepository.getGroupIds(
             userId
         );
-        return getNotificationDataData;
+        if(groupIds.length<1){
+            return "알림이 없습니다."
+        }
+        const notificationData = await this.notificationRepository.getNotification(
+            userId, groupIds
+        );
+        return notificationData;
     };
-    updataNotification = async (userId, notificationId) => {
+    updataNotification = async (userId, participantid) => {
         const updataNotificationData = await this.notificationRepository.updataNotification(
-            userId, notificationId
+            userId, participantid
         );
         return updataNotificationData;
     };
